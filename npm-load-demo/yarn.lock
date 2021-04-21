@@ -317,10 +317,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vectorly-io/ai-upscaler@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.0.2.tgz#eb80ce0b6e6954ea7ccf0bab39072434006014de"
-  integrity sha512-mNdB84CVTw49+6S8eRUkUX/TwvCPyPfzjO5drr+O8OltiuNPloS+TLJszl1DIJEyVyQ1NzEWDa0CMH/4RI63SA==
+"@vectorly-io/ai-upscaler@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.2.1.tgz#cc213c41ac26b4f376ba148135989b57ad2a7c3c"
+  integrity sha512-BwQQQaYLrJr/sEDpnjltuJh3hdEnWjswcSLA9eroldodJf7/eD9n0t6k/6fjgMimBBOES/ZVSsXaGmay5qNNhQ==
 
 "@webassemblyjs/ast@1.11.0":
   version "1.11.0"
