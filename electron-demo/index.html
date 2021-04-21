@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-upscaler.js"></script>
+    <title>Vectorly Upscaler Electron Demo</title>
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+
+  <div  style="width: 1280px; height: 720px; position: absolute;">
+    <video id="my-video" src="https://files.vectorly.io/demo/sydney/360p/sydney-360p.mp4" crossorigin="anonymous" autoplay muted> </video>
+  </div>
+
+
+  <!--
+  About Vectorly: https://vectorly.io
+  General web docs: https://vectorly.io/docs/docs-page.html#section-3
+  API Reference: https://cdn.vectorly.io/upscaler/docs/latest/
+
+-->
+
+  <script>
+      var video = document.getElementById('my-video')
+      var upscaler = new vectorlyUpscaler(video, {
+        token: ".." // Sign up for a token on Vectorly's Dashboard (https://upscaler.vectorly.io/)
+      });
+    </script>
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./renderer.js"></script>
+
+  </body>
+
+</html>
