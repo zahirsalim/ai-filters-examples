@@ -7,6 +7,7 @@ Start by installing using npm/yarn
 ```
 yarn add @vectorly-io/ai-upscaler
 ```
+OR
 
 ```
 npm install --save @vectorly-io/ai-upscaler

@@ -4,32 +4,9 @@
 </head>
 
 <body>
+
 <video id="my-video" class="video-js"  controls width="426" height="240"  data-setup="{}" crossorigin="anonymous">
 </video>
-
-
-
-
-<script>
-
-    const url = "https://files.vectorly.io/demo/high-quality-240p/jellyfish-240p.mp4";
-
-    const player = videojs('my-video', {sources: [{
-        src: url,
-        type: 'video/mp4'
-    }], width: 1280, height: 720});
-
-
-    videojs.registerPlugin('vectorlyPlugin', test.vectorlyPlugin);
-
-
-    const upscaler = player.vectorlyPlugin({
-      token: (new URLSearchParams(window.location.search)).get("token") // Pass in token from upscaler.vectorly.io
-    });
-
-
-</script>
-
 
 </body>
 
