@@ -7,12 +7,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 
 module.exports = {
-  entry: ["./src/main.js"],
+  entry: ["./src/core/main.js"],
   output: {
     library: "test",
     libraryTarget: "umd",
     libraryExport: "default",
-    path: path.resolve(__dirname, 'demo'),
+    path: path.resolve(__dirname, '../demo/core'),
       chunkFilename: 'test.[name].js',
     filename: "test.js"
   },
@@ -36,8 +36,8 @@ module.exports = {
       cleanStaleWebpackAssets: false
     }),
     new HtmlWebpackPlugin({
-        template: 'src/index.html',
-        inject: 'head',
+        template: './src/core/index.html',
+        inject: true,
         scriptLoading: 'blocking',
         filename: process.env.HTML_FNAME || 'index.html',
     }),

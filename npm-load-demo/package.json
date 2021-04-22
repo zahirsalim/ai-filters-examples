@@ -7,7 +7,9 @@
   },
   "author": "Sam Bhattacharyya",
   "scripts": {
-    "test": "webpack --mode=development"
+    "test": "webpack --mode=development",
+    "core": "webpack --config=./webpack/core.config.js --mode=development",
+    "demo:core": "webpack serve --config=./webpack/core.config.js --mode=development --port=9000"
   },
   "version": "0.0.1",
   "dependencies": {
