@@ -324,10 +324,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@vectorly-io/ai-upscaler@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.2.1.tgz#cc213c41ac26b4f376ba148135989b57ad2a7c3c"
-  integrity sha512-BwQQQaYLrJr/sEDpnjltuJh3hdEnWjswcSLA9eroldodJf7/eD9n0t6k/6fjgMimBBOES/ZVSsXaGmay5qNNhQ==
+"@vectorly-io/ai-upscaler@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.3.0.tgz#4982cf6c9a087e43f2d66222fe203f1606c88260"
+  integrity sha512-qnWvtp3FH9DcMLNU8X9Sk8h0FAxUpjZXXD+4OBzVSkaS8kz3d+VUQQHGOoULvJaw+1g8eC510n6Ze+Y7oJgJWA==
 
 "@videojs/http-streaming@2.6.4":
   version "2.6.4"
