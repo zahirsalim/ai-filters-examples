@@ -7,7 +7,8 @@
   },
   "author": "Sam Bhattacharyya",
   "scripts": {
-    "test": "webpack --mode=development",
+    "videojs": "webpack --config ./webpack/videojs.config.js --mode=development",
+    "demo:videojs": "webpack serve --config ./webpack/videojs.config.js --mode=development",
     "core": "webpack --config=./webpack/core.config.js --mode=development",
     "demo:core": "webpack serve --config=./webpack/core.config.js --mode=development --port=9000"
   },
@@ -18,7 +19,9 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
+    "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.0.0",
+    "style-loader": "^2.0.0",
     "video.js": "^7.11.8",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",

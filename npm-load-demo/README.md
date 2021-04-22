@@ -18,6 +18,13 @@ Get a token from https://upscaler.vectorly.io to use the library
 
 Follow the docs at https://vectorly.io/docs
 
+## Test Vectorly Videojs plugin
+
+`yarn videojs` will compile and output the bundle to `demo/` folder
+
+You can run live dev server using `yarn demo:videojs`
+
+
 ## Test Vectorly Upscaler Core
 
 After running the

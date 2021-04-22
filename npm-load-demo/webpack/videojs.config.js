@@ -7,14 +7,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 
 module.exports = {
-  entry: ["./src/main.js"],
+  entry: ["./src/videojs/main.js"],
   output: {
     library: "test",
     libraryTarget: "umd",
     libraryExport: "default",
-    path: path.resolve(__dirname, 'demo'),
-      chunkFilename: 'test.[name].js',
-    filename: "test.js"
+    path: path.resolve(__dirname, 'demo', 'videojs'),
+    chunkFilename: 'test.[name].js',
+    filename: "videojs-demo.js"
   },
   module: {
     rules: [
@@ -36,7 +36,7 @@ module.exports = {
       cleanStaleWebpackAssets: false
     }),
     new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        template: 'src/videojs/index.html',
         inject: 'head',
         scriptLoading: 'blocking',
         filename: process.env.HTML_FNAME || 'index.html',
