@@ -54,6 +54,11 @@
 
 <script>
 /* eslint-disable */
+  import videojs from 'video.js';
+  import 'video.js/dist/video-js.min.css';
+  import vectorlyUpscaler from '@vectorly-io/ai-upscaler/dist/vectorly-videojs'; //eslint-disable
+  vectorlyUpscaler.register(videojs)
+
   export default {
     name: "TestTwo",
     data () {
@@ -104,7 +109,6 @@
         initVideo() {
           this.player_processed = videojs('video-processed', {width:1280, height:720});
           console.log(this.player_processed)
-          videojs.registerPlugin('vectorlyPlugin', vectorlyUpscaler.videoJSPlugin);
           const upscaler = this.player_processed.vectorlyPlugin({
             token: (new URLSearchParams(window.location.search)).get("token"),
             networkParams: {
