@@ -12,7 +12,7 @@ module.exports = {
     library: "test",
     libraryTarget: "umd",
     libraryExport: "default",
-    path: path.resolve(__dirname, 'demo', 'videojs'),
+    path: path.resolve(__dirname, '../demo/videojs'),
     chunkFilename: 'test.[name].js',
     filename: "videojs-demo.js"
   },
