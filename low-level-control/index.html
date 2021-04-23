@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="origin-trial" content="AkLPETKVnJC/njTvpbWOu+cyUhX9kjAvSZOOHgrfmlgn7CGKsW0+pVCbEScZU7y90ogjl93LQ4vH4xE2u5t65wgAAAB3eyJvcmlnaW4iOiJodHRwczovL3dlYmNvZGVjcy1ibG9ncG9zdC1kZW1vLmdsaXRjaC5tZTo0NDMiLCJmZWF0dXJlIjoiV2ViQ29kZWNzIiwiZXhwaXJ5IjoxNjE1MjMzMTk4LCJpc1N1YmRvbWFpbiI6dHJ1ZX0=">
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-core.js"> </script>
     <title>WebCodecs API demo: Encoding and Decoding</title>
     <style>
         canvas {
@@ -146,7 +147,7 @@
             let frame = ready_frames.shift();
             underflow = false;
 
-            let bitmap = await frame.createImageBitmap();
+            let bitmap = await createImageBitmap(frame);
             // Based on the frame's timestamp calculate how much of real time waiting
             // is needed before showing the next frame.
             let time_till_next_frame = calculateTimeTillNextFrame(frame.timestamp);
@@ -155,7 +156,7 @@
 
             // Immediately schedule rendering of the next frame
             setTimeout(renderFrame, 0);
-            frame.destroy();
+            frame.close();
             bitmap.close();
         }
 
