@@ -12,7 +12,8 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.4.5",
     "video.js": "^7.11.8",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-flash-message": "^0.7.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

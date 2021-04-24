@@ -1,21 +1,28 @@
   <template>
 
     <el-row type="flex">
+
+
       <el-col :span="16" class="video-cl">
         <div class="grid-content bg-purple">
+
           <el-row :gutter="20">
             <video muted autoload="true" autoPlay="autoPlay" id="video-processed" class="video-js" controls crossorigin="anonymous">
               <source v-bind:src="baseUrl + videoName" type="video/mp4" >
             </video>
           </el-row>
           <el-row :gutter="20">
+
             <video muted autoload="true" autoPlay="autoPlay" id="video-origin" class="video-js" controls crossorigin="anonymous">
               <source v-bind:src="baseUrl + videoName" type="video/mp4" >
             </video>
           </el-row>
         </div>
+
+
       </el-col>
       <el-col :span="8">
+
         <el-row>
           <el-col :span="5" type="flex"> <el-button @click="pauseAll"> Pause </el-button> </el-col>
           <el-col :span="15"> <el-button @click="playAll"> Play </el-button></el-col>
@@ -35,6 +42,10 @@
             </el-select>
           </el-col>
         </el-row>
+
+        <el-row>
+          <flash-message transitionIn="animated swing"   ></flash-message>
+        </el-row>
         <el-row class="label" type="flex" justify="start">
           <el-divider content-position="left">Choose Video</el-divider>
         </el-row>
@@ -48,8 +59,12 @@
             </el-table-column>
           </el-table>
         </el-row>
+
+
       </el-col>
+
     </el-row>
+
   </template>
 
 <script>
@@ -118,11 +133,17 @@
             debug: true
           })
           this.upscaler = upscaler;
+          const flash = this.flash;
+
           upscaler.addEventListener('load', function () {
             console.log("Upscaler initialized");
+            flash('Upscaler loaded successfully', 'success', {timeout: 5000});
           });
+
           upscaler.addEventListener('error', function () {
             console.log("Failed to initialize");
+            flash('Failed to initialize upscaler. Check that the token is specified', 'error');
+
           });
           upscaler.addEventListener('start', function () {
             console.log("Starting upscaling");
