@@ -8,8 +8,11 @@
     <title>WebCodecs API demo: Encoding and Decoding</title>
     <style>
         canvas {
-            padding: 10px;
-            background: gold;
+            border-width: 2px;
+            border-color: black;
+            border-style: solid;
+            margin: 20px auto;
+            display: block;
         }
 
         button {
@@ -21,15 +24,48 @@
             text-align: center;
             display: block;
             font-size: 16px;
+            margin: auto;
         }
+
+        h1, h3{
+            text-align: center;
+            width: 100%;
+            font-family: sans-serif;
+            margin: 20px auto;
+        }
+
+
+
     </style>
 </head>
 
-<body>
-<canvas id="src" width="640" height="480"></canvas>
+<body >
+
+<h1>Vectorly Low level control Demo</h1>
+<h3>Source video</h3>
+<canvas id="src" width="640" height="360"></canvas>
+
 <button onclick="playPause()">Pause</button>
-<canvas id="dst" width="640" height="480"></canvas>
+<h3 style="display:none;">Destination video (not upscaled)</h3>
+<canvas id="dst" width="640" height="360" style="display: none;"></canvas>
+<h3>Destination video (Upscaled)</h3>
+<canvas id="upscaled" width="1280" height="720" style="background: black;"></canvas>
 <script>
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+
+    const upscaler = new vectorlyUpscaler.core({
+        token: getUrlParams("token")  || "your-token",
+        w: 640,
+        h: 360,
+        canvas: document.getElementById("upscaled"),
+        networkParams: {name: 'residual_4k_2x', tag: 'general', version: '0'}
+    });
+
     let codec_string = "vp8";
     let keep_going = true;
 
@@ -60,18 +96,17 @@
         let cy = height / 2;
         let r = Math.min(width, height) / 5;
         let drawOneFrame = function (time) {
-            let angle = Math.PI * 2 * (time / 5000);
-            let scale = 1 + 0.3 * Math.sin(Math.PI * 2 * (time / 7000));
+
             ctx.save();
+
+            let cy =  height*(0.5 + 0.3 * Math.sin(Math.PI * 2 * (time / 7000)));
             ctx.fillRect(0, 0, width, height);
 
             ctx.translate(cx, cy);
-            ctx.rotate(angle);
-            ctx.scale(scale, scale);
 
-            ctx.font = '30px Verdana';
+            ctx.font = '20px Verdana';
             ctx.fillStyle = 'black';
-            const text = "😊📹📷Hello WebCodecs 🎥🎞️😊";
+            const text = "Webcodecs 🌐🎥🎞 + AI Upscaling🤖↔️↕️   == ️😊💜";
             const size = ctx.measureText(text).width;
             ctx.fillText(text, -size / 2, 0);
             ctx.restore();
@@ -154,10 +189,17 @@
             await delay(time_till_next_frame);
             ctx.drawImage(bitmap, 0, 0);
 
+            upscaler.setInput(bitmap); // Sets input element
+            upscaler.render(); // Renders to canvas
+
             // Immediately schedule rendering of the next frame
             setTimeout(renderFrame, 0);
-            frame.close();
-            bitmap.close();
+
+            setTimeout(function (){
+                frame.close();
+                bitmap.close();
+            }, 300);
+
         }
 
         function handleFrame(frame) {
@@ -199,6 +241,12 @@
     }
 
     document.body.onload = main;
+
+
+
+
+
+
 </script>
 
 </body>
