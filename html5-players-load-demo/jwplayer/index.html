@@ -1,0 +1,48 @@
+<head>
+
+
+    <script src="https://cdn.jwplayer.com/libraries/8yG2UmVQ.js"></script>
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-jwplayer.js"> </script>
+    <link rel="stylesheet" href="../demo.css">
+</head>
+
+<body>
+
+
+<div id="myElement" width="1280px"></div>
+
+
+<div class="alert" id="warning">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Upscaler failed to initialize. Make sure to include the token parameter
+</div>
+
+
+<script>
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+
+    jwplayer("myElement").setup({
+        width: 1280,
+        height: 720,
+        "playlist": [{
+            "file": "https://files.vectorly.io/demo/sydney/360p/sydney-360p.mp4",
+        }],
+    }).on('ready', function () {
+        const upscaler = new vectorlyUpscaler.jwPlugin(jwplayer, {
+            token: getUrlParams("token")||"<your-token>"
+        });
+
+        upscaler.on('error', function (){
+            document.getElementById("warning").style.display = "block";
+        });
+    })
+
+</script>
+
+
+</body>

@@ -1,0 +1,52 @@
+<head>
+    <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <!-- <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-videojs.js"></script>
+    <link rel="stylesheet" href="../demo.css">
+</head>
+
+<body>
+
+
+<video id="my-video"
+       class="video-js"
+       controls
+       width="1280"
+       height="720"
+       data-setup="{}"
+       crossorigin="anonymous">
+    <source src="https://files.vectorly.io/demo/sydney/360p/sydney-360p.mp4">
+</video>
+
+<div class="alert" id="warning">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Upscaler failed to initialize. Make sure to include the token parameter
+</div>
+
+<script>
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+    const player = videojs('my-video')
+
+    videojs.registerPlugin('vectorlyPlugin', vectorlyUpscaler.videoJSPlugin);
+    const vjsUpscaler = player.vectorlyPlugin({
+        token: getUrlParams("token")||"<your-token>"
+    });
+
+    vjsUpscaler.on('error', function (){
+        document.getElementById("warning").style.display = "block";
+    });
+    // vjsUpscaler is videoJSPlugin instance
+</script>
+
+
+
+
+</body>
