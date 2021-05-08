@@ -27,7 +27,16 @@ image_tag.onload = async function(){
                                   token: (new URLSearchParams(window.location.search)).get("token")
                                  }
     // Instantiate the upscaler object
-    const upscaler = new vectorlyUpscaler.core(upscaler_init_config);
+    const upscaler = (new vectorlyUpscaler.core())
+    .on('load', function () {
+        console.log("Upscaler initialized"); })
+    .on('error', function () {
+        console.log("Failed to initialize"); })
+    .on('start', function () {
+        console.log("Starting upscaling"); })
+    .on('stop', function () {
+        console.log("Stopping upscaling"); })
+    upscaler.load(upscaler_init_config);
 
     // render the image
     requestAnimationFrame( () => {

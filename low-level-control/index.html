@@ -58,13 +58,36 @@
     }
 
 
-    const upscaler = new vectorlyUpscaler.core({
-        token: getUrlParams("token")  || "your-token",
-        w: 640,
-        h: 360,
+    const width = 640;
+    const height = 360;
+    // Get parameters
+    const upscaler_init_config = {w: width,
+        h: height,
+        renderSize: {w: width*2, h: height*2},
         canvas: document.getElementById("upscaled"),
-        networkParams: {name: 'residual_4k_2x', tag: 'general', version: '0'}
-    });
+        float_type: "float16",
+        use_webgl1: "false",
+        networkParams : {
+            name: 'residual_5k_2x',
+            tag: 'general',
+            version: '0',
+        },
+        token: getUrlParams("token") || "your-token"}
+
+    const upscaler = (new vectorlyUpscaler.core())
+        .on('load', function () {
+            console.log("Upscaler initialized");
+            main();
+        })
+        .on('error', function () {
+            console.log("Failed to initialize"); })
+        .on('start', function () {
+            console.log("Starting upscaling"); })
+        .on('stop', function () {
+            console.log("Stopping upscaling"); })
+
+    upscaler.load(upscaler_init_config);
+
 
     let codec_string = "vp8";
     let keep_going = true;
@@ -183,6 +206,7 @@
             underflow = false;
 
             let bitmap = await createImageBitmap(frame);
+
             // Based on the frame's timestamp calculate how much of real time waiting
             // is needed before showing the next frame.
             let time_till_next_frame = calculateTimeTillNextFrame(frame.timestamp);
@@ -239,8 +263,6 @@
             decoder.decode(chunk);
         });
     }
-
-    document.body.onload = main;
 
 
 
