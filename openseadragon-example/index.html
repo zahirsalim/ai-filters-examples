@@ -1,0 +1,108 @@
+<head><script src="upscaler.js"></script></head>
+
+<body style="margin: 0;" style="position: absolute;">
+    <div class="canvas-div">
+        <canvas style="background-color:white; position: absolute;" id="upscaledCanvas"  ></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/openseadragon.min.js"></script>
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-core.js"></script>
+    <div id="openseadragon1" style="height: 50%; width: 50%; left: 25%; top: 25%; position: absolute;" ></div>
+</body>
+
+
+
+
+<script>
+
+    var viewer = OpenSeadragon({
+        id: "openseadragon1",
+        prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/",
+        tileSources: "https://files.vectorly.io/demo/openseadragon/slide-0.dzi",
+        crossOriginPolicy: 'Anonymous',
+        ajaxWithCredentials: false
+    });
+
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+
+    viewer.addHandler("open", function () {
+
+
+        let canvas = viewer.canvas.childNodes[0];
+        canvas.style.display = "none";
+
+        canvas.style.width = "auto";
+        canvas.style.height = "auto";
+
+
+        document.body.appendChild(canvas);
+
+
+        viewer.container.style.overflow = "visible";
+
+        const menu = viewer.container.childNodes[1];
+
+        menu.style.left = "-50%";
+        menu.style.top = "-50%";
+
+
+        let width = canvas.width;
+        let height = canvas.height;
+
+        const upscaler = new vectorlyUpscaler.core({
+            token: getUrlParams("token")  || "your-token",
+            w: width,
+            h: height,
+            canvas: document.getElementById("upscaledCanvas"),
+            networkParams: {name: 'residual_4k_2x', tag: 'general', version: '0'}
+        });
+
+
+        function onload(){
+            window.upscaler = upscaler;
+
+            let lastUpdateTime = Date.now();
+
+            setTimeout(draw, 100);
+            setTimeout(draw, 500);
+            setTimeout(draw, 1000);
+
+            function draw() {
+
+                if(Date.now() - lastUpdateTime > 50 && canvas){
+                    upscaler.setInput(canvas);
+                    upscaler.render();
+                    lastUpdateTime = Date.now();
+                }
+            }
+
+
+            viewer.addHandler('canvas-drag', draw);
+
+            viewer.addHandler('zoom', draw);
+        }
+
+        setTimeout(onload, 500)
+
+        /*
+
+        Waiting on handler support for these
+
+        upscaler.on('load',onload)
+
+        upscaler.on('error', function (){
+           alert("Failed to load");
+        });
+
+*/
+    });
+
+
+
+
+</script>
+

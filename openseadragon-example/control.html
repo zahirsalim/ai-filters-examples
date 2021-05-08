@@ -1,0 +1,28 @@
+<head><script src="upscaler.js"></script></head>
+
+<body style="margin: 0;" style="position: absolute;">
+    <div class="canvas-div">
+        <canvas style="background-color:transparent; position: absolute;" id="upscaledCanvas"  ></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.2/openseadragon.min.js"></script>
+    <div id="openseadragon1" style="height: 100%; width: 100%;" ></div>
+</body>
+
+
+
+
+<script>
+
+    var viewer = OpenSeadragon({
+        id: "openseadragon1",
+        prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/",
+        tileSources: "https://vv-lrn-dist-public.s3-us-west-2.amazonaws.com/demo/openseadragon/slide-0.dzi",
+        crossOriginPolicy: 'Anonymous',
+        ajaxWithCredentials: false
+    });
+
+
+
+
+</script>
+

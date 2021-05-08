@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script src="shaka-player.ui.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.10/controls.min.css"  crossorigin="anonymous" />
+
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-shaka.js"></script>
+    <link rel="stylesheet" href="../demo.css">
+</head>
+<body>
+
+
+
+<div id="container" data-shaka-player-container style="max-width:1280px;height:720px;">
+    <video data-shaka-player crossorigin="anonymous" id="my-video" ></video>
+</div>
+
+<div class="alert" id="warning">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Upscaler failed to initialize. Make sure to include the token parameter
+</div>
+
+<script>
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+
+
+    async function init() {
+        const video = document.getElementById('my-video');
+        const ui = video['ui'];
+        const controls = ui.getControls();
+        const player = controls.getPlayer();
+
+        try {
+            await player.load("https://files.vectorly.io/demo/sydney/360p/sydney-360p.mp4");
+            // This runs if the asynchronous load is successful.
+            const upscaler = new vectorlyUpscaler.shakaPlugin(player,{
+                token: getUrlParams("token")||"<your-token>"
+            });
+
+            upscaler.on('error', function (){
+                document.getElementById("warning").style.display = "block";
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    document.addEventListener('shaka-ui-loaded', init);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.vectorly.io/upscaler/v2/latest/vectorly-shaka.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/3.0.10/shaka-player.compiled.js" integrity="sha512-HrgtP3BYUxMkei7p7iV5uW0eYNJ0/kV7Rl2ADTG9Hd2izWtYP9tza6kt5g3FKcr3zIZ0CzW0y9RB8VS1Lf0T7Q==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../demo.css">
+</head>
+<body>
+
+
+
+<div id="container" data-shaka-player-container style="max-width:1280px; height: 720px;">
+    <video data-shaka-player crossorigin="anonymous" id="my-video" ></video>
+</div>
+
+<div class="alert" id="warning">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Upscaler failed to initialize. Make sure to include the token parameter
+</div>
+
+<script>
+
+    const video = document.getElementById('my-video');
+    const player = new shaka.Player(video);
+
+    function getUrlParams(prop) {
+        window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+        return window.searchParams.get(prop)
+    }
+
+
+
+    player.load("https://files.vectorly.io/demo/sydney/360p/sydney-360p.mp4").then(function () {
+        const upscaler = new vectorlyUpscaler.shakaPlugin(player,{
+            token: getUrlParams("token")||"<your-token>"
+        });
+
+        upscaler.on('error', function (){
+            document.getElementById("warning").style.display = "block";
+        });
+
+    }).catch(function (e){
+        console.log("Errror", e);
+    });
+
+</script>
+
+
+
+</body>
+</html>
