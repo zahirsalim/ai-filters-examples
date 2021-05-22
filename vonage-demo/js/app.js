@@ -48,6 +48,14 @@ function initializeSession() {
         subscriber.on('videoElementCreated', function (){
             const video = subscriber.element.querySelector('video');
             const upscaler  = new vectorlyUpscaler(video, {token: '..your-token....'});
+
+            upscaler.on('load', function (){
+               console.log("Upscaler was initialized successfully!") ;
+            });
+
+            upscaler.on('error', function (){
+               console.log("There was an issue initializing the upscaler");
+            });
         });
 
     });
