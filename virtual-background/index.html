@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script src="https://cdn.vectorly.io/upscaler/v2/dev/a26df62/vectorly-core.js"> </script>
+        <script src="https://cdn.vectorly.io/upscaler/v2/dev/829a269/vectorly-core.js"> </script>
 
         <title>Virtual Background API demo</title>
 
@@ -88,7 +88,9 @@
                 tag: 'general',
                 version: '0',
             },
-            background: "https://files.vectorly.io/demo/videocall/virtual-background-1200x720.jpg",
+            networkOptions: {
+                background: "https://files.vectorly.io/demo/videocall/virtual-background-1200x720.jpg",
+            },
             token: getUrlParams("token") || "your-token"}
 
         const upscaler = (new vectorlyUpscaler.core())
