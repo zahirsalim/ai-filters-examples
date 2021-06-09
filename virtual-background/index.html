@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script src="https://cdn.vectorly.io/upscaler/v2/dev/4336f90/vectorly-core.js"> </script>
+        <script src="https://cdn.vectorly.io/upscaler/v2/dev/a26df62/vectorly-core.js"> </script>
 
         <title>Virtual Background API demo</title>
 
@@ -101,12 +101,13 @@
             console.log("Starting upscaling"); })
         .on('stop', function () {
             console.log("Stopping upscaling"); })
+        upscaler.load(upscaler_init_config);
 
 
 
         async function initializeWebcam(){
             var webcamStream = await navigator.mediaDevices.getUserMedia({audio: false, video: {width: 640, height: 360}})
-            upscaler.load(upscaler_init_config);
+
             window.MediaStream = webcamStream;
             video.srcObject  = webcamStream;
         }
@@ -139,7 +140,7 @@
                     upscaler.setInput(video)
                     upscaler.render();
                     console.log("looping")
-                    if(!(captureCam && segmentBg)){ 
+                    if(!(captureCam && segmentBg)){
                         return }
                     requestAnimationFrame(() => {iterate()});
                 }
