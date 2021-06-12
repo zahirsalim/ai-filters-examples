@@ -7,12 +7,15 @@
 .tile.large {
   position: relative;
   margin: 2px;
+  width: 100%;
+  height: 100%;
 }
 
 .tile video {
   width: 100%;
   position: absolute;
   top: 0px;
+  max-height: 100%;
 }
 
 .tile .background {
