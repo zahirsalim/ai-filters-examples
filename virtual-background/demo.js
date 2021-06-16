@@ -1,5 +1,6 @@
 /* eslint-disable */
 let setBackground = false;
+let old_id = ""
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
@@ -113,6 +114,8 @@ function updateFPS(){
 async function changeInputStream(video_id) {
 
   try {
+    document.getElementById(old_id) && document.getElementById(old_id).pause()
+    old_id = video_id
     let sample_video = document.getElementById(video_id)
 
     let inputStream = sample_video.captureStream()
