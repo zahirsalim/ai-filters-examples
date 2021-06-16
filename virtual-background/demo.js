@@ -30,6 +30,7 @@ async function streamWebcam() {
           throw "webcam initialization failed"
       }
       if(old_id === 'video'){
+        window.bgFilter &&  window.bgFilter.disable()
         await stopWebcam()
         old_id=''
       }else{
@@ -37,14 +38,14 @@ async function streamWebcam() {
         await enablebackground()
         updateFPS();
       }
-  } catch (e) {
+    } catch (e) {
       alert("webcam initialization failed")
+    }
   }
-}
 
-async function stopWebcam(){
-  window.mediaStream.getTracks()[0].stop()
-  window.bgFilter && window.bgFilter.stop()
+  async function stopWebcam(){
+    window.mediaStream.getTracks()[0].stop()
+    window.bgFilter && window.bgFilter.stop()
 }
 
 async function enablebackground(type, image) {
@@ -126,8 +127,11 @@ async function changeInputStream(video_id) {
     if(old_id === 'video'){
       await stopWebcam()
     }
+    window.bgFilter && window.bgFilter.enable()
+
     document.getElementById(old_id) && document.getElementById(old_id).pause()
     if(old_id===video_id){
+      window.bgFilter &&  window.bgFilter.disable()
       old_id=''
       return
     }
