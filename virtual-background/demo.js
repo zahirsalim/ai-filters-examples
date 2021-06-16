@@ -38,7 +38,6 @@ async function stopWebcam(){
 }
 
 async function enablebackground(type, image) {
-  console.log(getUrlParams('token'), "token")
   setBackground = true;
   const processed = document.getElementById('demo');
   const params = {
@@ -115,21 +114,17 @@ async function changeInputStream(video_id) {
 
   try {
     let sample_video = document.getElementById(video_id)
-    
+
     let inputStream = sample_video.captureStream()
     window.mediaStream = inputStream;
-    
+
     let default_video = document.getElementById('video');
-    
+
     if (setBackground) {
-      await enablebackground()
-    } else {
-      window.bgFilter &&  window.bgFilter.changeInput(sample_video)
-      // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+      window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+      sample_video.play()
       default_video.srcObject = window.mediaStream.clone();
-      // sample_video.play()
-      // default_video.play()
-      // window.bgFilter.changeInput(inputStream);
+      window.bgFilter.changeInput(inputStream);
     }
 
     updateFPS();
