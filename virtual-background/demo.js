@@ -127,6 +127,10 @@ async function changeInputStream(video_id) {
       await stopWebcam()
     }
     document.getElementById(old_id) && document.getElementById(old_id).pause()
+    if(old_id===video_id){
+      old_id=''
+      return
+    }
     old_id = video_id
 
 
