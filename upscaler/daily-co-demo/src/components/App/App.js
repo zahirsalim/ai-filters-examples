@@ -118,7 +118,7 @@ export default function App() {
       event && logDailyEvent(event);
       switch (callObject.meetingState()) {
         case 'joined-meeting':
-          window.callobj.setBandwidth({kbs: 300, trackConstraints: {width: 320, height: 240}});
+          window.callobj.setBandwidth({kbs: 300, trackConstraints: {height: 240}});
           setAppState(STATE_JOINED);
           break;
         case 'left-meeting':

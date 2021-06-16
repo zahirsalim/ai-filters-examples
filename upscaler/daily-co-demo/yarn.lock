@@ -1743,10 +1743,10 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@vectorly-io/ai-upscaler@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.2.1.tgz#cc213c41ac26b4f376ba148135989b57ad2a7c3c"
-  integrity sha512-BwQQQaYLrJr/sEDpnjltuJh3hdEnWjswcSLA9eroldodJf7/eD9n0t6k/6fjgMimBBOES/ZVSsXaGmay5qNNhQ==
+"@vectorly-io/ai-upscaler@^2.3.7":
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-upscaler/-/ai-upscaler-2.3.7.tgz#bd0230509da6d642085a63653290a8aac1805a4f"
+  integrity sha512-9mYxwNd7RKTkrVyfPK5K/tKyBaPJb86f27Um0WDYH8rQ9Aaj3jxQEk8FTb4v/QE+5juvZNpIhTHEFXKoTViwGw==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
