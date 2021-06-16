@@ -9,14 +9,18 @@ function getUrlParams(prop) {
 
 async function initializeWebcam(){
     console.log('Initializing initializeWebcam', window.mediaStream)
+    window.mediaStream = null;
     if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
       var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
       // {width: 640, height: 360}})
       window.mediaStream = webcamStream;
     }
+    document.getElementById(old_id) && document.getElementById(old_id).pause()
     const video = document.getElementById('video');
-    window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+    old_id = 'video'
     video.srcObject  = window.mediaStream;
+    video.play()
+    window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
 }
 
 
@@ -25,9 +29,14 @@ async function streamWebcam() {
       if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
           throw "webcam initialization failed"
       }
-      await initializeWebcam();
-      await enablebackground()
-      updateFPS();
+      if(old_id === 'video'){
+        await stopWebcam()
+        old_id=''
+      }else{
+        await initializeWebcam();
+        await enablebackground()
+        updateFPS();
+      }
   } catch (e) {
       alert("webcam initialization failed")
   }
@@ -114,8 +123,13 @@ function updateFPS(){
 async function changeInputStream(video_id) {
 
   try {
+    if(old_id === 'video'){
+      await stopWebcam()
+    }
     document.getElementById(old_id) && document.getElementById(old_id).pause()
     old_id = video_id
+
+
     let sample_video = document.getElementById(video_id)
 
     let inputStream = sample_video.captureStream()
@@ -124,7 +138,7 @@ async function changeInputStream(video_id) {
     let default_video = document.getElementById('video');
 
     if (setBackground) {
-      window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+      // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
       sample_video.play()
       default_video.srcObject = window.mediaStream.clone();
       window.bgFilter.changeInput(inputStream);
