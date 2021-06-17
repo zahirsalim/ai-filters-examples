@@ -80,7 +80,7 @@ async function gotStream(stream) {
   try {
 
     const BackgroundFilter = vectorly.BackgroundFilter;
-    const filter = new BackgroundFilter(stream, {token: "<your-token>", type: 'blur'});
+    const filter = new BackgroundFilter(stream, {token:  getUrlParams("token"), serverType: 'staging', type: 'blur'});
     stream =  await filter.getOutput();  //Video Stream Track
 
   } catch (e){
