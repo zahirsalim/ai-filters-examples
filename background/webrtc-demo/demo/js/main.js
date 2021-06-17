@@ -77,17 +77,9 @@ async function gotStream(stream) {
   localStream = stream;
 
 
-  const BackgroundFilter = vectorly.BackgroundFilter;
-
-  console.log("Filter");
-  console.log(BackgroundFilter);
-  console.log("Vectorly");
-  console.log(vectorly);
-
-  console.log(stream);
-
-
   try {
+
+    const BackgroundFilter = vectorly.BackgroundFilter;
     const filter = new BackgroundFilter(stream, {token: "<your-token>", type: 'blur'});
     stream =  await filter.getOutput();  //Video Stream Track
 
