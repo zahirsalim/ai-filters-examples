@@ -146,6 +146,8 @@ async function changeInputStream(video_id) {
 
     let default_video = document.getElementById('video');
 
+    if(!setBackground) await enablebackground();
+
     if (setBackground) {
       // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
       sample_video.play()
