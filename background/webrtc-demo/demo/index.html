@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+ *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Vectorly WebRTC Demo">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+    <meta itemprop="description" content="Demo of Vectorly's client-side upscaling with WebRTC ">
+    <meta itemprop="image" content="images/vectorly-logo-circle.png">
+    <meta itemprop="name" content="Vectorly WebRTC Demo">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+
+    <base target="_blank">
+
+    <title>Vectorly Background Filters with WebRTC</title>
+
+    <link rel="icon" sizes="192x192" href="images/vectorly-logo-circle.png">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/parent.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="https://cdn.vectorly.io/ai-filters/v1/latest/vectorly.filters.js"></script>
+
+    <style>
+        video{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="container">
+
+    <h1><a href="https://vectorly.io/docs/technology/" title="Vectorly">Vectorly</a> <span>WebRTC Demo</span> </h1>
+
+    <div id="feeds-container" style="width: 640px; height: 540px; position: relative; display: block; margin: auto;" >
+
+        <video id="originalVideo" playsinline autoplay muted width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Original Video</div>
+        <video id="localVideo" playsinline autoplay muted width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Local (filtered) Video</div>
+        <video id="remoteVideo" playsinline autoplay width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Remote Video</div>
+    </div>
+
+</div>
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="js/main.js" async></script>
+
+
+
+
+</body>
+</html>
