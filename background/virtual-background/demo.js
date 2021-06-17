@@ -54,7 +54,7 @@ async function enablebackground(type, image) {
   const params = {
     debug: false,
     analyticsEnabled: true,
-    token: getUrlParams('token'),
+    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
     background: {'type': type || 'blur', 'image': image}
   }
   if (window.bgFilter) {
@@ -107,7 +107,7 @@ function updatevirtualbackground(image_url){
 }
 
 function updateFPS(){
-  return
+  //return
   try {
     setInterval(() => {
       if (window.bgFilter && window.bgFilter.processor.metrics && window.bgFilter.processor.metrics.fps) {
