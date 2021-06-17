@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import './Tile.css';
-import Upscaler from '@vectorly/ai-upscaler-plugin';
-// const Upscaler = require('./vectorly.js')
+import vectorlyUpscaler from '@vectorly-io/ai-upscaler';
 
 function getTrackUnavailableMessage(kind, trackState) {
   if (!trackState) return;
@@ -74,7 +73,9 @@ export default function Tile(props) {
       (videoEl.current.srcObject = new MediaStream([videoTrack]));
     if (videoEl.current && props.isLarge) {
       window.upscalers = window.upscalers || {}
-      window.upscalers[videoTrack.id] = new Upscaler(videoEl.current, {id: videoTrack.id, height: 240, width: 320});
+      window.upscalers[videoTrack.id] = new vectorlyUpscaler(videoEl.current,
+        {token: process.env.REACT_APP_VECTORLY_TOKEN, id: videoTrack.id, serverType: 'staging'}
+      )
     }
   }, [videoTrack]);
 
