@@ -11,10 +11,6 @@
 
 const remoteVideo = document.querySelector('video#remoteVideo');
 const localVideo = document.querySelector('video#localVideo');
-const callButton = document.querySelector('button#callButton');
-const bandwidthSelector = document.querySelector('select#bandwidth');
-const sourceSelector = document.querySelector('select#source');
-const codecSelector = document.querySelector('select#codec');
 const originalVideo = document.querySelector('video#originalVideo');
 
 
@@ -30,15 +26,13 @@ let filteredStream;
 // eslint-disable-next-line prefer-const
 let maxBandwidth = 0;
 
-let bitrateGraph;
-let bitrateSeries;
 let headerrateSeries;
 
 
 let height = 240;
 let width = 320;
 
-let packetGraph;
+
 let packetSeries;
 
 let upscaler;
@@ -60,7 +54,6 @@ RTCRtpSender.getCapabilities("video").codecs.forEach(function (codec) {
     codecs[codec.mimeType] = codec;
 });
 
-if(!codecs['video/H264'] && !codecs['video/VP9']) codecSelector.disabled = true;
 
 
 
@@ -145,15 +138,6 @@ function call() {
   navigator.mediaDevices.getUserMedia({video: { width:width, height: height }})
       .then(gotStream)
       .catch(e => console.warn('getUserMedia() error: ' + e.name));
-/*
-  upscaler = new vectorlyUpscaler(remoteVideo,
-                                  {
-                                    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-                                    // serverType: 'staging',
-                                    // networkParams: {name: 'residual_3k', version: '2.1', tag: 'general'}
-                                    networkParams: {name: 'residual_4k_2x', version: '0', tag: 'screenshare'}
-                                  });
-*/
 
 }
 
