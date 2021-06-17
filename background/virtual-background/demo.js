@@ -187,7 +187,7 @@ window.onload = (event) => {
     try {
       setTimeout(() => {
       // changeInputStream('bg-video-4');
-      streamWebcam()
+      // streamWebcam()
     }, 100);
   } catch (error) {
     console.log('ERROR in background load', err)
