@@ -54,7 +54,6 @@ async function enablebackground(type, image) {
   const params = {
     debug: true,
     token: getUrlParams('token'),
-    serverType: 'staging',
     background: {'type': type || 'blur', 'image': image}
   }
   if (window.bgFilter) {
