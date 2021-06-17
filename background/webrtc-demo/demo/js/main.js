@@ -24,12 +24,10 @@ const feedContainer = document.getElementById("feeds-container");
 
 
 
-
-callButton.onclick = call;
-
 let pc1;
 let pc2;
 let localStream;
+let filteredStream;
 
 // Can be set in the console before making a call to test this keeps
 // within the envelope set by the SDP. In kbps.
@@ -77,11 +75,12 @@ async function gotStream(stream) {
   localStream = stream;
 
 
+
   try {
 
     const BackgroundFilter = vectorly.BackgroundFilter;
     const filter = new BackgroundFilter(stream, {token:  getUrlParams("token"), serverType: 'staging', type: 'blur'});
-    stream =  await filter.getOutput();  //Video Stream Track
+    filteredStream=  await filter.getOutput();  //Video Stream Track
 
   } catch (e){
 
@@ -92,8 +91,16 @@ async function gotStream(stream) {
 
 
 
-  localVideo.srcObject = stream;
-  localStream.getTracks().forEach(track => pc1.addTrack(track, localStream));
+  localVideo.srcObject = localStream;
+
+  const tracks = localStream.getTracks();
+
+  filteredStream.getTracks().forEach(function (track){
+    pc1.addTrack(track, filteredStream);
+  });
+
+
+
   console.log('Adding Local Stream to peer connection');
 
   pc1.createOffer(
@@ -103,16 +110,6 @@ async function gotStream(stream) {
       onCreateSessionDescriptionError
   );
 
-  bitrateSeries = new TimelineDataSeries();
-  bitrateGraph = new TimelineGraphView('bitrateGraph', 'bitrateCanvas');
-  bitrateGraph.updateEndDate();
-
-  headerrateSeries = new TimelineDataSeries();
-  headerrateSeries.setColor('green');
-
-  packetSeries = new TimelineDataSeries();
-  packetGraph = new TimelineGraphView('packetGraph', 'packetCanvas');
-  packetGraph.updateEndDate();
 }
 
 function onCreateSessionDescriptionError(error) {
@@ -125,16 +122,11 @@ function getUrlParams(prop) {
 }
 
 
+
+
 function call() {
-  callButton.disabled = true;
-  bandwidthSelector.disabled = false;
-  resolutionSelector.disabled = true;
-  codecSelector.disabled = true;
 
   console.log('Starting call');
-
-
-
 
   const servers = null;
   pc1 = new RTCPeerConnection(servers);
@@ -236,207 +228,7 @@ function onSetSessionDescriptionError(error) {
   console.log('Failed to set session description: ' + error.toString());
 }
 
-// renegotiate bandwidth on the fly.
-bandwidthSelector.onchange = () => {
-  bandwidthSelector.disabled = true;
-  const bandwidth = bandwidthSelector.options[bandwidthSelector.selectedIndex].value;
-
-  // In Chrome, use RTCRtpSender.setParameters to change bandwidth without
-  // (local) renegotiation. Note that this will be within the envelope of
-  // the initial maximum bandwidth negotiated via SDP.
-  if ((adapter.browserDetails.browser === 'chrome' ||
-       adapter.browserDetails.browser === 'safari' ||
-       (adapter.browserDetails.browser === 'firefox' &&
-        adapter.browserDetails.version >= 64)) &&
-      'RTCRtpSender' in window &&
-      'setParameters' in window.RTCRtpSender.prototype) {
-    const sender = pc1.getSenders()[0];
-    const parameters = sender.getParameters();
-    if (!parameters.encodings) {
-      parameters.encodings = [{}];
-    }
-    if (bandwidth === 'unlimited') {
-      delete parameters.encodings[0].maxBitrate;
-    } else {
-      parameters.encodings[0].maxBitrate = bandwidth * 1000;
-    }
-
-
-    sender.setParameters(parameters)
-        .then(() => {
-          bandwidthSelector.disabled = false;
-        })
-        .catch(e => console.error(e));
-    return;
-  }
-  // Fallback to the SDP munging with local renegotiation way of limiting
-  // the bandwidth.
-  pc1.createOffer()
-      .then(offer => pc1.setLocalDescription(offer))
-      .then(() => {
-        const desc = {
-          type: pc1.remoteDescription.type,
-          sdp: bandwidth === 'unlimited' ?
-          removeBandwidthRestriction(pc1.remoteDescription.sdp) :
-          updateBandwidthRestriction(pc1.remoteDescription.sdp, bandwidth)
-        };
-        console.log('Applying bandwidth restriction to setRemoteDescription:\n' +
-        desc.sdp);
-        return pc1.setRemoteDescription(desc);
-      })
-      .then(() => {
-        bandwidthSelector.disabled = false;
-      })
-      .catch(onSetSessionDescriptionError);
-};
-
-function updateBandwidthRestriction(sdp, bandwidth) {
-  let modifier = 'AS';
-  if (adapter.browserDetails.browser === 'firefox') {
-    bandwidth = (bandwidth >>> 0) * 1000;
-    modifier = 'TIAS';
-  }
-  if (sdp.indexOf('b=' + modifier + ':') === -1) {
-    // insert b= after c= line.
-    sdp = sdp.replace(/c=IN (.*)\r\n/, 'c=IN $1\r\nb=' + modifier + ':' + bandwidth + '\r\n');
-  } else {
-    sdp = sdp.replace(new RegExp('b=' + modifier + ':.*\r\n'), 'b=' + modifier + ':' + bandwidth + '\r\n');
-  }
-  return sdp;
-}
-
-function removeBandwidthRestriction(sdp) {
-  return sdp.replace(/b=AS:.*\r\n/, '').replace(/b=TIAS:.*\r\n/, '');
-}
 
 
 
-upscaleToggle.onchange = () =>{
-    if(upscaleToggle.checked) upscaler.enable();
-    else  upscaler.disable();
-};
-
-
-sourceSelector.onchange = () =>{
-
-  if(sourceSelector.value === "local") upscaledContainer.style.visibility = "hidden";
-  else upscaledContainer.style.visibility = "visible";
-
-};
-
-
-codecSelector.onchange = () =>{
-  if(codecSelector.value === "vp9"){
-
-    codecPreferences = [codecs['video/VP9'], codecs['video/H264']];
-  } else {
-
-    codecPreferences = [codecs['video/H264'], codecs['video/VP9']];
-  }
-
-  console.log("Setting codec preferences");
-  console.log(codecPreferences);
-};
-
-resolutionSelector.onchange = () =>{
-
-  if(resolutionSelector.value === "240p"){
-      height = 240;
-      width = 320;
-
-
-      feedContainer.style.width = "720px";
-      feedContainer.style.height = "540px";
-
-      localVideo.style.width = "720px";
-      localVideo.style.height ="540px";
-
-      upscaledContainer.style.width =  "720px";
-      upscaledContainer.style.height = "540px";
-
-  } else if(resolutionSelector.value === "360p") {
-
-    height = 360;
-    width = 480;
-
-      feedContainer.style.width = "720px";
-      feedContainer.style.height = "540px";
-
-      localVideo.style.width = "720px";
-      localVideo.style.height ="540px";
-
-      upscaledContainer.style.width =  "720px";
-      upscaledContainer.style.height = "540px";
-
-  } else if(resolutionSelector.value === "360pw"){
-
-      height = 360;
-      width = 640;
-
-
-      feedContainer.style.width = "920px";
-      feedContainer.style.height = "540px";
-
-      localVideo.style.width = "920px";
-      localVideo.style.height ="540px";
-
-      upscaledContainer.style.width =  "920px";
-      upscaledContainer.style.height = "540px";
-  }
-
-
-
-    remoteVideo.width = width;
-    remoteVideo.height = height;
-
-
-};
-
-
-// query getStats every second
-window.setInterval(() => {
-  if (!pc1) {
-    return;
-  }
-  const sender = pc1.getSenders()[0];
-  if (!sender) {
-    return;
-  }
-  sender.getStats().then(res => {
-    res.forEach(report => {
-      let bytes;
-      let headerBytes;
-      let packets;
-      if (report.type === 'outbound-rtp') {
-        if (report.isRemote) {
-          return;
-        }
-        const now = report.timestamp;
-        bytes = report.bytesSent;
-        headerBytes = report.headerBytesSent;
-
-        packets = report.packetsSent;
-        if (lastResult && lastResult.has(report.id)) {
-          // calculate bitrate
-          const bitrate = 8 * (bytes - lastResult.get(report.id).bytesSent) /
-            (now - lastResult.get(report.id).timestamp);
-          const headerrate = 8 * (headerBytes - lastResult.get(report.id).headerBytesSent) /
-            (now - lastResult.get(report.id).timestamp);
-
-          // append to chart
-          bitrateSeries.addPoint(now, bitrate);
-          headerrateSeries.addPoint(now, headerrate);
-          bitrateGraph.setDataSeries([bitrateSeries, headerrateSeries]);
-          bitrateGraph.updateEndDate();
-
-          // calculate number of packets and append to chart
-          packetSeries.addPoint(now, packets -
-            lastResult.get(report.id).packetsSent);
-          packetGraph.setDataSeries([packetSeries]);
-          packetGraph.updateEndDate();
-        }
-      }
-    });
-    lastResult = res;
-  });
-}, 1000);
+call();

@@ -20,7 +20,7 @@
 
     <base target="_blank">
 
-    <title>Vectorly Client-Side upscaling with WebRTC</title>
+    <title>Vectorly Background Filters with WebRTC</title>
 
     <link rel="icon" sizes="192x192" href="images/vectorly-logo-circle.png">
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
@@ -37,86 +37,16 @@
 
     <h1><a href="https://vectorly.io/docs/technology/" title="Vectorly">Vectorly</a> <span>WebRTC Demo</span> </h1>
 
-
-    <div id="buttons">
-
-        <label>Resolution:</label>
-        <select id="resolution">
-            <option value="240p">240x320</option>
-            <option value="360p">360x480</option>
-            <option value="360pw">360x640</option>
-        </select>
-
-
-        <label>Bandwidth:</label>
-        <select id="bandwidth" disabled>
-            <option value="unlimited" selected>unlimited</option>
-            <option value="1000">1000 kbps</option>
-            <option value="800">800 kbps</option>
-            <option value="600">600 kbps</option>
-            <option value="400">400 kbps</option>
-            <option value="300">300 kbps</option>
-            <option value="200">200 kbps</option>
-            <option value="100">100 kbps</option>
-        </select>
-
-        <label>Codec:</label>
-        <select id="codec">
-            <option value="h264">H264</option>
-            <option value="vp9">VP9</option>
-        </select>
-
-        <button id="callButton">Call</button>
-
-
-        <label>Showing:</label>
-        <select id="source">
-            <option value="remote">Receiver's Video</option>
-            <option value="local">Broadcaster's Video</option>
-        </select>
-
-        <label>Upscaled</label>
-        <label class="switch">
-          <input id="upscale" type="checkbox" checked />
-          <span class="slider round"><span>
-        </label>
-    </div>
-
-
     <div id="feeds-container" style="width: 720px; height: 540px; position: relative; display: block; margin: auto;" >
-
-        <video id="localVideo" playsinline autoplay muted style="width: 720px; height: 540px;"></video>
-
-
-        <div id="upscaled-container" style="width: 720px; height: 540px; background: #222; position: absolute;  top: 0; left: 0;" >
-            <video id="remoteVideo" playsinline autoplay width="320" height="240"></video>
-        </div>
-
-
+        <video id="remoteVideo" playsinline autoplay width="640" height="360" style="float: left;"></video>
+        <video id="localVideo" playsinline autoplay muted width="640" height="360" style="float: left"></video>
     </div>
-
-
-
-
-
-    <div class="graph-container" id="bitrateGraph">
-        <div>Bitrate</div>
-        <canvas id="bitrateCanvas" style="width: 100%"></canvas>
-    </div>
-    <div class="graph-container" id="packetGraph">
-        <div>Packets sent per second</div>
-        <canvas id="packetCanvas"  style="width: 100%"> </canvas>
-    </div>
-
-
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/peerconnection/bandwidth"
-       title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
 
 </div>
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="js/main.js" async></script>
-<script src="js/graph.js"></script>
+
 
 
 
