@@ -97,6 +97,9 @@ function virtualbackground(){
 }
 
 function updatevirtualbackground(image_url){
+
+  if(!setBackground) return;
+
   if (setBackground && window.bgFilter) {
     window.bgFilter.enable()
     image_url = image_url || "https://cdn.vectorly.io/public-demos/background-waterfall-pexels.jpg"
