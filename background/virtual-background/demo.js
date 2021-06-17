@@ -1,4 +1,4 @@
-/* eslint-disable */
+ /* eslint-disable */
 let setBackground = false;
 let old_id = ""
 
@@ -52,7 +52,8 @@ async function enablebackground(type, image) {
   setBackground = true;
   const processed = document.getElementById('demo');
   const params = {
-    debug: true,
+    debug: false,
+    analyticsEnabled: true,
     token: getUrlParams('token'),
     background: {'type': type || 'blur', 'image': image}
   }
@@ -106,6 +107,7 @@ function updatevirtualbackground(image_url){
 }
 
 function updateFPS(){
+  return
   try {
     setInterval(() => {
       if (window.bgFilter && window.bgFilter.processor.metrics && window.bgFilter.processor.metrics.fps) {
@@ -114,7 +116,7 @@ function updateFPS(){
       } else {
         document.getElementById('fps').innerHTML = '';
       }
-    }, 100);
+    }, 1000);
   } catch (error) {
     console.log('ERROR in updateFPS', error)
   }
@@ -188,7 +190,7 @@ window.onload = (event) => {
       setTimeout(() => {
       // changeInputStream('bg-video-4');
       // streamWebcam()
-    }, 100);
+    }, 1000);
   } catch (error) {
     console.log('ERROR in background load', err)
   }
