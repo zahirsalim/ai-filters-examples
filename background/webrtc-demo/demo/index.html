@@ -29,6 +29,12 @@
     <link rel="stylesheet" href="css/main.css"/>
     <script src="https://cdn.vectorly.io/ai-filters/v1/latest/vectorly.filters.js"></script>
 
+    <style>
+        video{
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -37,9 +43,14 @@
 
     <h1><a href="https://vectorly.io/docs/technology/" title="Vectorly">Vectorly</a> <span>WebRTC Demo</span> </h1>
 
-    <div id="feeds-container" style="width: 720px; height: 540px; position: relative; display: block; margin: auto;" >
-        <video id="remoteVideo" playsinline autoplay width="640" height="360" style="float: left;"></video>
-        <video id="localVideo" playsinline autoplay muted width="640" height="360" style="float: left"></video>
+    <div id="feeds-container" style="width: 640px; height: 540px; position: relative; display: block; margin: auto;" >
+
+        <video id="originalVideo" playsinline autoplay muted width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Original Video</div>
+        <video id="localVideo" playsinline autoplay muted width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Local (filtered) Video</div>
+        <video id="remoteVideo" playsinline autoplay width="640" height="360"></video>
+        <div style="width: 100%; text-align: center">Remote Video</div>
     </div>
 
 </div>

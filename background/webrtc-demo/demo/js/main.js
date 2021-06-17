@@ -14,12 +14,8 @@ const localVideo = document.querySelector('video#localVideo');
 const callButton = document.querySelector('button#callButton');
 const bandwidthSelector = document.querySelector('select#bandwidth');
 const sourceSelector = document.querySelector('select#source');
-const resolutionSelector = document.querySelector('select#resolution');
 const codecSelector = document.querySelector('select#codec');
-const upscaleToggle = document.getElementById("upscale");
-const upscaledContainer=  document.getElementById("upscaled-container");
-const feedContainer = document.getElementById("feeds-container");
-
+const originalVideo = document.querySelector('video#originalVideo');
 
 
 
@@ -91,9 +87,8 @@ async function gotStream(stream) {
 
 
 
-  localVideo.srcObject = localStream;
-
-  const tracks = localStream.getTracks();
+  originalVideo.srcObject = localStream;
+  localVideo.srcObject = filteredStream;
 
   filteredStream.getTracks().forEach(function (track){
     pc1.addTrack(track, filteredStream);

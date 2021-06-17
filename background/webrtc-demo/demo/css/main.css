@@ -18,9 +18,7 @@ button {
   width: 96px;
 }
 
-video#localVideo {
-  margin: 0 20px 20px 0;
-}
+
 
 div.label {
   display: inline-block;
@@ -28,11 +26,6 @@ div.label {
   width: 120px;
 }
 
-div.graph-container {
-  float: left;
-  margin: 0.5em;
-  width: calc(50% - 1em);
-}
 
 a#viewSource {
   clear: both;
