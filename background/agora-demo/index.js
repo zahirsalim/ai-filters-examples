@@ -74,7 +74,7 @@ async function join() {
 
   const mediaStream = new MediaStream([localTracks.videoTrack._mediaStreamTrack]);
 
-  const filter = new BackgroundFilter(mediaStream, {token: options.vectorlyToken, serverType: "staging"});
+  const filter = new BackgroundFilter(mediaStream, {token: options.vectorlyToken});
 
   const filteredStream = await filter.getOutput();
 

@@ -21,7 +21,7 @@ async function initializeSession() {
     // Create a publisher
 
     const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: '<your-token>', serverType: 'staging'});
+    const filter = new BackgroundFilter(stream, {token: '<your-token>'});
     const filteredStream = await filter.getOutput();
 
 
