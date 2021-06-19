@@ -127,7 +127,7 @@ export default function App() {
 
           const inputStream = new MediaStream([sourceVideoTrack]);
 
-          const filter = new vectorly.BackgroundFilter(inputStream, {token: 'your-vectorly-token', background: 'blur'});
+          const filter = new vectorly.BackgroundFilter(inputStream, {token: 'your-vectorly-token', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
 
           filter.getOutput().then(function(filteredTrack ){
 

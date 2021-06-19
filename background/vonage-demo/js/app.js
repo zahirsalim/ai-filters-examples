@@ -21,7 +21,7 @@ async function initializeSession() {
     // Create a publisher
 
     const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: '<your-token>'});
+    const filter = new BackgroundFilter(stream, {token: '<your-token>', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
     const filteredStream = await filter.getOutput();
 
 
