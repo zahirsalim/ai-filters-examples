@@ -24,28 +24,33 @@ In our app, when a user clicks to start a call, the app will create a [meeting r
 4. Add the Daily room URL you created to line 31 of `api.js`, and follow the comment's instructions.
 
 
-## Integrating Vectorly AI Upscaling
+## Integrating Vectorly's Background filters
 
-You'll need to make 2 main changes to enable Vectorly's AI upscaling to work on a general video conferencing application like Daily.co.
+You'll need to use the Daily.co API's `callObject`, specifically the callObject's `setIputDevice` method, in order to send a custom video source from the local sender.
 
-1. Adjust the video encoder settings to send downscaled video content from the user's device (Line 121 in src/components/App/App.js
+
+You do this by intercepting the local participant's current video track, filtering it with Vectorly's background filter, and then sending the filtered video stream as the source video for the local participant.
+
+The relevant code block in this repo is located in Line 126 of src/components/App/App.js
+
+
 
 ```
- case 'joined-meeting':
-      window.callobj.setBandwidth({trackConstraints: {width: 320, height: 240}})
-      setAppState(STATE_JOINED);
-      break;
+          const sourceVideoTrack = callObject._participants.local.videoTrack;
+
+          const inputStream = new MediaStream([sourceVideoTrack]);
+
+          const filter = new vectorly.BackgroundFilter(inputStream, {token: 'your-vectorly-token', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
+
+          filter.getOutput().then(function(filteredTrack ){
+
+            callObject.setInputDevicesAsync({
+              videoSource: filteredTrack.getVideoTracks()[0],
+            });
+
+          });
  ```
 
- 2. Initialize the Upscaler object, and feed it the video tag of the main output view window (Line 77 in src/components/Tile/Tile.js)
-
-```
-    if (videoEl.current && props.isLarge) {
-      window.upscalers = window.upscalers || {}
-      window.upscalers[videoTrack.id] = new Upscaler(videoEl.current, {id: videoTrack.id});
-    }
-```
 
 
-With those two changes, you should be able to see Vectorly's technology working to upscale video content.
-
+With those two changes, you should be able to see the background filter enabled for the local participant's video feed
