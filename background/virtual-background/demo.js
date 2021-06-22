@@ -113,7 +113,7 @@ function updateFPS(){
   //return
   try {
     setInterval(() => {
-      if (window.bgFilter && window.bgFilter.processor.metrics && window.bgFilter.processor.metrics.fps) {
+      if (window.bgFilter && window.bgFilter.processor && window.bgFilter.processor.metrics && window.bgFilter.processor.metrics.fps) {
         let fps = window.bgFilter.processor.metrics.fps;
         document.getElementById('fps').innerHTML = 'FPS: '+fps;
       } else {
@@ -144,7 +144,14 @@ async function changeInputStream(video_id) {
 
     let sample_video = document.getElementById(video_id)
 
-    let inputStream = sample_video.captureStream()
+    let inputStream
+    if (sample_video.captureStream) {
+      inputStream = sample_video.captureStream()
+    } else if (sample_video.mozCaptureStream) {
+      inputStream = sample_video.mozCaptureStream()
+    } else {
+      inputStream = null
+    }
     window.mediaStream = inputStream;
 
     let default_video = document.getElementById('video');
@@ -154,8 +161,15 @@ async function changeInputStream(video_id) {
     if (setBackground) {
       // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
       sample_video.play()
-      default_video.srcObject = window.mediaStream.clone();
-      window.bgFilter.changeInput(inputStream);
+      if (inputStream) {
+        default_video.srcObject = inputStream
+        window.bgFilter.changeInput(inputStream);
+      } else {
+        default_video.setAttribute('src', sample_video.src)
+        default_video.load()
+        default_video.play()
+        window.bgFilter.changeInput(sample_video);
+      }
     }
 
     updateFPS();
