@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a demo of how to use Vectorly's Background SDK with Twilio Video's web API. The repository is built on top of the Twilio [javascript quickstar](https://github.com/twilio/video-quickstart-js/)
+This is a demo of how to use Vectorly's Background SDK with Twilio Video's web API. The repository is built on top of the Twilio [javascript quickstart](https://github.com/twilio/video-quickstart-js/)
 
 ## Setup Requirements
 
