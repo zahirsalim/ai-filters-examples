@@ -2,7 +2,24 @@
 
 Demo repository to show how to load Vectorly's AI filters through NPM
 
-Start by installing using npm/yarn
+### Setup
+
+
+**Environment**
+
+Start by installing dependencies using yarn or npm
+
+```
+yarn
+```
+OR
+
+```
+npm install
+```
+**Package**
+
+You can also install the latest version of the filters
 
 ```
 yarn add @vectorly-io/ai-filters
@@ -13,13 +30,10 @@ OR
 npm install --save @vectorly-io/ai-filters
 ```
 
+**Vectorly Token**
 
-Get a token from https://ai-filters.vectorly.io to use the library
+Get your token from https://ai-filters.vectorly.io, and keep it handy
 
-Follow the docs at https://vectorly.io/docs
-
-## Test Vectorly background filter
-
-`yarn demo` will compile and output the bundle to `demo/background/` folder
+### Testing
 
 You can run live dev server using `yarn demo:serve --port 9000` and open `http://localhost:9000/?token=<your-token>`
