@@ -214,6 +214,13 @@ window.onload = (event) => {
       setTimeout(() => {
       // changeInputStream('bg-video-4');
       // streamWebcam()
+
+        for(var i=0; i < 4; i++){
+          var video = document.getElementById('bg-video-' + (i+1));
+          if(!(video.captureStream || video.mozCaptureStream))  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+        }
+
+
     }, 1000);
   } catch (error) {
     console.log('ERROR in background load', err)
