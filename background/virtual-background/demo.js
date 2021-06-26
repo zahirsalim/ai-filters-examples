@@ -51,11 +51,15 @@ async function streamWebcam() {
 async function enablebackground(type, image) {
   setBackground = true;
   const processed = document.getElementById('demo');
+  let background;
+
+  if(type) background = (type === 'blur') ? type : image;
+
   const params = {
     debug: false,
     analyticsEnabled: true,
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    background: {'type': type || 'blur', 'image': image}
+    background: background
   }
   if (window.bgFilter) {
     window.bgFilter.enable()
