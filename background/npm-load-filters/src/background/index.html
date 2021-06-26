@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Virtual Background API demo</title>
+
+        <style>
+            canvas {
+                border-width: 2px;
+                border-color: black;
+                border-style: solid;
+                margin: 20px auto;
+                display: block;
+            }
+
+            video {
+                border-width: 2px;
+                border-color: black;
+                border-style: solid;
+                margin: 20px auto;
+                display: block;
+            }
+
+            button {
+                background-color: #555555;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                width: 200px;
+                text-align: center;
+                display: block;
+                font-size: 14px;
+                margin: auto;
+                margin-left: 2px;
+            }
+
+            h1, h3{
+                text-align: center;
+                width: 100%;
+                font-family: sans-serif;
+                margin: 20px auto;
+            }
+
+            div#buttons {
+              margin: auto;
+              max-width: 50%;
+              display: flex;
+              padding-top: 5px;
+            }
+
+            #container {
+              text-align: center;
+            }
+
+        </style>
+
+
+    </head>
+
+
+    <body>
+        <div id="container">
+        <h1>Vectorly Virtual Background API demo</h1>
+        <h3>Source video</h3>
+        <!-- Stream video via webcam -->
+        <div id="buttons">
+          <button id="qvga">QVGA</button>
+          <button id="vga">VGA</button>
+          <button id="hd">HD</button>
+          <button id="full-hd">Full HD</button>
+          <!--
+          <button id="televisionFourK">Television 4K (3840x2160)</button>
+          <button id="cinemaFourK">Cinema 4K (4096x2160)</button>
+          <button id="eightK">8K</button>
+          -->
+        </div>
+        <p id="dimensions"></p>
+
+
+        <video id="video" playsinline autoplay></video>
+
+        <div id="buttons" style="max-width: 25%">
+        <button id="cam-button" onclick="playPause()">Play</button>
+        <button id="bg-button" onclick="enablebackground()">Turn Virtual Background: ON</button>
+        </div>
+        <div id="buttons">
+        <button id="blur-bg" onclick="blurbackground()">Blur Background</button>
+        <button id="virtual-bg" onclick="virtualbackground()">Virtual Background</button>
+        <button id="update-virtual-bg" onclick="updatevirtualbackground()">Update Background Image</button>
+        </div>
+        <div id="container"></div>
+        <h3>Destination video</h3>
+        <video id="demo" playsinline autoplay></video>
+        </div>
+    </body>
+
+</html>
