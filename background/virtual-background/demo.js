@@ -152,6 +152,7 @@ async function changeInputStream(video_id) {
     if (sample_video.captureStream) {
       inputStream = sample_video.captureStream()
     } else if (sample_video.mozCaptureStream) {
+      sample_video.play()  // The video needs to play before the inputStream is readable?
       inputStream = sample_video.mozCaptureStream()
     } else {
       inputStream = null
