@@ -21,23 +21,6 @@ async function initializeWebcam(){
   video.srcObject  = window.mediaStream;
 }
 
-/*
-async function initializeWebcam(){
-    console.log('Initializing initializeWebcam', window.mediaStream)
-    window.mediaStream = null;
-    if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
-      var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
-      // {width: 640, height: 360}})
-      window.mediaStream = webcamStream;
-    }
-    document.getElementById(old_id) && document.getElementById(old_id).pause()
-    const video = document.getElementById('video');
-    old_id = 'video'
-    video.srcObject  = window.mediaStream;
-    video.play()
-    window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
-}
-*/
 
 async function streamWebcam() {
   try{
@@ -201,29 +184,6 @@ async function changeInputStream(video_id) {
     console.log('ERROR in enablebackground', error)
   }
 
-  // if (!setBackground && window.bgFilter === undefined) {
-  //   try {
-  //     setBackground = true;
-  //     const processed = document.getElementById('demo');
-  //     const params = {
-  //       debug: true,
-  //       token: getUrlParams('token'),
-  //       serverType: 'staging',
-  //     }
-  //     const bgFilter = new vectorly.BackgroundFilter(inputStream, params);
-  //     window.bgFilter = bgFilter
-  //     virtualBg = true;
-  //     const outputStream = await bgFilter.getOutput()
-  //     console.log('OutputStream', outputStream)
-  //     processed.srcObject = outputStream
-  //     updateFPS();
-  //   } catch (err) {
-  //     console.log('ERROR in enablebackground', err)
-  //   }
-  // } else {
-  //     window.bgFilter.changeInput(inputStream);
-  //     updateFPS();
-  // }
 }
 
 
@@ -237,8 +197,6 @@ window.onload = (event) => {
   console.log(`event`, event)
     try {
       setTimeout(() => {
-      // changeInputStream('bg-video-4');
-      // streamWebcam()
 
         let isSafari = false;
 
