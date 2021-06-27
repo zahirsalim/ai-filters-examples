@@ -1736,7 +1736,7 @@ label[data-shrink=false]+.MuiInputBase-formControl .MuiInputBase-input:focus::-m
     flex-direction: column;
 }
 
-<style type="text/css">@font-face {
+@font-face {
     font-weight: 400;
     font-style: normal;
     font-family: 'Circular-Loom';

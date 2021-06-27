@@ -45,17 +45,6 @@ const offerOptions = {
 };
 
 
-let codecPreferences = [];
-
-
-const codecs= {};
-
-RTCRtpSender.getCapabilities("video").codecs.forEach(function (codec) {
-    codecs[codec.mimeType] = codec;
-});
-
-
-
 
 
 
@@ -120,11 +109,6 @@ function call() {
   pc1 = new RTCPeerConnection(servers);
 
     const rtpTransceiver = pc1.addTransceiver("video");
-
-    if (rtpTransceiver.setCodecPreferences) {
-      rtpTransceiver.setCodecPreferences(codecPreferences);
-    }
-
 
   console.log('Created local peer connection object pc1');
   pc1.onicecandidate = onIceCandidate.bind(pc1);
