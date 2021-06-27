@@ -57,7 +57,7 @@ async function gotStream(stream) {
   try {
 
     const BackgroundFilter = vectorly.BackgroundFilter;
-    const filter = new BackgroundFilter(stream, {token:  getUrlParams("token"), background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
+    const filter = new BackgroundFilter(stream, {token:  getUrlParams("token") || '0b5707c6-6642-4cc8-8570-b29af9e51345', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
     filteredStream=  await filter.getOutput();  //Video Stream Track
 
   } catch (e){
