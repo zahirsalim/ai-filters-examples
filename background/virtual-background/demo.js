@@ -1,6 +1,7 @@
 /* eslint-disable */
 let setBackground = false;
-let old_id = ""
+let old_id = "";
+let isSafari = false;
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
@@ -24,6 +25,10 @@ async function streamWebcam() {
     if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
       throw "webcam initialization failed"
     }
+
+    let loadingGif = document.getElementById('loading');
+    loadingGif.style.display = "block";
+
     if(old_id === 'video'){
       window.bgFilter &&  window.bgFilter.disable()
       await stopWebcam()
@@ -33,6 +38,8 @@ async function streamWebcam() {
       await enablebackground()
       updateFPS();
     }
+
+    loadingGif.style.display = "none";
   } catch (e) {
     alert("webcam initialization failed")
   }
@@ -126,11 +133,16 @@ function updateFPS(){
 
 async function changeInputStream(video_id) {
 
+  let loadingGif = document.getElementById('loading');
+  loadingGif.style.display = "block";
+
   try {
     if(old_id === 'video'){
       await stopWebcam()
     }
     window.bgFilter && window.bgFilter.enable()
+
+
 
     document.getElementById(old_id) && document.getElementById(old_id).pause()
     if(old_id===video_id){
@@ -169,22 +181,25 @@ async function changeInputStream(video_id) {
 
     if (setBackground) {
       // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
-      sample_video.play()
+      await sample_video.play()
 
       if (inputStream instanceof MediaStream) {
-        window.bgFilter.changeInput(inputStream);
+       await window.bgFilter.changeInput(inputStream);
       } else {
-        default_video.play();
-        window.bgFilter.changeInput(sample_video);
+       await default_video.play();
+       await window.bgFilter.changeInput(sample_video);
         document.getElementById('safari-click-enable').style.display = "none";
       }
     }
 
     updateFPS();
 
+
   } catch (error) {
     console.log('ERROR in enablebackground', error)
   }
+
+  loadingGif.style.display = "none";
 
 }
 
@@ -200,7 +215,7 @@ window.onload = (event) => {
     try {
       setTimeout(() => {
 
-        let isSafari = false;
+
 
         for(var i=0; i < 4; i++){
           var video = document.getElementById('bg-video-' + (i+1));
