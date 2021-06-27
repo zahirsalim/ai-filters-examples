@@ -12,7 +12,17 @@ function getUrlParams(prop) {
 async function initializeWebcam(){
   console.log('Initializing initializeWebcam', window.mediaStream)
 
-  window.mediaStream =  await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
+  if(isSafari){
+
+    if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
+      var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
+      // {width: 640, height: 360}})
+      window.mediaStream = webcamStream;
+    }
+
+  } else {
+    window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
+  }
 
   const video = document.getElementById('video');
   window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
