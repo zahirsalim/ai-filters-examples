@@ -170,7 +170,7 @@ async function changeInputStream(video_id) {
       sample_video.play()  // The video needs to play before the inputStream is readable?
       inputStream = sample_video.mozCaptureStream()
     } else {
-      inputStream = sample_video
+      inputStream = sample_video;
     }
     window.mediaStream = inputStream;
 
@@ -181,14 +181,17 @@ async function changeInputStream(video_id) {
     if (setBackground) {
       // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
       sample_video.play()
-      if (inputStream) {
+
+
+      if (inputStream instanceof MediaStream) {
         default_video.srcObject = inputStream
         window.bgFilter.changeInput(inputStream);
       } else {
-        default_video.setAttribute('src', sample_video.src)
+        default_video.setAttribute('src', sample_video.currentSrc);
         default_video.load()
         default_video.play()
         window.bgFilter.changeInput(sample_video);
+        document.getElementById('safari-click-enable').style.display = "none";
       }
     }
 
@@ -223,27 +226,6 @@ async function changeInputStream(video_id) {
   // }
 }
 
-window.onload = (event) => {
-  console.log(`event`, event)
-  try {
-    setTimeout(() => {
-      // changeInputStream('bg-video-4');
-      // streamWebcam()
-
-      for(var i=0; i < 4; i++){
-        var video = document.getElementById('bg-video-' + (i+1));
-        if(!(video.captureStream || video.mozCaptureStream))  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
-      }
-
-
-    }, 1000);
-  } catch (error) {
-    console.log('ERROR in background load', err)
-  }
-};
-
-
-
 
 
 async function safariClickEnableStream(){
@@ -263,7 +245,7 @@ window.onload = (event) => {
         for(var i=0; i < 4; i++){
           var video = document.getElementById('bg-video-' + (i+1));
           if(!(video.captureStream || video.mozCaptureStream))  {
-          //  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+            document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
             isSafari = true;
           }
 
