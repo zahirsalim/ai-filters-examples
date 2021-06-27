@@ -8,7 +8,7 @@
     <meta name="description" content="Virtual backgrounds demo">
     <script src="./demo.js"> </script>
     <title>Virtual Backgrounds Demo</title>
-    <script src="https://cdn.vectorly.io/ai-filters/v1/1.0.0-beta.3/vectorly.BackgroundFilter.js"> </script>
+    <script src="https://cdn.vectorly.io/ai-filters/v1/1.0.0-beta.5/vectorly.BackgroundFilter.js"> </script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
     <meta http-equiv="origin-trial" content="AhOw5Z7s5Lk3pDD5hRHWZ+uUbOAvnzl5pN89NxkF6ky8CUHHfoZt55Gu6nABIjScpxLm3aqGZOYKLCyrs0T5AgkAAABaeyJvcmlnaW4iOiJodHRwczovL2ZpbGVzLnZlY3Rvcmx5LmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBc3NlbWJseVNpbWQiLCJleHBpcnkiOjE2NDk4MDc5OTl9">
@@ -34,6 +34,11 @@
                     <video class="jss7" id="demo" playsinline autoplay></video>
                     <canvas class="jss31" width="1280" height="853"></canvas>
                     <span class="MuiTypography-root jss32 MuiTypography-caption" id="fps"></span>
+                    <svg class="MuiSvgIcon-root jss14" id="safari-click-enable" height="128" width="128" focusable="false" viewBox="0 0 24 24" style="left: 50%; top: 50%; transform: scale(2.0) translate(-50%, -50%);  display: none; cursor: pointer;" onclick="safariClickEnableStream()"   aria-hidden="true">
+                        <path
+                                d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
+                        </path>
+                    </svg>
                 </div>
             </div>
             <div class="MuiPaper-root MuiCard-root jss8 MuiPaper-elevation1 MuiPaper-rounded">
@@ -72,9 +77,13 @@
                         </span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>-->
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="changeInputStream('bg-video-1')">
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-1" tabindex="0" type="button" onclick="changeInputStream('bg-video-1')">
                         <span class="MuiButton-label">
-                            <video id="bg-video-1" class="jss12 jss13" src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_1_360p.mp4" alt="" crossorigin="anonymous"></video>
+                            <video id="bg-video-1" class="jss12 jss13"alt="" crossorigin="anonymous">
+                                <source  src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_1_360p.mp4" >
+                                <source  src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_1_360p.webm" >
+                                <source src="https://stream.mux.com/nMXFJZWfrxx00cuGGYklqBTPACEaJEQsU.m3u8">
+                            </video>
                             <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
@@ -83,9 +92,13 @@
                         </span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="changeInputStream('bg-video-2')">
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-2"  tabindex="0" type="button" onclick="changeInputStream('bg-video-2')">
                         <span class="MuiButton-label">
-                            <video id="bg-video-2" class="jss12 jss13" src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_2_360p.mp4" alt="" crossorigin="anonymous"></video>
+                            <video id="bg-video-2" class="jss12 jss13"  alt="" crossorigin="anonymous">
+                                <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_2_360p.mp4">
+                               <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_2_360p.webm">
+                                <source src="https://stream.mux.com/hyuLj54sQZJMG2MUrW7YOl9hNdu3RXHK.m3u8">
+                            </video>
                             <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
@@ -94,9 +107,13 @@
                         </span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="changeInputStream('bg-video-3')">
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0"  id="tab-video-3"  type="button" onclick="changeInputStream('bg-video-3')">
                         <span class="MuiButton-label">
-                            <video id="bg-video-3" class="jss12 jss13" src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_3_360p.mp4" alt="" preload="metadata" crossorigin="anonymous"></video>
+                            <video id="bg-video-3" class="jss12 jss13" alt="" preload="metadata" crossorigin="anonymous">
+                                <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_3_360p.mp4">
+                               <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_3_360p.webm">
+                                <source src="https://stream.mux.com/VFQb98VGLkjbEkpuBe00e7SBENoxiHo7y.m3u8">
+                            </video>
                             <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
@@ -105,9 +122,12 @@
                         </span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="changeInputStream('bg-video-4')">
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-4"  tabindex="0" type="button" onclick="changeInputStream('bg-video-4')">
                         <span class="MuiButton-label">
-                            <video id="bg-video-4" class="jss12 jss13" src="https://files.vectorly.io/demo/videocall/videocall-360p.mp4" alt="" preload="metadata" crossorigin="anonymous"></video>
+                            <video id="bg-video-4" class="jss12 jss13"  alt="" preload="metadata" crossorigin="anonymous">
+                                <source src="https://files.vectorly.io/demo/videocall/videocall-360p.mp4">
+                                <source src="https://stream.mux.com/HF7tyyvQdNyS00zHWQ00CxFTpHbhiZF300r.m3u8">
+                            </video>
                             <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                                 <path
                                     d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
