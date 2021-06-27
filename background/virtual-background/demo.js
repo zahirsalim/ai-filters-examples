@@ -170,7 +170,7 @@ async function changeInputStream(video_id) {
       sample_video.play()  // The video needs to play before the inputStream is readable?
       inputStream = sample_video.mozCaptureStream()
     } else {
-      inputStream = null
+      inputStream = sample_video
     }
     window.mediaStream = inputStream;
 
@@ -263,14 +263,13 @@ window.onload = (event) => {
         for(var i=0; i < 4; i++){
           var video = document.getElementById('bg-video-' + (i+1));
           if(!(video.captureStream || video.mozCaptureStream))  {
-            document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+          //  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
             isSafari = true;
           }
 
         }
 
         if(isSafari) {
-          streamWebcam();
           document.getElementById('safari-click-enable').style.display = "block";
         }
 
