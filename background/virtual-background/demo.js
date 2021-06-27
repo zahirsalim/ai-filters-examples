@@ -159,20 +159,25 @@ async function changeInputStream(video_id) {
 
     let default_video = document.getElementById('video');
 
+    if (inputStream instanceof MediaStream) {
+      default_video.srcObject = inputStream
+    } else {
+      default_video.setAttribute('src', sample_video.currentSrc);
+      default_video.load();
+      await default_video.play();
+      default_video.pause();
+    }
+
     if(!setBackground) await enablebackground();
 
     if (setBackground) {
       // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
       sample_video.play()
 
-
       if (inputStream instanceof MediaStream) {
-        default_video.srcObject = inputStream
         window.bgFilter.changeInput(inputStream);
       } else {
-        default_video.setAttribute('src', sample_video.currentSrc);
-        default_video.load()
-        default_video.play()
+        default_video.play();
         window.bgFilter.changeInput(sample_video);
         document.getElementById('safari-click-enable').style.display = "none";
       }
@@ -203,7 +208,7 @@ window.onload = (event) => {
         for(var i=0; i < 4; i++){
           var video = document.getElementById('bg-video-' + (i+1));
           if(!(video.captureStream || video.mozCaptureStream))  {
-            document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+           // document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
             isSafari = true;
           }
 
