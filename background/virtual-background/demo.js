@@ -1,7 +1,7 @@
 /* eslint-disable */
 let setBackground = false;
 let old_id = "";
-let isSafari = false;
+let isSafari = false; //Because Safari is a garbage browser
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
@@ -88,6 +88,8 @@ async function enablebackground(type, image) {
       console.log('ERROR in enablebackground', err)
     }
   }
+
+  if(isSafari) document.getElementById('sources').style.visibility = "hidden";
 }
 
 async function disablebackground(){
