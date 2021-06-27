@@ -16,11 +16,12 @@ var options = {
 
 // the demo can auto join channel with params in url
 $(() => {
+
   var urlParams = new URL(location.href).searchParams;
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
-  options.vectorlyToken = urlParams.get("vectorlyToken");
+  options.vectorlyToken = document.getElementById("vectorly-token").value;
   if (options.appid && options.channel) {
     $("#appid").val(options.appid);
     $("#token").val(options.token);
@@ -74,7 +75,7 @@ async function join() {
 
   const mediaStream = new MediaStream([localTracks.videoTrack._mediaStreamTrack]);
 
-  const filter = new BackgroundFilter(mediaStream, {token: options.vectorlyToken});
+  const filter = new BackgroundFilter(mediaStream, {token: document.getElementById("vectorly-token").value});
 
   const filteredStream = await filter.getOutput();
 
