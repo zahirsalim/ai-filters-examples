@@ -1,4 +1,4 @@
- /* eslint-disable */
+/* eslint-disable */
 let setBackground = false;
 let old_id = ""
 
@@ -7,6 +7,21 @@ function getUrlParams(prop) {
   return window.searchParams.get(prop)
 }
 
+
+async function initializeWebcam(){
+  console.log('Initializing initializeWebcam', window.mediaStream)
+  if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
+    var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
+    // {width: 640, height: 360}})
+
+    window.mediaStream = webcamStream;
+  }
+  const video = document.getElementById('video');
+  window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+  video.srcObject  = window.mediaStream;
+}
+
+/*
 async function initializeWebcam(){
     console.log('Initializing initializeWebcam', window.mediaStream)
     window.mediaStream = null;
@@ -22,30 +37,30 @@ async function initializeWebcam(){
     video.play()
     window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
 }
-
+*/
 
 async function streamWebcam() {
   try{
-      if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
-          throw "webcam initialization failed"
-      }
-      if(old_id === 'video'){
-        window.bgFilter &&  window.bgFilter.disable()
-        await stopWebcam()
-        old_id=''
-      }else{
-        await initializeWebcam();
-        await enablebackground()
-        updateFPS();
-      }
-    } catch (e) {
-      alert("webcam initialization failed")
+    if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
+      throw "webcam initialization failed"
     }
+    if(old_id === 'video'){
+      window.bgFilter &&  window.bgFilter.disable()
+      await stopWebcam()
+      old_id=''
+    }else{
+      await initializeWebcam();
+      await enablebackground()
+      updateFPS();
+    }
+  } catch (e) {
+    alert("webcam initialization failed")
   }
+}
 
-  async function stopWebcam(){
-    window.mediaStream.getTracks()[0].stop()
-    window.bgFilter && window.bgFilter.stop()
+async function stopWebcam(){
+  window.mediaStream.getTracks()[0].stop()
+  window.bgFilter && window.bgFilter.stop()
 }
 
 async function enablebackground(type, image) {
@@ -82,9 +97,9 @@ async function disablebackground(){
   setBackground = false;
   const processed = document.getElementById('demo');
   if (window.bgFilter) {
-      window.bgFilter.disable()
-      processed.srcObject = await window.bgFilter.getOutput()
-    }
+    window.bgFilter.disable()
+    processed.srcObject = await window.bgFilter.getOutput()
+  }
 }
 
 function blurbackground(){
@@ -180,7 +195,7 @@ async function changeInputStream(video_id) {
     updateFPS();
 
   } catch (error) {
-      console.log('ERROR in enablebackground', error)
+    console.log('ERROR in enablebackground', error)
   }
 
   // if (!setBackground && window.bgFilter === undefined) {
@@ -210,18 +225,56 @@ async function changeInputStream(video_id) {
 
 window.onload = (event) => {
   console.log(`event`, event)
+  try {
+    setTimeout(() => {
+      // changeInputStream('bg-video-4');
+      // streamWebcam()
+
+      for(var i=0; i < 4; i++){
+        var video = document.getElementById('bg-video-' + (i+1));
+        if(!(video.captureStream || video.mozCaptureStream))  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+      }
+
+
+    }, 1000);
+  } catch (error) {
+    console.log('ERROR in background load', err)
+  }
+};
+
+
+
+
+
+async function safariClickEnableStream(){
+  document.getElementById('safari-click-enable').style.display = "none";
+  streamWebcam();
+}
+
+window.onload = (event) => {
+  console.log(`event`, event)
     try {
       setTimeout(() => {
       // changeInputStream('bg-video-4');
       // streamWebcam()
 
+        let isSafari = false;
+
         for(var i=0; i < 4; i++){
           var video = document.getElementById('bg-video-' + (i+1));
-          if(!(video.captureStream || video.mozCaptureStream))  document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+          if(!(video.captureStream || video.mozCaptureStream))  {
+            document.getElementById('tab-video-' + (i+1)).style.visibility = "hidden";
+            isSafari = true;
+          }
+
         }
 
+        if(isSafari) {
+          streamWebcam();
+          document.getElementById('safari-click-enable').style.display = "block";
+        }
 
-    }, 1000);
+    }, 200);
   } catch (error) {
     console.log('ERROR in background load', err)
   }
