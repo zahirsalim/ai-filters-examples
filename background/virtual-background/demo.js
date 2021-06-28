@@ -2,7 +2,7 @@
 let setBackground = false;
 let old_id = "";
 let isSafari = false; //Because Safari is a garbage browser
-
+let usingWebcam = false
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
   return window.searchParams.get(prop)
@@ -24,10 +24,11 @@ async function initializeWebcam(){
     window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
   }
 
-  const video = document.getElementById('video');
   if(old_id != ''){
     document.getElementById(old_id) && document.getElementById(old_id).pause()
   }
+
+  const video = document.getElementById('video');
   window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
   video.srcObject  = window.mediaStream;
 }
@@ -47,6 +48,7 @@ async function streamWebcam() {
       await stopWebcam()
       old_id=''
     }else{
+      usingWebcam = true
       await initializeWebcam();
       await enablebackground()
       updateFPS();
@@ -59,6 +61,7 @@ async function streamWebcam() {
 }
 
 async function stopWebcam(){
+  usingWebcam = false;
   window.mediaStream.getTracks()[0].stop()
   window.bgFilter && window.bgFilter.stop()
 }
@@ -153,13 +156,14 @@ async function changeInputStream(video_id) {
 
   try {
     console.log(video_id, old_id)
-    if(old_id === 'video'){
+    if(usingWebcam){
       await stopWebcam()
     }
     window.bgFilter && window.bgFilter.enable()
 
     if(old_id != ''){
       document.getElementById(old_id) && document.getElementById(old_id).pause()
+ 
     }
     // if(old_id===video_id){
     //   window.bgFilter &&  window.bgFilter.disable()
