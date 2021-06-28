@@ -1,8 +1,8 @@
 /* eslint-disable */
 let setBackground = false;
 let old_id = "";
-let isSafari = false; //Because Safari is a garbage browser
-let usingWebcam = false
+let isSafari = false;
+
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
   return window.searchParams.get(prop)
@@ -22,10 +22,6 @@ async function initializeWebcam(){
 
   } else {
     window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
-  }
-
-  if(old_id != ''){
-    document.getElementById(old_id) && document.getElementById(old_id).pause()
   }
 
   const video = document.getElementById('video');
@@ -48,7 +44,6 @@ async function streamWebcam() {
       await stopWebcam()
       old_id=''
     }else{
-      usingWebcam = true
       await initializeWebcam();
       await enablebackground()
       updateFPS();
@@ -61,7 +56,6 @@ async function streamWebcam() {
 }
 
 async function stopWebcam(){
-  usingWebcam = false;
   window.mediaStream.getTracks()[0].stop()
   window.bgFilter && window.bgFilter.stop()
 }
@@ -155,21 +149,19 @@ async function changeInputStream(video_id) {
   loadingGif.style.display = "block";
 
   try {
-    console.log(video_id, old_id)
-    if(usingWebcam){
+    if(old_id === 'video'){
       await stopWebcam()
     }
     window.bgFilter && window.bgFilter.enable()
 
-    if(old_id != ''){
-      document.getElementById(old_id) && document.getElementById(old_id).pause()
- 
+
+
+    document.getElementById(old_id) && document.getElementById(old_id).pause()
+    if(old_id===video_id){
+      window.bgFilter &&  window.bgFilter.disable()
+      old_id=''
+      return
     }
-    // if(old_id===video_id){
-    //   window.bgFilter &&  window.bgFilter.disable()
-    //   old_id=''
-    //   return
-    // }
     old_id = video_id
 
 
@@ -187,7 +179,6 @@ async function changeInputStream(video_id) {
     window.mediaStream = inputStream;
 
     let default_video = document.getElementById('video');
-    await default_video.pause()
 
     if (inputStream instanceof MediaStream) {
       default_video.srcObject = inputStream
