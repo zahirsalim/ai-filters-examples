@@ -25,6 +25,9 @@ async function initializeWebcam(){
   }
 
   const video = document.getElementById('video');
+  if(old_id != ''){
+    document.getElementById(old_id) && document.getElementById(old_id).pause()
+  }
   window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
   video.srcObject  = window.mediaStream;
 }
@@ -149,19 +152,20 @@ async function changeInputStream(video_id) {
   loadingGif.style.display = "block";
 
   try {
+    console.log(video_id, old_id)
     if(old_id === 'video'){
       await stopWebcam()
     }
     window.bgFilter && window.bgFilter.enable()
 
-
-
-    document.getElementById(old_id) && document.getElementById(old_id).pause()
-    if(old_id===video_id){
-      window.bgFilter &&  window.bgFilter.disable()
-      old_id=''
-      return
+    if(old_id != ''){
+      document.getElementById(old_id) && document.getElementById(old_id).pause()
     }
+    // if(old_id===video_id){
+    //   window.bgFilter &&  window.bgFilter.disable()
+    //   old_id=''
+    //   return
+    // }
     old_id = video_id
 
 
@@ -179,6 +183,7 @@ async function changeInputStream(video_id) {
     window.mediaStream = inputStream;
 
     let default_video = document.getElementById('video');
+    await default_video.pause()
 
     if (inputStream instanceof MediaStream) {
       default_video.srcObject = inputStream
