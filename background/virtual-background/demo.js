@@ -1,7 +1,7 @@
 /* eslint-disable */
 let setBackground = false;
 let old_id = "";
-let isSafari = false; //Because Safari is a garbage browser
+let isSafari = false;
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
