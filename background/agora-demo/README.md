@@ -19,7 +19,7 @@ This repo is based on the 4.x demo app for Agora
 2. Run npm install
 3. Run npm start
 
-It will open up a browser on port 8080, and it should load a test page where you can see your local video stream.
+It will open up a browser on port 3000, and it should load a test page where you can see your local video stream.
 
 
 ## Integrating Vectorly's Background filters
