@@ -21,7 +21,11 @@ $(() => {
   options.appid = urlParams.get("appid");
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
-  options.vectorlyToken = document.getElementById("vectorly-token").value;
+  options.vectorlyToken = urlParams.get("vectorlyToken");
+
+  console.log("Options");
+  console.log(options);
+
   if (options.appid && options.channel) {
     $("#appid").val(options.appid);
     $("#token").val(options.token);
@@ -38,11 +42,12 @@ $("#join-form").submit(async function (e) {
     options.appid = $("#appid").val();
     options.token = $("#token").val();
     options.channel = $("#channel").val();
+    options.vectorlyToken = $("#vectorly-token").val();
     await join();
     if(options.token) {
       $("#success-alert-with-token").css("display", "block");
     } else {
-      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&token=${options.token}`);
+      $("#success-alert a").attr("href", `index.html?appid=${options.appid}&channel=${options.channel}&vectorlyToken=${options.vectorlyToken}&token=${options.token}`);
       $("#success-alert").css("display", "block");
     }
   } catch (error) {
