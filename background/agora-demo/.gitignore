@@ -2,7 +2,6 @@ browsers*
 .eslintcache
 firefox-*.tar.bz2
 package-lock.json
-package.json
 node_modules
 .DS_Store
 validation-report.json
