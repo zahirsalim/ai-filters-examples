@@ -15,9 +15,12 @@ This repo is based on the 4.x demo app for Agora
 ## Running locally
 
 
-1. Open `src/index.html` in your browser
-2. Insert your Vectorly token, Agora App ID and channel name
-3. Click 'Join' to joine the call
+1. Set Environment variables `AGORA_APP_ID` to your Agora App Id,  and `VECTORLY_TOKEN` to your Vectorly Token
+2. Run npm install
+3. Run npm start
+
+It will open up a browser on port 8080, and it should load a test page where you can see your local video stream.
+
 
 ## Integrating Vectorly's Background filters
 
