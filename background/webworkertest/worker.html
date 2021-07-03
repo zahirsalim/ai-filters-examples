@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="application/javascript">
+
+    var myWorker = new Worker('worker.js');
+
+    let count = 0;
+
+    myWorker.onmessage = function(e) {
+        count += 1;
+        console.log(count);
+    }
+
+
+    myWorker.postMessage(0);
+
+
+
+</script>
+
+
+</body>
+</html>

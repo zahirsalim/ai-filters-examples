@@ -69,7 +69,18 @@ Author: Ewa Gasperowicz (@devnook)
         </h1>
         <canvas id="canvas-worker" width="400" height="200"></canvas>
       </div>
+
+      <div>
+        <h1>
+          Canvas on worker
+        </h1>
+        <video id="offscreen-output" width="400" height="200" autoplay muted playsinline></video>
       </div>
+      </div>
+
+
+
+
     </section>
   </main>
 
@@ -83,6 +94,10 @@ Author: Ewa Gasperowicz (@devnook)
           if (!animationWorker) {
             importScripts(e.data.origin + '/animation.js');
             animationWorker = new Animation(e.data.canvas.getContext('2d'));
+
+               animationWorker.onImageData(function(bitmap){
+                  self.postMessage({bitmap}, [bitmap]);
+               });
           }
           animationWorker.start();
           break;
@@ -91,6 +106,8 @@ Author: Ewa Gasperowicz (@devnook)
           break;
       }
     };
+
+
   </script>
 
   <script>
@@ -113,20 +130,54 @@ Author: Ewa Gasperowicz (@devnook)
         })
       });
 
-      const canvas = document.querySelector('#case1');
-      const animationWindow = new Animation(document.querySelector('#canvas-window').getContext('2d'));
-      animationWindow.start();
+      const canvas = document.querySelector('#canvas-window');
+      const ctx = canvas.getContext('2d');
+    //  const animationWindow = new Animation(document.querySelector('#canvas-window').getContext('2d'));
+      //animationWindow.start();
+
+
+
 
       const workerCode = document.querySelector('#workerCode').textContent;
       const blob = new Blob([workerCode], { type: 'text/javascript' });
       const url = URL.createObjectURL(blob);
       const worker = new Worker(url);
 
-      const offscreen = document.querySelector('#canvas-worker').transferControlToOffscreen();
+      let offscreen = document.querySelector('#canvas-worker');
+
+
+
+      offscreen = offscreen.transferControlToOffscreen();
+
       const urlParts = location.href.split('/');
       if (urlParts[urlParts.length - 1].indexOf('.') !== -1) {
         urlParts.pop();
       }
+
+
+
+      console.log(canvas);
+      const stream = canvas.captureStream();
+     // const stream = document.querySelector('#canvas-window').captureStream();
+
+
+      const video  = document.getElementById('offscreen-output');
+
+      video.srcObject = stream;
+      console.log(video);
+      video.play();
+
+      worker.addEventListener('message', function (e){
+
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        const bitmap = e.data.bitmap;
+        ctx.drawImage(bitmap, 0, 0);
+
+
+
+      });
+
+
       worker.postMessage({ msg: 'start', origin: urlParts.join('/'), canvas: offscreen }, [offscreen]);
       URL.revokeObjectURL(url); // cleanup
     })();

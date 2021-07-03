@@ -38,6 +38,11 @@ class Animation {
     this.ctx.fill();
   };
 
+  onImageData(listener){
+
+    this.onImageDataListener = listener;
+  }
+
   animate() {
     if (!this.run) {
       return;
@@ -48,7 +53,18 @@ class Animation {
     };
     this.r = this.grow ? this.r + 1 : this.r - 1;
     this.drawCircle();
+
+    const animator  = this;
+    if(this.onImageDataListener){
+      createImageBitmap(this.ctx.canvas).then(function (bitmap){
+        animator.onImageDataListener(bitmap);
+      });
+
+    }
+
     requestAnimationFrame(this.boundAnimate);
+
+
   }
 
   stop() {
@@ -94,7 +110,7 @@ class ThemedAnimation extends Animation {
     this.ctx.fillStyle = color;
   }
 
-  animate() {
+  async animate() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     if (!this.run) {
       return;
@@ -117,6 +133,11 @@ class ThemedAnimation extends Animation {
     this.r = this.grow ? this.r + 1 : this.r - 1;
 
     this.drawCircle();
+
+
+
+
+
     requestAnimationFrame(this.boundAnimate);
   }
 }
