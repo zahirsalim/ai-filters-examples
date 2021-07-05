@@ -26,6 +26,7 @@ async function createRoom() {
   }),
     room = await response.json();
   return room;
+  */
 
 
   // Comment out the above and uncomment the below, using your own URL

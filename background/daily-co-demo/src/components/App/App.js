@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { BackgroundFilter } from '@vectorly-io/ai-filters';
 import Call from '../Call/Call';
 import StartButton from '../StartButton/StartButton';
 import api from '../../api';
@@ -16,7 +17,6 @@ const STATE_JOINED = 'STATE_JOINED';
 const STATE_LEAVING = 'STATE_LEAVING';
 const STATE_ERROR = 'STATE_ERROR';
 
-/* global vectorly */
 
 export default function App() {
   const [appState, setAppState] = useState(STATE_IDLE);
@@ -125,17 +125,26 @@ export default function App() {
 
           const sourceVideoTrack = callObject._participants.local.videoTrack;
 
-          const inputStream = new MediaStream([sourceVideoTrack]);
+          const inputStream = new MediaStream([sourceVideoTrack.clone()]);
 
-          const filter = new vectorly.BackgroundFilter(inputStream, {token: 'your-vectorly-token', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
-
-          filter.getOutput().then(function(filteredTrack ){
-
-            callObject.setInputDevicesAsync({
-              videoSource: filteredTrack.getVideoTracks()[0],
+          try{
+            const filter = new BackgroundFilter(inputStream, {
+              token: 'your-vectorly-token',
+              background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
             });
 
-          });
+            filter.getOutput().then(function(filteredTrack ){
+
+              callObject.setInputDevicesAsync({
+                videoSource: filteredTrack.getVideoTracks()[0],
+              });
+
+            });
+          } catch(e){
+            console.warn("There was an error loading the virtual background");
+            console.warn(e);
+          }
+
 
           break;
         case 'left-meeting':

@@ -31,16 +31,24 @@ You'll need to use the Daily.co API's `callObject`, specifically the callObject'
 
 You do this by intercepting the local participant's current video track, filtering it with Vectorly's background filter, and then sending the filtered video stream as the source video for the local participant.
 
+
+The library is imported via npm package `@vectorly-io/ai-filters` in src/components/App/App.js
+
+```
+import { BackgroundFilter } from '@vectorly-io/ai-filters';
+```
+
 The relevant code block in this repo is located in Line 126 of src/components/App/App.js
-
-
 
 ```
           const sourceVideoTrack = callObject._participants.local.videoTrack;
 
-          const inputStream = new MediaStream([sourceVideoTrack]);
+          const inputStream = new MediaStream([sourceVideoTrack.clone()]);
 
-          const filter = new vectorly.BackgroundFilter(inputStream, {token: 'your-vectorly-token', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
+          const filter = new BackgroundFilter(inputStream, {
+            token: 'your-vectorly-token',
+            background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg'
+          });
 
           filter.getOutput().then(function(filteredTrack ){
 
