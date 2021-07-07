@@ -80,15 +80,23 @@ async function join() {
 
   const mediaStream = new MediaStream([localTracks.videoTrack._mediaStreamTrack]);
 
-  const filter = new BackgroundFilter(mediaStream, {token: document.getElementById("vectorly-token").value});
+  try{
 
-  const filteredStream = await filter.getOutput();
+    const filter = new BackgroundFilter(mediaStream, {token: document.getElementById("vectorly-token").value});
 
-  const customTrack = AgoraRTC.createCustomVideoTrack({
-    mediaStreamTrack: filteredStream.getVideoTracks()[0],
-  });
+    const filteredStream = await filter.getOutput();
 
-  localTracks.videoTrack = customTrack;
+    const customTrack = AgoraRTC.createCustomVideoTrack({
+      mediaStreamTrack: filteredStream.getVideoTracks()[0],
+    });
+
+    localTracks.videoTrack = customTrack;
+  } catch (e){
+    console.warn("There was an error loading the virtual background");
+    console.warn(e);
+  }
+
+
 
   // play local video track
   localTracks.videoTrack.play("local-player");
