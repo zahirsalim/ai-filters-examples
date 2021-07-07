@@ -228,7 +228,7 @@ async function joinRoom(token, connectOptions) {
   // Save the LocalVideoTrack.
   let localVideoTrack = Array.from(room.localParticipant.videoTracks.values())[0].track;
 
-
+try{
   const BackgroundFilter = vectorly.BackgroundFilter;
 
   const inputStream = new MediaStream([localVideoTrack.mediaStreamTrack]);
@@ -236,9 +236,15 @@ async function joinRoom(token, connectOptions) {
   const outputStream = await filter.getOutput();
   const filteredTrack = new LocalVideoTrack(outputStream.getVideoTracks()[0]);
 
-  room.localParticipant.publishTrack(filteredTrack);
-
   localVideoTrack = filteredTrack;
+
+} catch (e) {
+  console.warn("There was an error loading the virtual background");
+  console.warn(e);
+}
+
+
+  room.localParticipant.publishTrack(localVideoTrack);
 
   // Make the Room available in the JavaScript console for debugging.
   window.room = room;

@@ -49,9 +49,8 @@ const offerOptions = {
 
 
 async function gotStream(stream) {
-  console.log('Received local stream');
-  localStream = stream;
 
+  localStream = stream;
 
 
   try {
@@ -62,8 +61,8 @@ async function gotStream(stream) {
 
   } catch (e){
 
-    console.log("Error");
-    console.log(e);
+    console.warn("There was an error loading the virtual background");
+    console.warn(e);
 
   }
 

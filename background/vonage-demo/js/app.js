@@ -19,18 +19,28 @@ async function initializeSession() {
     // Subscribe to a newly created stream
 
     // Create a publisher
-
-    const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: '<your-token>', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
-    const filteredStream = await filter.getOutput();
-
-
-    var publisher = OT.initPublisher('publisher', {
+    const config = {
         insertMode: 'append',
         width: '100%',
-        videoSource: filteredStream.getVideoTracks()[0],
         height: '100%'
-    }, handleError);
+    }
+
+
+    try{
+        const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+        const filter = new BackgroundFilter(stream, {token: '<your-token>', background: 'https://demo.vectorly.io/virtual-backgrounds/1.jpg'});
+        const filteredStream = await filter.getOutput();
+
+        config.videoSource = filteredStream.getVideoTracks()[0];
+
+    } catch (e) {
+        console.warn("There was an error loading the virtual background");
+        console.warn(e);
+    }
+
+
+
+    var publisher = OT.initPublisher('publisher', config, handleError);
 
 
 
