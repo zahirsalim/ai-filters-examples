@@ -23,7 +23,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "homepage": "https://files.vectorly.io/demo/daily-co-demo/caf31d5",
+  "homepage": "https://files.vectorly.io/demo/daily-co-demo/2b2609c",
   "browserslist": {
     "production": [
       ">0.2%",
