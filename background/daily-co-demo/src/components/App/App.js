@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { BackgroundFilter } from '@vectorly-io/ai-filters';
+// import { BackgroundFilter } from '@vectorly-io/ai-filters';
 import Call from '../Call/Call';
 import StartButton from '../StartButton/StartButton';
 import api from '../../api';
@@ -17,6 +17,9 @@ const STATE_JOINED = 'STATE_JOINED';
 const STATE_LEAVING = 'STATE_LEAVING';
 const STATE_ERROR = 'STATE_ERROR';
 
+
+/* global vectorly */
+const BackgroundFilter = vectorly.BackgroundFilter
 
 export default function App() {
   const [appState, setAppState] = useState(STATE_IDLE);
