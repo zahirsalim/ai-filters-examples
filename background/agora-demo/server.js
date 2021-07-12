@@ -8,8 +8,8 @@ const vectorlyToken = process.env.VECTORLY_TOKEN;
 
 connect()
     .use(serveStatic(__dirname + '/src/'))
-    .listen(8080, () =>{
-        if(agoraAppId && vectorlyToken)  open(`http://localhost:8080/index.html?appid=${agoraAppId}&vectorlyToken=${vectorlyToken}&channel=test`);
-        else  open('http://localhost:8080/')
-        console.log('Server running on 8080...')
+    .listen(3000, () =>{
+        if(agoraAppId && vectorlyToken)  open(`http://localhost:3000/index.html?appid=${agoraAppId}&vectorlyToken=${vectorlyToken}&channel=test`);
+        else  open('http://localhost:3000/')
+        console.log('Server running on 3000...')
     });
