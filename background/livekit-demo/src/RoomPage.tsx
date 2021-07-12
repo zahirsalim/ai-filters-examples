@@ -81,10 +81,7 @@ async function onConnected(room: Room, query: URLSearchParams) {
 
     const inputStream = new MediaStream([videoTrack.mediaStreamTrack])
     const filter = new BackgroundFilter(inputStream, {
-      // token: 'your-vectorly-token',
-      // serverType: 'staging',
-      // token: '0b5707c6-6642-4cc8-8570-b29af9e51345',
-        token: '944e1bb2-fd0e-4d12-b02a-b3f1dac44aec',
+      token: 'your-vectorly-token',
       background: 'blur',
     });
     const outputStream = await filter.getOutput()
