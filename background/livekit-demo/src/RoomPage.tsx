@@ -1,11 +1,12 @@
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CreateAudioTrackOptions, createLocalAudioTrack, createLocalVideoTrack, CreateVideoTrackOptions, Room, RoomEvent, TrackPublishOptions } from 'livekit-client'
+import { CreateAudioTrackOptions, createLocalAudioTrack, createLocalVideoTrack, CreateVideoTrackOptions, Room, RoomEvent, TrackPublishOptions, LocalVideoTrack } from 'livekit-client'
 import { LiveKitRoom } from 'livekit-react'
 import React, { useState } from "react"
 import "react-aspect-ratio/aspect-ratio.css"
 import { useHistory, useLocation } from 'react-router-dom'
-import BackgroundFilter from '@vectorly-io/ai-filters';
+import { BackgroundFilter } from '@vectorly-io/ai-filters';
+console.log('BackgroundFilter :>> ', BackgroundFilter);
 
 export const RoomPage = () => {
   const [numParticipants, setNumParticipants] = useState(0)
@@ -77,16 +78,25 @@ async function onConnected(room: Room, query: URLSearchParams) {
       captureOptions.deviceId = videoDeviceId;
     }
     const videoTrack = await createLocalVideoTrack(captureOptions);
-    const filter = new BackgroundFilter([videoTrack], {token: "944e1bb2-fd0e-4d12-b02a-b3f1dac44aec", background: 'blur'});
-    const outputStream =  await filter.getOutput();
 
+    const inputStream = new MediaStream([videoTrack.mediaStreamTrack])
+    const filter = new BackgroundFilter(inputStream, {
+      // token: 'your-vectorly-token',
+      // serverType: 'staging',
+      // token: '0b5707c6-6642-4cc8-8570-b29af9e51345',
+        token: '944e1bb2-fd0e-4d12-b02a-b3f1dac44aec',
+      background: 'blur',
+    });
+    const outputStream = await filter.getOutput()
+    const videoTrackWithBG = new LocalVideoTrack(outputStream.getVideoTracks()[0])
+    
     const publishOptions: TrackPublishOptions = {
       name: 'camera'
     }
     if (isSet(query, 'simulcast')) {
       publishOptions.simulcast = true
     }
-    await room.localParticipant.publishTrack(outputStream, publishOptions)
+    await room.localParticipant.publishTrack(videoTrackWithBG, publishOptions)
   }
 }
 

@@ -4,6 +4,7 @@ import { AudioSelectButton, ControlButton, VideoRenderer, VideoSelectButton } fr
 import React, { ReactElement, useEffect, useRef, useState } from "react"
 import AspectRatio from 'react-aspect-ratio'
 import { useHistory } from 'react-router-dom'
+import { BackgroundFilter } from '@vectorly-io/ai-filters';
 
 export const PreJoinPage = () => {
   // state to pass onto room
@@ -40,6 +41,21 @@ export const PreJoinPage = () => {
     }
   }, [token, url])
 
+  const setVideoTrackWithBG = async (videoTrack:LocalVideoTrack) => {
+    const inputStream = new MediaStream([videoTrack.mediaStreamTrack])
+    const filter = new BackgroundFilter(inputStream, {
+      // token: 'your-vectorly-token',
+      // serverType: 'staging',
+      // token: '0b5707c6-6642-4cc8-8570-b29af9e51345',
+      token: '944e1bb2-fd0e-4d12-b02a-b3f1dac44aec',
+      background: 'blur',
+    });
+    const outputStream = await filter.getOutput()
+    const videoTrackWithBG = new LocalVideoTrack(outputStream.getVideoTracks()[0])
+    setVideoTrack(videoTrackWithBG)
+    return videoTrackWithBG
+  }
+
   const toggleVideo = () => {
     if (videoTrack) {
       videoTrack.stop()
@@ -52,7 +68,8 @@ export const PreJoinPage = () => {
       }
       createLocalVideoTrack(options).then((track) => {
         setVideoEnabled(true)
-        setVideoTrack(track)
+
+        setVideoTrackWithBG(track)
       })
     }
   }
@@ -61,7 +78,7 @@ export const PreJoinPage = () => {
     // enable video by default
     createLocalVideoTrack().then((track) => {
       setVideoEnabled(true)
-      setVideoTrack(track)
+      setVideoTrackWithBG(track)
     })
   }, [])
 
