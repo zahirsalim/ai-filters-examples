@@ -4,13 +4,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prepare": "run-s build",
-    "build": "microbundle-crl --no-compress --format modern,cjs",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build"
+    "start": "node ./node_modules/react-scripts/bin/react-scripts.js start",
+    "build": "node ./node_modules/react-scripts/bin/react-scripts.js build",
+    "test": "node ./node_modules/react-scripts/bin/react-scripts.js test",
+    "eject": "node ./node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
-    "@vectorly-io/ai-filters": "^1.1.0",
     "livekit-client": "^0.9.6",
     "livekit-react": "^0.3.11",
     "react": "^16.13.1",
@@ -18,7 +17,8 @@
     "react-scripts": "^3.4.1",
     "typescript": "^3.7.5",
     "react-aspect-ratio": "^1.0.49",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "@vectorly-io/ai-filters": "^1.1.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
@@ -29,6 +29,7 @@
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
+    "@types/react-router-dom": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "babel-eslint": "^10.0.3",
