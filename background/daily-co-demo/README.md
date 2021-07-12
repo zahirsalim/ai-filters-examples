@@ -18,11 +18,11 @@ In our app, when a user clicks to start a call, the app will create a [meeting r
 
 ## Running locally
 
-1. Install dependencies `npm i`
-2. Start dev server `npm run dev`
-3. Then open your browser and go to `http://localhost:3002`
-4. Add the Daily room URL you created to line 31 of `api.js`, and follow the comment's instructions.
-5. Insert your Vectorly token into line 130 of src/components/App/App.js
+1. Add the Daily room URL you created to line 31 of `api.js`, and follow the comment's instructions.
+2. Insert your Vectorly token into line 130 of src/components/App/App.js
+3. Install dependencies `npm i`
+4. Start dev server `npm run dev`
+5. Then open your browser and go to `http://localhost:3002`
 
 ## Integrating Vectorly's Background filters
 
