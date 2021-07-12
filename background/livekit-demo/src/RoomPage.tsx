@@ -5,7 +5,7 @@ import { LiveKitRoom } from 'livekit-react'
 import React, { useState } from "react"
 import "react-aspect-ratio/aspect-ratio.css"
 import { useHistory, useLocation } from 'react-router-dom'
-import { BackgroundFilter } from '@vectorly-io/ai-filters';
+import BackgroundFilter from '@vectorly-io/ai-filters';
 
 export const RoomPage = () => {
   const [numParticipants, setNumParticipants] = useState(0)
@@ -77,9 +77,7 @@ async function onConnected(room: Room, query: URLSearchParams) {
       captureOptions.deviceId = videoDeviceId;
     }
     const videoTrack = await createLocalVideoTrack(captureOptions);
-    
-    const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: "944e1bb2-fd0e-4d12-b02a-b3f1dac44aec", background: 'blur'});
+    const filter = new BackgroundFilter([videoTrack], {token: "944e1bb2-fd0e-4d12-b02a-b3f1dac44aec", background: 'blur'});
     const outputStream =  await filter.getOutput();
 
     const publishOptions: TrackPublishOptions = {
