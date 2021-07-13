@@ -4,7 +4,7 @@ import { AudioSelectButton, ControlButton, VideoRenderer, VideoSelectButton } fr
 import React, { ReactElement, useEffect, useRef, useState } from "react"
 import AspectRatio from 'react-aspect-ratio'
 import { useHistory } from 'react-router-dom'
-import { BackgroundFilter } from '@vectorly-io/ai-filters';
+import  BackgroundFilter  from '@vectorly-io/ai-filters/dist/vectorly.BackgroundFilter';
 
 export const PreJoinPage = () => {
   // state to pass onto room
