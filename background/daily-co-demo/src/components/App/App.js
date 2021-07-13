@@ -129,7 +129,7 @@ export default function App() {
 
           try{
             const filter = new BackgroundFilter(inputStream, {
-              token: 'your-vectorly-token',
+              token: '<your-vectorly-token>',
               background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
             });
 
