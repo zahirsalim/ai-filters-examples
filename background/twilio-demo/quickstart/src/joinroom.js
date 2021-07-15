@@ -1,6 +1,7 @@
 'use strict';
 
 const { connect, createLocalVideoTrack, Logger, LocalVideoTrack } = require('twilio-video');
+const {BackgroundFilter} = require('@vectorly-io/ai-filters');
 const { isMobile } = require('./browser');
 
 const $leave = $('#leave-room');
@@ -229,14 +230,11 @@ async function joinRoom(token, connectOptions) {
   let localVideoTrack = Array.from(room.localParticipant.videoTracks.values())[0].track;
 
 try{
-  const BackgroundFilter = vectorly.BackgroundFilter;
 
-  const inputStream = new MediaStream([localVideoTrack.mediaStreamTrack]);
-  const filter = new BackgroundFilter(inputStream, {token: '0912c95e-c4e5-47d0-bf26-01b214f01f48', background: 'blur'});
-  const outputStream = await filter.getOutput();
-  const filteredTrack = new LocalVideoTrack(outputStream.getVideoTracks()[0]);
+  const filter = new BackgroundFilter(localVideoTrack.mediaStreamTrack, {token: '0912c95e-c4e5-47d0-bf26-01b214f01f48', background: 'blur'});
+  const filteredTrack = await  filter.getOutputTrack();
 
-  localVideoTrack = filteredTrack;
+  localVideoTrack =  new LocalVideoTrack(filteredTrack);
 
 } catch (e) {
   console.warn("There was an error loading the virtual background");
