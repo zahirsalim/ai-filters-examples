@@ -1,4 +1,7 @@
 // create Agora client
+
+AgoraRTC.setLogLevel(4);
+
 var client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 var localTracks = {
@@ -22,9 +25,6 @@ $(() => {
   options.channel = urlParams.get("channel");
   options.token = urlParams.get("token");
   options.vectorlyToken = urlParams.get("vectorlyToken");
-
-  console.log("Options");
-  console.log(options);
 
   if (options.appid && options.channel) {
     $("#appid").val(options.appid);
@@ -78,16 +78,14 @@ async function join() {
 
   const BackgroundFilter = vectorly.BackgroundFilter;
 
-  const mediaStream = new MediaStream([localTracks.videoTrack._mediaStreamTrack]);
-
   try{
 
-    const filter = new BackgroundFilter(mediaStream, {token: document.getElementById("vectorly-token").value});
+    const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack, {token: document.getElementById("vectorly-token").value});
 
-    const filteredStream = await filter.getOutput();
+    const filteredTrack = await filter.getOutputTrack();
 
     const customTrack = AgoraRTC.createCustomVideoTrack({
-      mediaStreamTrack: filteredStream.getVideoTracks()[0],
+      mediaStreamTrack: filteredTrack,
     });
 
     localTracks.videoTrack = customTrack;
@@ -104,7 +102,7 @@ async function join() {
 
   // publish local tracks to channel
   await client.publish(Object.values(localTracks));
-  console.log("publish success");
+  //console.log("publish success");
 }
 
 async function leave() {
@@ -127,14 +125,14 @@ async function leave() {
   $("#local-player-name").text("");
   $("#join").attr("disabled", false);
   $("#leave").attr("disabled", true);
-  console.log("client leaves channel success");
+ // console.log("client leaves channel success");
 }
 
 async function subscribe(user, mediaType) {
   const uid = user.uid;
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
-  console.log("subscribe success");
+ // console.log("subscribe success");
   if (mediaType === 'video') {
     const player = $(`
       <div id="player-wrapper-${uid}">
