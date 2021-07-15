@@ -2139,10 +2139,10 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@vectorly-io/ai-filters@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-filters/-/ai-filters-1.2.1.tgz#92ed9979d79b75ac89abbc2a0ffe334a4d3cef9c"
-  integrity sha512-hqBAhAg98Zxf5XmoMInBQ9qWv/LlOzJcCrVTDjbCQ8C1TPkoY2xU9ayZldgPXtzmNi9AwbUynG/KT1g9ObMLLw==
+"@vectorly-io/ai-filters@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@vectorly-io/ai-filters/-/ai-filters-1.2.6.tgz#f22ef22162f4e63550e40599e8a92b34ff4b7fc4"
+  integrity sha512-Q6tzJpwJ6cdkhMqGxR2v+jcUeFCMVVVRkOsQYy9NUX263khi+M6RxWbrJIJ0lA5Q1TcmW9R2OsxV0unN7zt7Qw==
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"

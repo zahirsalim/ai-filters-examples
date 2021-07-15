@@ -4,7 +4,7 @@ import { AudioSelectButton, ControlButton, VideoRenderer, VideoSelectButton } fr
 import React, { ReactElement, useEffect, useRef, useState } from "react"
 import AspectRatio from 'react-aspect-ratio'
 import { useHistory } from 'react-router-dom'
-import  BackgroundFilter  from '@vectorly-io/ai-filters/dist/vectorly.BackgroundFilter';
+import  {BackgroundFilter}  from '@vectorly-io/ai-filters';
 
 export const PreJoinPage = () => {
   // state to pass onto room
@@ -42,13 +42,12 @@ export const PreJoinPage = () => {
   }, [token, url])
 
   const setVideoTrackWithBG = async (videoTrack:LocalVideoTrack) => {
-    const inputStream = new MediaStream([videoTrack.mediaStreamTrack])
-    const filter = new BackgroundFilter(inputStream, {
+    const filter = new BackgroundFilter(videoTrack.mediaStreamTrack, {
       token: 'your-vectorly-token',
       background: 'blur',
     });
-    const outputStream = await filter.getOutput()
-    const videoTrackWithBG = new LocalVideoTrack(outputStream.getVideoTracks()[0])
+    const outputTrack = await filter.getOutputTrack()
+    const videoTrackWithBG = new LocalVideoTrack(outputTrack)
     setVideoTrack(videoTrackWithBG)
     return videoTrackWithBG
   }

@@ -5,7 +5,7 @@ import { LiveKitRoom } from 'livekit-react'
 import React, { useState } from "react"
 import "react-aspect-ratio/aspect-ratio.css"
 import { useHistory, useLocation } from 'react-router-dom'
-import  BackgroundFilter  from '@vectorly-io/ai-filters/dist/vectorly.BackgroundFilter';
+import  {BackgroundFilter}  from '@vectorly-io/ai-filters';
 console.log('BackgroundFilter :>> ', BackgroundFilter);
 
 export const RoomPage = () => {

@@ -125,18 +125,16 @@ export default function App() {
 
           const sourceVideoTrack = callObject._participants.local.videoTrack;
 
-          const inputStream = new MediaStream([sourceVideoTrack.clone()]);
-
           try{
-            const filter = new BackgroundFilter(inputStream, {
+            const filter = new BackgroundFilter(sourceVideoTrack, {
               token: '<your-vectorly-token>',
               background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
             });
 
-            filter.getOutput().then(function(filteredTrack ){
+            filter.getOutputTrack().then(function(filteredTrack ){
 
               callObject.setInputDevicesAsync({
-                videoSource: filteredTrack.getVideoTracks()[0],
+                videoSource:filteredTrack,
               });
 
             });
