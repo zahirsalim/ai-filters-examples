@@ -123,7 +123,9 @@ export default function App() {
           setAppState(STATE_JOINED);
 
 
-          const sourceVideoTrack = callObject._participants.local.videoTrack;
+
+          // For Daily-co, you need to clone the track
+          const sourceVideoTrack = callObject._participants.local.videoTrack.clone();
 
           try{
             const filter = new BackgroundFilter(sourceVideoTrack, {
@@ -131,6 +133,7 @@ export default function App() {
               background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
             });
 
+            // You'll need to manually call filter.stop() when you want to close the video stream
             filter.getOutputTrack().then(function(filteredTrack ){
 
               callObject.setInputDevicesAsync({
