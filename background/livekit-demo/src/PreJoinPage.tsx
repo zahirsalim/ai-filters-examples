@@ -21,6 +21,8 @@ export const PreJoinPage = () => {
   const [videoDevice, setVideoDevice] = useState<MediaDeviceInfo>();
   const history = useHistory()
 
+  console.log('Feature Check', BackgroundFilter.isSupported())
+
   useEffect(() => {
     if (!videoRef.current || !videoTrack) {
       return

@@ -2,6 +2,9 @@
 let setBackground = false;
 let old_id = "";
 let isSafari = false;
+console.log('Feature Check', vectorly.BackgroundFilter.isSupported());
+
+
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
@@ -223,7 +226,7 @@ async function safariClickEnableStream(){
 }
 
 window.onload = (event) => {
-  console.log(`event`, event)
+ // console.log(`event`, event)
     try {
       setTimeout(() => {
 
