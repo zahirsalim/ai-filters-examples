@@ -23,7 +23,7 @@ Sign up for a Vectorly account [here](https://ai-filters.vectorly.io/) and get y
 Set your Vectorly token in an environent variable
 
 ```bash
-VECTORLY_TOKEN
+VECTORLY_TOKEN=...
 ```
 
 ## Running the demo
@@ -33,3 +33,8 @@ VECTORLY_TOKEN
 
 It should open a browser window, where you can then view a Signal Wire demo with Virtual Backgrounds integrated
 
+**Step 1**: Enter your user name
+![Step 1](images/step1.png)
+
+**Step 2**: You should see your camera feed with a virtual background
+![Step 1](images/step2.png)
