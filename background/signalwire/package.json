@@ -1,7 +1,7 @@
 {
   "name": "vectorly-signal-wire-integration",
   "version": "0.1.0",
-  "description": "Node.js example server starter project",
+  "description": "This is an example repository showing how to integrate Vectorly's Background Filter with SignalWire's Video API.",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js"
