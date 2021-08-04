@@ -14,7 +14,7 @@
         <pre id="supported">Browser is not supported</pre>
     </div>
 
-    <div style="float: right; width: 300px;">
+    <div style="float: right; width: 300px; display: none;" id="performance-check">
         <b>Performance Check:</b>
         <p></p>
         <input id="button" type="button" value="Run performance check" onclick="runPerformanceCheck()">
@@ -41,7 +41,9 @@
 
     try{
         document.getElementById('supported').textContent = JSON.stringify(BackgroundFilter.isSupported(), undefined, 2);
+        document.getElementById('performance-check').style.display = "block";
     } catch (e) {
+
 
     }
 
