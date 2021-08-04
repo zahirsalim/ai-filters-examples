@@ -8,11 +8,27 @@
 <body>
 
 
-<input id="button" type="button" value="Run performance check" onclick="runPerformanceCheck()">
-<br/>
-<div id="msg"></div>
+<div style="width: 650px;">
+    <div style="float: left; width: 300px;">
+        <b>Is Supported on this Browser?</b>
+        <pre id="supported">Browser is not supported</pre>
+    </div>
 
-<pre id="output"></pre>
+    <div style="float: right; width: 300px;">
+        <b>Performance Check:</b>
+        <p></p>
+        <input id="button" type="button" value="Run performance check" onclick="runPerformanceCheck()">
+        <br/>
+        <div id="msg"></div>
+
+        <pre id="output"></pre>
+    </div>
+
+
+</div>
+
+
+
 
 <script>
 
@@ -22,9 +38,18 @@
     const BackgroundFilter = vectorly.BackgroundFilter;
 
 
+
+    try{
+        document.getElementById('supported').textContent = JSON.stringify(BackgroundFilter.isSupported(), undefined, 2);
+    } catch (e) {
+
+    }
+
+
+
     function runPerformanceCheck(){
 
-        msg.textContent = "Running background test...";
+        msg.textContent = "Running performance check...";
 
         button.style.display = "none";
         output.textContent = "";
