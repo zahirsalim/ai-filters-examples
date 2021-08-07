@@ -78,6 +78,9 @@ async function join() {
 
   const BackgroundFilter = vectorly.BackgroundFilter;
 
+  const enableButton = document.getElementById('enable');
+  const disableButton = document.getElementById('disable');
+
   try{
 
     const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack, {token: document.getElementById("vectorly-token").value,     analyticsEnabled: false,});
@@ -87,6 +90,23 @@ async function join() {
     const customTrack = AgoraRTC.createCustomVideoTrack({
       mediaStreamTrack: filteredTrack,
     });
+
+
+
+    disableButton.style.display = "inline-block";
+
+    window.enableBackground = function (){
+      disableButton.style.display = "inline-block";
+      enableButton.style.display = "none";
+      filter.enable();
+    }
+
+    window.disableBackground = function () {
+      disableButton.style.display = "none";
+      enableButton.style.display = "inline-block";
+      filter.disable();
+    }
+
 
     localTracks.videoTrack = customTrack;
   } catch (e){
