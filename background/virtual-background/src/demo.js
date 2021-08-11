@@ -81,6 +81,9 @@ async function enablebackground(type, image) {
     processed.srcObject = await window.bgFilter.getOutput()
   } else {
     try {
+
+      console.log("Media stream");
+      console.log(window.mediaStream);
       const bgFilter = new vectorly.BackgroundFilter(window.mediaStream, params);
       window.bgFilter = bgFilter
       virtualBg = true;
@@ -89,6 +92,7 @@ async function enablebackground(type, image) {
       processed.srcObject = outputStream
     } catch (err) {
       console.log('ERROR in enablebackground', err)
+      console.log(err);
     }
   }
 
