@@ -74,7 +74,8 @@ async function enablebackground(type, image) {
     debug: false,
     analyticsEnabled: false,
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    background: background
+    background: background,
+    passthrough: true
   }
   if (window.bgFilter) {
     window.bgFilter.enable()
