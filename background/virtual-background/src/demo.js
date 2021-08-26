@@ -79,7 +79,7 @@ async function enablebackground(type, image) {
   }
   if (window.bgFilter) {
     window.bgFilter.enable()
-    processed.srcObject = await window.bgFilter.getOutput()
+
   } else {
     try {
 
@@ -100,12 +100,18 @@ async function enablebackground(type, image) {
   if(isSafari) document.getElementById('sources').style.visibility = "hidden";
 }
 
+window.disable = function (){
+  bgFilter.disable();
+}
+window.enable = function (){
+  bgFilter.enable();
+}
+
 async function disablebackground(){
-  setBackground = false;
-  const processed = document.getElementById('demo');
+ // setBackground = false;
   if (window.bgFilter) {
     window.bgFilter.disable()
-    processed.srcObject = await window.bgFilter.getOutput()
+   // processed.srcObject = await window.bgFilter.getOutput()
   }
 }
 
