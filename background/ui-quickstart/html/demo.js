@@ -33,7 +33,8 @@ async function enablebackground(inputStream) {
 
   const params = {
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    passthrough: true
+    passthrough: true,
+    background: 'blur'
   }
   const bgFilter = new BackgroundFilter(inputStream, params);
   window.bgFilter = bgFilter
