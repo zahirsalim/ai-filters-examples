@@ -1,5 +1,5 @@
 /* eslint-disable */
-let setBackground = false;
+
 console.log('Feature Check', vectorly.BackgroundFilter.isSupported());
 
 function getUrlParams(prop) {
@@ -12,9 +12,6 @@ async function initializeWebcam(){
 
   window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
 
-  const video = document.getElementById('video');
-  window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
-  video.srcObject  = window.mediaStream;
 }
 
 
@@ -41,39 +38,25 @@ async function stopWebcam(){
   window.bgFilter && window.bgFilter.stop()
 }
 
-async function enablebackground(type, image) {
-  setBackground = true;
-  const processed = document.getElementById('demo');
-  let background;
+async function enablebackground() {
 
-  if(type) background = (type === 'blur') ? type : image;
+  const processed = document.getElementById('demo');
 
   const params = {
-    debug: false,
-    analyticsEnabled: false,
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    background: background,
     passthrough: true
   }
-  if (window.bgFilter) {
-    window.bgFilter.enable()
 
-  } else {
-    try {
+  try {
+    const bgFilter = new vectorly.BackgroundFilter(window.mediaStream, params);
+    window.bgFilter = bgFilter
+    const outputStream = await bgFilter.getOutput()
+    processed.srcObject = outputStream
+  } catch (err) {
+    processed.srcObject = window.mediaStream;
 
-      console.log("Media stream");
-      console.log(window.mediaStream);
-      const bgFilter = new vectorly.BackgroundFilter(window.mediaStream, params);
-      window.bgFilter = bgFilter
-      virtualBg = true;
-      const outputStream = await bgFilter.getOutput()
-      console.log('OutputStream', outputStream)
-      processed.srcObject = outputStream
-    } catch (err) {
-      processed.srcObject = window.mediaStream;
-      virtualBg = true;
-    }
   }
+
 }
 
 async function disablebackground(){
@@ -84,23 +67,11 @@ async function disablebackground(){
   }
 }
 
-function blurbackground(){
-  if (setBackground && window.bgFilter) {
-    window.bgFilter.enable()
-    window.bgFilter && window.bgFilter.changeBackground('blur')
-  } else {
-    enablebackground()
-  }
-}
-
 
 function updatevirtualbackground(image){
-
   if (window.bgFilter) {
     window.bgFilter.enable()
     window.bgFilter.changeBackground(image);
-  } else {
-    enablebackground('virtual', image)
   }
 }
 
