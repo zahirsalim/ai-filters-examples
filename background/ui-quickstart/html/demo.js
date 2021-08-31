@@ -29,42 +29,42 @@ async function startStream() {
   }
 }
 
-  async function enablebackground(inputStream) {
+async function enablebackground(inputStream) {
 
-    const params = {
-      token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-      passthrough: true
-    }
-    const bgFilter = new BackgroundFilter(inputStream, params);
-    window.bgFilter = bgFilter
-    return await bgFilter.getOutput()
+  const params = {
+    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
+    passthrough: true
+  }
+  const bgFilter = new BackgroundFilter(inputStream, params);
+  window.bgFilter = bgFilter
+  return await bgFilter.getOutput()
 
 
+}
+
+async function disablebackground() {
+  if (window.bgFilter) window.bgFilter.disable()
+}
+
+
+function updatevirtualbackground(image) {
+  if (window.bgFilter) {
+    window.bgFilter.enable()
+    window.bgFilter.changeBackground(image);
+  }
+}
+
+
+
+window.addEventListener('load', async function () {
+
+  try {
+    startStream();
+  } catch (e) {
+    alert("Unable to initialize webcam", e);
   }
 
-  async function disablebackground() {
-    if (window.bgFilter) window.bgFilter.disable()
-  }
-
-
-  function updatevirtualbackground(image) {
-    if (window.bgFilter) {
-      window.bgFilter.enable()
-      window.bgFilter.changeBackground(image);
-    }
-  }
-
-
-
-  window.addEventListener('load', async function () {
-
-    try {
-      startStream();
-    } catch (e) {
-      alert("Unable to initialize webcam", e);
-    }
-
-  });
+});
 
 
 
