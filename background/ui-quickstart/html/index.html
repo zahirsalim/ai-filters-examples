@@ -1,18 +1,12 @@
-<html lang="en" class="js-focus-visible" data-js-focus-visible="">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <!-- <link rel="icon" href="/virtual-background/favicon.ico"> -->
     <meta name="viewport" content="minimum-scale=1,initial-scale=1,width=device-width">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Virtual backgrounds demo">
-
-    <title>Virtual Backgrounds Demo</title>
+    <meta name="description" content="Virtual backgrounds UI Component">
+    <title>Virtual Backgrounds UI Component</title>
     <script src="https://cdn.vectorly.io/ai-filters/v1/latest/vectorly.filters.js"></script>
     <script src="./demo.js"> </script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
-    <meta http-equiv="origin-trial" content="AhOw5Z7s5Lk3pDD5hRHWZ+uUbOAvnzl5pN89NxkF6ky8CUHHfoZt55Gu6nABIjScpxLm3aqGZOYKLCyrs0T5AgkAAABaeyJvcmlnaW4iOiJodHRwczovL2ZpbGVzLnZlY3Rvcmx5LmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBc3NlbWJseVNpbWQiLCJleHBpcnkiOjE2NDk4MDc5OTl9">
     <link rel="stylesheet" href="vectorly-ui.css">
 </head>
 
@@ -21,19 +15,8 @@
     <div id="root" style="width: 30vw; margin: auto;">
         <div class="jss1">
             <div class="MuiPaper-root jss3 MuiPaper-elevation1 MuiPaper-rounded">
-                <div class="jss6" style="display: none">
-                    <video class="jss7" id="video" playsinline autoplay poster="images/choose-source-video.svg"></video>
-                </div>
                 <div class="jss30">
-                    <video class="jss7" id="demo" playsinline autoplay></video>
-                    <canvas class="jss31" width="1280" height="853"></canvas>
-                    <img src="images/loading.gif" width="100" height="100" style=" position: absolute; left: 50%; top: 50%; display: none; transform: translate(-50%, -50%); "  id="loading">
-                    <span class="MuiTypography-root jss32 MuiTypography-caption" id="fps"></span>
-                    <svg class="MuiSvgIcon-root jss14" id="safari-click-enable" height="128" width="128" focusable="false" viewBox="0 0 24 24" style="left: 50%; top: 50%; transform: scale(2.0) translate(-50%, -50%);  display: none; cursor: pointer;" onclick="safariClickEnableStream()"   aria-hidden="true">
-                        <path
-                                d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                        </path>
-                    </svg>
+                    <video class="jss7" id="demo" playsinline autoplay muted poster="images/loading.gif"></video>
                 </div>
             </div>
             <div class="MuiPaper-root MuiCard-root jss15 MuiPaper-elevation1 MuiPaper-rounded" style="margin: auto;">
