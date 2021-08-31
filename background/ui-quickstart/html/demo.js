@@ -1,10 +1,6 @@
 /* eslint-disable */
 let setBackground = false;
-let old_id = "";
-let isSafari = false;
 console.log('Feature Check', vectorly.BackgroundFilter.isSupported());
-
-
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
@@ -13,7 +9,6 @@ function getUrlParams(prop) {
 
 
 async function initializeWebcam(){
-  console.log('Initializing initializeWebcam', window.mediaStream)
 
   window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
 
@@ -79,22 +74,13 @@ async function enablebackground(type, image) {
       virtualBg = true;
     }
   }
-
-  if(isSafari) document.getElementById('sources').style.visibility = "hidden";
-}
-
-window.disable = function (){
-  bgFilter.disable();
-}
-window.enable = function (){
-  bgFilter.enable();
 }
 
 async function disablebackground(){
- // setBackground = false;
+
   if (window.bgFilter) {
     window.bgFilter.disable()
-   // processed.srcObject = await window.bgFilter.getOutput()
+
   }
 }
 
@@ -107,18 +93,14 @@ function blurbackground(){
   }
 }
 
-function virtualbackground(){
-  window.bgFilter && window.bgFilter.changeBackground('')
-}
 
-function updatevirtualbackground(image_url){
-  if(!setBackground) return;
-  if (setBackground && window.bgFilter) {
+function updatevirtualbackground(image){
+
+  if (window.bgFilter) {
     window.bgFilter.enable()
-    image_url = image_url || "https://cdn.vectorly.io/public-demos/background-waterfall-pexels.jpg"
-    window.bgFilter && window.bgFilter.changeBackground(image_url)
+    window.bgFilter.changeBackground(image);
   } else {
-    enablebackground('virtual', image_url)
+    enablebackground('virtual', image)
   }
 }
 
