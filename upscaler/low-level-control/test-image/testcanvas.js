@@ -27,7 +27,7 @@ window.onload = () => {
       renderSize: renderSize,
       canvas: canvas,
       networkParams: {name: 'residual_3k_3x', tag: 'general', version: '2.1'},
-      token: '81548a00-b412-49bb-82cb-f5ddce588dde'
+      token: 'insert-your-token'
     }
     loadP = upscaler.load(upsConfig)
 
