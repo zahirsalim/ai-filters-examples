@@ -108,6 +108,18 @@ window.enable = function (){
   bgFilter.enable();
 }
 
+async function setAImodel(model){
+  window.model = model;
+  if(model==='webgl') document.getElementById('webgl-warning').style.display = 'block';
+  else document.getElementById('webgl-warning').style.display = 'none';
+
+  if(setBackground) {
+    await enablebackground(old_type, old_type, true);
+  }
+
+}
+
+
 async function disablebackground(){
  // setBackground = false;
   if (window.bgFilter) {
