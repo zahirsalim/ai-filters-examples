@@ -71,7 +71,10 @@ async function enablebackground(type, image) {
   if(type) background = (type === 'blur') ? type : image;
 
   window.old_type = type;
-  window.old_image = image
+  window.old_image = image;
+
+  document.getElementById('btnradio2').disabled = true;
+  document.getElementById('btnradio1').disabled = true;
 
   const params = {
     debug: false,
@@ -115,11 +118,11 @@ async function setAImodel(model){
   window.model = model;
   if(model==='webgl') document.getElementById('webgl-warning').style.display = 'block';
   else document.getElementById('webgl-warning').style.display = 'none';
-
+/*
   if(setBackground) {
     await enablebackground(old_type, old_type, true);
   }
-
+*/
 }
 
 
