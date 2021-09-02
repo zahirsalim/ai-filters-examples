@@ -70,12 +70,15 @@ async function enablebackground(type, image) {
 
   if(type) background = (type === 'blur') ? type : image;
 
+  window.old_type = type;
+  window.old_image = image
+
   const params = {
     debug: false,
     analyticsEnabled: false,
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
     background: background,
-    model: 'webgl',
+    model: window.model || getUrlParams('model') || 'selfie',
     passthrough: true
   }
   if (window.bgFilter) {
