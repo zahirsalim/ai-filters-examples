@@ -70,11 +70,20 @@ async function enablebackground(type, image) {
 
   if(type) background = (type === 'blur') ? type : image;
 
+  window.old_type = type;
+  window.old_image = image;
+
+  document.getElementById('btnradio2').disabled = true;
+  document.getElementById('btnradio1').disabled = true;
+
   const params = {
     debug: false,
     analyticsEnabled: false,
     token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
     background: background,
+    frameRate: 30,
+    segmentationFrameRate: 15,
+    model: window.model || getUrlParams('model') || 'selfie',
     passthrough: true
   }
   if (window.bgFilter) {
@@ -106,6 +115,18 @@ window.disable = function (){
 window.enable = function (){
   bgFilter.enable();
 }
+
+async function setAImodel(model){
+  window.model = model;
+  if(model==='webgl') document.getElementById('webgl-warning').style.display = 'block';
+  else document.getElementById('webgl-warning').style.display = 'none';
+/*
+  if(setBackground) {
+    await enablebackground(old_type, old_type, true);
+  }
+*/
+}
+
 
 async function disablebackground(){
  // setBackground = false;

@@ -8,6 +8,8 @@
     <meta name="description" content="Virtual backgrounds demo">
 
     <title>Virtual Backgrounds Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="https://cdn.vectorly.io/ai-filters/v1/latest/vectorly.filters.js"></script>
     <script src="./demo.js"> </script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -25,7 +27,35 @@
     </h1>
     <br><br>
     <div id="subtitle">Virtual Background API Demo</div>
+
+
+    <div style="left: 20vw; position: absolute; width: 1000px; display: block;">
+
+        <div style="float: left; font-size: 1.125rem;  font-weight: bold; padding: .75vh 1vw;">AI Model:</div>
+
+        <div class="btn-group" role="group"  id="model-select" style="float: left;" aria-label="Basic radio toggle button group" >
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked onchange="setAImodel('selfie')">
+            <label class="btn btn-outline-primary" for="btnradio1">Selfie</label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"   onchange="setAImodel('webgl')">
+            <label class="btn btn-outline-primary" for="btnradio2">WebGL</label>
+        </div>
+
+
+            <div  id="webgl-warning" class="alert alert-warning" role="alert"   style="position: relative; display: none;  padding: .75vh 1vw; margin-left: 1vw;  float: left; ">
+                The WebGL model is currently in Beta. See more info <a href="https://vectorly.io/docs/docs-page.html#item-webgl-model">here</a>
+            </div>
+
+
+
+    </div>
+
+
     <div id="root" style="padding: 5vh 20vw;">
+
+
+
+
+
         <div class="jss1">
             <div class="MuiPaper-root jss3 MuiPaper-elevation1 MuiPaper-rounded">
                 <div class="jss6">
