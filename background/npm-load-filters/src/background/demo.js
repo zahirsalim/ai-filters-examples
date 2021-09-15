@@ -19,17 +19,7 @@ function getUrlParams(prop) {
 async function initializeWebcam(){
   console.log('Initializing initializeWebcam', window.mediaStream)
 
-  if(isSafari){
-
-    if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
-      var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
-      // {width: 640, height: 360}})
-      window.mediaStream = webcamStream;
-    }
-
-  } else {
-    window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
-  }
+  window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
 
   const video = document.getElementById('video');
   window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
@@ -37,14 +27,14 @@ async function initializeWebcam(){
 }
 
 
-async function streamWebcam() {
+window.streamWebcam  = async function() {
   try{
     if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
       throw "webcam initialization failed"
     }
 
-    let loadingGif = document.getElementById('loading');
-    loadingGif.style.display = "block";
+    
+    document.getElementById('demo').setAttribute('poster', "https://i.stack.imgur.com/ATB3o.gif");
 
     if(old_id === 'video'){
       window.bgFilter &&  window.bgFilter.disable()
@@ -56,8 +46,10 @@ async function streamWebcam() {
       updateFPS();
     }
 
-    loadingGif.style.display = "none";
   } catch (e) {
+
+    console.log(e);
+
     alert("webcam initialization failed")
   }
 }
@@ -109,7 +101,6 @@ async function enablebackground(type, image) {
     }
   }
 
-  if(isSafari) document.getElementById('sources').style.visibility = "hidden";
 }
 
 window.disable = function (){
@@ -119,22 +110,21 @@ window.enable = function (){
   bgFilter.enable();
 }
 
-async function setAImodel(model){
+window.setAImodel = function(model){
   window.model = model;
   if(model==='webgl') document.getElementById('webgl-warning').style.display = 'block';
   else document.getElementById('webgl-warning').style.display = 'none';
 }
 
 
-async function disablebackground(){
- // setBackground = false;
+window.disablebackground = function (){
+
   if (window.bgFilter) {
     window.bgFilter.disable()
-   // processed.srcObject = await window.bgFilter.getOutput()
   }
 }
 
-function blurbackground(){
+window.blurbackground = function (){
   if (setBackground && window.bgFilter) {
     window.bgFilter.enable()
     window.bgFilter && window.bgFilter.changeBackground('blur')
@@ -143,22 +133,6 @@ function blurbackground(){
   }
 }
 
-function virtualbackground(){
-  window.bgFilter && window.bgFilter.changeBackground('')
-}
-
-function updatevirtualbackground(image_url){
-
-  if(!setBackground) return;
-
-  if (setBackground && window.bgFilter) {
-    window.bgFilter.enable()
-    image_url = image_url || "https://cdn.vectorly.io/public-demos/background-waterfall-pexels.jpg"
-    window.bgFilter && window.bgFilter.changeBackground(image_url)
-  } else {
-    enablebackground('virtual', image_url)
-  }
-}
 
 function updateFPS(){
   //return
@@ -176,10 +150,8 @@ function updateFPS(){
   }
 }
 
-async function changeInputStream(video_id) {
+window.changeInputStream = async  function (video_id) {
 
-  let loadingGif = document.getElementById('loading');
-  loadingGif.style.display = "block";
 
   try {
     if(old_id === 'video'){
@@ -244,7 +216,6 @@ async function changeInputStream(video_id) {
     console.log('ERROR in enablebackground', error)
   }
 
-  loadingGif.style.display = "none";
 
 }
 
