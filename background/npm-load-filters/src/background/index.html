@@ -71,103 +71,37 @@
             <div class="MuiPaper-root MuiCard-root jss8 MuiPaper-elevation1 MuiPaper-rounded">
                 <div class="MuiCardContent-root" id="sources">
                     <h2 class="MuiTypography-root MuiTypography-h6 MuiTypography-gutterBottom">Source</h2>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="streamWebcam()" id="cam-button">
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="streamWebcam(320, 240)" >
+                        <span class="MuiButton-label">
+                           <div class="jss9">240p</div>
+                        </span>
+                        <span class="MuiTouchRipple-root"></span>
+                    </button>
+
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="streamWebcam(640, 360)" >
+                        <span class="MuiButton-label">
+                            <div class="jss9">360p</div>
+                        </span>
+                        <span class="MuiTouchRipple-root"></span>
+                    </button>
+
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="streamWebcam(1280, 720)">
+                        <span class="MuiButton-label">
+                              <div class="jss9">720p</div>
+                        </span>
+                        <span class="MuiTouchRipple-root"></span>
+                    </button>
+
+                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button" onclick="streamWebcam(1920, 1080)" >
                         <span class="MuiButton-label">
                             <div class="jss9">
-                                <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path
-                                        d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z">
-                                    </path>
-                                </svg>
+                                1080p
                             </div>
                         </span>
                         <span class="MuiTouchRipple-root"></span>
                     </button>
-                    <!-- <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button">
-                        <span class="MuiButton-label">
-                            <img class="jss12 jss13"
-                                src="" alt="">
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button">
-                        <span class="MuiButton-label">
-                            <img class="jss12 jss13"
-                                src="" alt="">
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0" type="button">
-                        <span class="MuiButton-label">
-                            <img class="jss12 jss13"
-                                src="" alt="">
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>-->
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-1" tabindex="0" type="button" onclick="changeInputStream('bg-video-1')">
-                        <span class="MuiButton-label">
-                            <video id="bg-video-1" class="jss12 jss13"alt=""    preload="metadata" crossorigin="anonymous" muted playsinline>
-                                <source src="https://stream.mux.com/nMXFJZWfrxx00cuGGYklqBTPACEaJEQsU.m3u8#t=0.001">
-                                <source  src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_1_360p.webm" >
 
-                                <source  src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_1_360p.mp4" >
-                            </video>
-                            <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-2"  tabindex="0" type="button" onclick="changeInputStream('bg-video-2')">
-                        <span class="MuiButton-label">
-                            <video id="bg-video-2" class="jss12 jss13"  alt=""  preload="metadata" muted playsinline  crossorigin="anonymous">
-                                                                <source src="https://stream.mux.com/hyuLj54sQZJMG2MUrW7YOl9hNdu3RXHK.m3u8#t=0.001">
-                               <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_2_360p.webm">
 
-                                <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_2_360p.mp4">
-                            </video>
-                            <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" tabindex="0"  id="tab-video-3"  type="button" onclick="changeInputStream('bg-video-3')">
-                        <span class="MuiButton-label">
-                            <video id="bg-video-3" class="jss12 jss13" alt="" preload="metadata" muted playsinline  crossorigin="anonymous">
-                                                            <source src="https://stream.mux.com/VFQb98VGLkjbEkpuBe00e7SBENoxiHo7y.m3u8#t=0.001">
-                               <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_3_360p.webm">
-
-                                <source src="https://cdn.vectorly.io/public-demos/virtual-background/videos/sample_virtual_background_3_360p.mp4">
-                            </video>
-                            <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
-                    <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss10" id="tab-video-4"  tabindex="0" type="button" onclick="changeInputStream('bg-video-4')">
-                        <span class="MuiButton-label">
-                            <video id="bg-video-4" class="jss12 jss13"  alt=""  preload="metadata" muted playsinline crossorigin="anonymous">
-                                <source src="https://stream.mux.com/HF7tyyvQdNyS00zHWQ00CxFTpHbhiZF300r.m3u8#t=0.001">
-                                <source src="https://files.vectorly.io/demo/videocall/videocall-360p.webm">
-                                <source src="https://files.vectorly.io/demo/videocall/videocall-360p.mp4">
-
-                            </video>
-                            <svg class="MuiSvgIcon-root jss14" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                                <path
-                                    d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="MuiTouchRipple-root"></span>
-                    </button>
                 </div>
             </div>
             <div class="MuiPaper-root MuiCard-root jss15 MuiPaper-elevation1 MuiPaper-rounded">

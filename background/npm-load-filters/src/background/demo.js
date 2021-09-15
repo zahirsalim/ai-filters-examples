@@ -1,6 +1,5 @@
 /* eslint-disable */
 let setBackground = false;
-let old_id = "";
 
 
 import { BackgroundFilter } from '@vectorly-io/ai-filters'
@@ -16,10 +15,10 @@ function getUrlParams(prop) {
 }
 
 
-async function initializeWebcam(){
-  console.log('Initializing initializeWebcam', window.mediaStream)
+async function initializeWebcam(width, height){
+  console.log(`Initializing initializeWebcam with width: ${width}, height: ${height}`, window.mediaStream)
 
-  window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
+  window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video:  {width: {exact: width}, height: {exact: height}}})
 
   const video = document.getElementById('video');
   window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
@@ -27,29 +26,22 @@ async function initializeWebcam(){
 }
 
 
-window.streamWebcam  = async function() {
+window.streamWebcam  = async function(width=640, height=360) {
   try{
     if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
       throw "webcam initialization failed"
     }
 
-    
     document.getElementById('demo').setAttribute('poster', "https://i.stack.imgur.com/ATB3o.gif");
 
-    if(old_id === 'video'){
-      window.bgFilter &&  window.bgFilter.disable()
-      await stopWebcam()
-      old_id=''
-    }else{
-      await initializeWebcam();
-      await enablebackground()
-      updateFPS();
-    }
+    await initializeWebcam(width, height);
+    await enablebackground()
+    updateFPS();
+
 
   } catch (e) {
 
-    console.log(e);
-
+    console.warn(e);
     alert("webcam initialization failed")
   }
 }
@@ -150,74 +142,6 @@ function updateFPS(){
   }
 }
 
-window.changeInputStream = async  function (video_id) {
-
-
-  try {
-    if(old_id === 'video'){
-      await stopWebcam()
-    }
-    window.bgFilter && window.bgFilter.enable()
-
-
-
-    document.getElementById(old_id) && document.getElementById(old_id).pause()
-    if(old_id===video_id){
-      window.bgFilter &&  window.bgFilter.disable()
-      old_id=''
-      return
-    }
-    old_id = video_id
-
-
-    let sample_video = document.getElementById(video_id)
-
-    let inputStream
-    if (sample_video.captureStream) {
-      inputStream = sample_video.captureStream()
-    } else if (sample_video.mozCaptureStream) {
-      sample_video.play()  // The video needs to play before the inputStream is readable?
-      inputStream = sample_video.mozCaptureStream()
-    } else {
-      inputStream = sample_video;
-    }
-    window.mediaStream = inputStream;
-
-    let default_video = document.getElementById('video');
-
-    if (inputStream instanceof MediaStream) {
-      default_video.srcObject = inputStream
-    } else {
-      default_video.setAttribute('src', sample_video.currentSrc);
-      default_video.load();
-      await default_video.play();
-      default_video.pause();
-    }
-
-    if(!setBackground) await enablebackground();
-
-    if (setBackground) {
-      // window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
-      await sample_video.play()
-
-      if (inputStream instanceof MediaStream) {
-       await window.bgFilter.changeInput(inputStream);
-      } else {
-       await default_video.play();
-       await window.bgFilter.changeInput(sample_video);
-        document.getElementById('safari-click-enable').style.display = "none";
-      }
-    }
-
-    updateFPS();
-
-
-  } catch (error) {
-    console.log('ERROR in enablebackground', error)
-  }
-
-
-}
 
 
 
