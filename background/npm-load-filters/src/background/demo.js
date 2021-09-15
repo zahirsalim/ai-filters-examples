@@ -4,6 +4,7 @@ let old_id = "";
 
 
 import { BackgroundFilter } from '@vectorly-io/ai-filters'
+import './demo.css';
 
 console.log('Feature Check', BackgroundFilter.isSupported());
 
