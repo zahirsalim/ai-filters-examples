@@ -56,7 +56,7 @@ The filter takes in a `MediaStream` or `VideoTrack`, and outputs another `MediaS
 
 
 
-You can find more details in the [docs](https://vectorly.io/docs/docs-page.html#section-background), or find quickstarts/integrations in the [backgrounds](/backround) section
+You can find more details in the [docs](https://vectorly.io/docs/docs-page.html#section-background), or find quickstarts/integrations in the [backgrounds](/background) section
 
 #### Upscaling 
 
