@@ -1,4 +1,4 @@
-<img src="img/vectorly-logo-black.svg" height="50" >
+<img src="https://user-images.githubusercontent.com/5678502/134426534-effa11ab-2048-4d1f-85b0-d3355bce04f5.png" height="50" >
 
 # AI Filters Web SDK
 
