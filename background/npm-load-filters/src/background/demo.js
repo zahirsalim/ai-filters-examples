@@ -42,7 +42,8 @@ window.streamWebcam  = async function(width=640, height=360) {
   } catch (e) {
 
     console.warn(e);
-    alert("webcam initialization failed")
+    alert(`Webcam initialized failed: ${e.name}`);
+    document.getElementById('demo').setAttribute('poster', "");
   }
 }
 
