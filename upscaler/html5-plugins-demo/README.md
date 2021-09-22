@@ -1,17 +1,13 @@
 # HTML5 Player Vectorly Integration
 
-You can integrate Vectorly into OpenSeaDragon to upscale deep-zoom images on the browser.
+You can integrate Vectorly's Upscale Filter into a number of different HTML5 Video players, to upscale video quality being streamed (live streamed or VoD).
 
-## Requirements
-
-**Get your Vectorly Token**
-
-Sign up for an account at `https://upscaler.vectorly.io`, and go to preferences->"Model Token" to get your upscaler token
+* [JWPlayer](jwplayer)
+* [Shaka](shaka-ui)
+* [VideoJS](videojs)
 
 
-
-## Viewing
-Just open index.html in your browser. Make sure to edit index.html to add your Model token
+Just open index.html from the appropriate folder in your browser. Make sure to edit index.html to add your Vectorly token
 
 
 
