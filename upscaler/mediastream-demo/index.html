@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Vectorly Upscale MediaStream</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdn.vectorly.io/ai-filters/v1/latest/vectorly.filters.js"> </script>
+
+    <style>
+
+    h1 {
+      text-align: center;
+      height: 100px;
+      width: 100%;
+      font-family: 'Open Sans', sans-serif;
+      top: 0;
+    }
+
+    #container {
+      text-align: center;
+      margin: auto;
+      display: block;
+    }
+
+    #slider-holder {
+      width: 200px;
+      height: 50px;
+      margin: 20px auto;
+      display: block;
+      z-index: 100;
+    }
+    </style>
+
+
+<body>
+
+<h1 id="header">
+    <img src="https://files.vectorly.io/Vectorly-circle-3-purple.png" width="50" height="50" style="text-align: center;">
+    </br>
+    Vectorly Upscaler MediaStream Test
+</h1>
+
+<div id="container">
+  <div id="slider-holder">
+      <div style="font-family: 'Open Sans'; font-size: 25px; margin: 0px 20px; background: gainsboro">Upscale</div>
+      <label class="switch">
+          <input id="upscale" type="checkbox" checked="checked">
+          <span class="slider round"></span>
+      </label>
+  </div>
+  <video crossorigin="anonymous" playsinline autoplay id="video" width="426" height="240" hidden></video>
+
+  <video autoplay playsinline id="output-video"> </video>
+
+</div>
+
+
+
+<script type="application/javascript">
+
+    function getUrlParams(prop) {
+      window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
+      return window.searchParams.get(prop)
+    }
+
+    const upscaleToggle = document.getElementById("upscale");
+
+    async function init() {
+        // When using the UI, the player is made automatically by the UI object.
+        const video = document.getElementById('video');
+        try {
+            const qvgaConstraints = {
+              video: {width: {exact: 320}, height: {exact: 240}}
+            };
+            video.srcObject = await navigator.mediaDevices.getUserMedia(qvgaConstraints)
+            // This runs if the asynchronous load is successful.
+
+            const upscaler = new vectorly.UpscaleFilter(video,
+              {
+                networkParams: {
+                  name: getUrlParams('name') || 'residual_3k_3x',
+                  tag: getUrlParams('tag') || 'general',
+                  version: getUrlParams('version') || '2.1'
+                },
+                container: 'disable',
+                debug: false,
+                token : getUrlParams('token') || "<your-vectorly-token>"
+              });
+            window.ups = upscaler.upscaler
+            await upscaler.initialized
+            upscaler.canvas.style.visibility = 'hidden'
+            const outputVideo = document.getElementById('output-video')
+            const canvasStream = upscaler.canvas.captureStream()
+            outputVideo.srcObject = canvasStream
+
+            upscaleToggle.onchange = ()=>{
+              if (upscaleToggle.checked) {
+                    upscaler.enable();
+                    upscaler.canvas.style.visibility = 'hidden'
+                    outputVideo.srcObject = canvasStream
+              } else {
+                    upscaler.disable();
+                    outputVideo.width = outputVideo.videoWidth
+                    outputVideo.height = outputVideo.videoHeight
+                    outputVideo.srcObject = video.srcObject.clone()
+              }
+            }
+
+            upscaler.on('load', function () {
+               console.log("Upscaler initialized");
+            });
+
+
+            upscaler.on('start', function () {
+                console.log("Starting upscaling");
+            });
+
+
+            upscaler.on('stop', function () {
+                console.log("Stopping upscaling");
+            });
+
+            upscaler.on('error', function () {
+                console.log("Failed to initialize");
+                upscaleToggle.disabled = true;
+                upscaleToggle.checked = false;
+            });
+
+
+            window.enable = function () {
+                upscaler.enable();
+            };
+
+            window.disable = function () {
+                upscaler.disable();
+            };
+
+
+        } catch (error) {
+
+           console.log(error);
+        }
+    }
+
+    window.onload = init
+
+
+</script>
+
+</body>
+</html>
+

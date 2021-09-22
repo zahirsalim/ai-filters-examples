@@ -80,7 +80,8 @@ async function join() {
 
   try{
 
-    const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack, {token: document.getElementById("vectorly-token").value,     analyticsEnabled: false,});
+    const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack, {token: document.getElementById("vectorly-token").value,  model: 'webgl',       frameRate: 30,
+      segmentationFrameRate: 15,  analyticsEnabled: false,});
 
     const filteredTrack = await filter.getOutputTrack();
 

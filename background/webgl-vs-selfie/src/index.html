@@ -1,0 +1,59 @@
+<html lang="en" class="js-focus-visible" data-js-focus-visible="">
+
+<head>
+    <meta charset="utf-8">
+    <!-- <link rel="icon" href="/virtual-background/favicon.ico"> -->
+    <meta name="viewport" content="minimum-scale=1,initial-scale=1,width=device-width">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Virtual backgrounds demo">
+
+    <title>Virtual Backgrounds Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.vectorly.io/ai-filters/v1/dev/0c40528/vectorly.filters.js"></script>
+    <script src="./demo.js"> </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
+    <meta http-equiv="origin-trial" content="AhOw5Z7s5Lk3pDD5hRHWZ+uUbOAvnzl5pN89NxkF6ky8CUHHfoZt55Gu6nABIjScpxLm3aqGZOYKLCyrs0T5AgkAAABaeyJvcmlnaW4iOiJodHRwczovL2ZpbGVzLnZlY3Rvcmx5LmlvOjQ0MyIsImZlYXR1cmUiOiJXZWJBc3NlbWJseVNpbWQiLCJleHBpcnkiOjE2NDk4MDc5OTl9">
+    <link rel="stylesheet" href="./demo.css">
+</head>
+
+<body>
+    <h1 id="header">
+        <div style="margin: auto; position: relative; width: 200px;margin-top: 20px;">
+        <img src="https://files.vectorly.io/Vectorly-circle-3-purple.png" width="50" height="50" style="text-align: center; float: left;">
+        <div style="margin: 5px; float: left; color: #17206d; font-size: 30px;">Vectorly</div>
+    </div>
+    </h1>
+    <br><br>
+    <div id="subtitle">Google Meet vs UNet Comparison</div>
+
+    <div id="root" style="padding: 5vh 20vw;">
+
+        <div class="jss1">
+            <div class="MuiPaper-root jss3 MuiPaper-elevation1 MuiPaper-rounded">
+                <div class="jss6">
+                    <video class="jss7" id="selfie" playsinline autoplay poster="images/loading.gif"></video>
+                    <span class="MuiTypography-root jss32 MuiTypography-caption"  id="selfie-fps">Google Meet</span>
+                </div>
+                <div class="jss30">
+                    <video class="jss7" id="unet" playsinline autoplay  poster="images/loading.gif"></video>
+                    <canvas class="jss31" width="1280" height="853"></canvas>
+                    <span class="MuiTypography-root jss32 MuiTypography-caption" id="webgl-fps">UNet / WebGL</span>
+                    <svg class="MuiSvgIcon-root jss14" id="safari-click-enable" height="128" width="128" focusable="false" viewBox="0 0 24 24" style="left: 50%; top: 50%; transform: scale(2.0) translate(-50%, -50%);  display: none; cursor: pointer;" onclick="safariClickEnableStream()"   aria-hidden="true">
+                        <path
+                                d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div  id="error" class="alert alert-danger" role="alert"   style="position: relative; width: 600px; margin: auto;  display: none; padding: .75vh 1vw;">
+
+    </div>
+
+</body>
+</html>
