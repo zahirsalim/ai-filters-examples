@@ -1,4 +1,4 @@
-#SignalWire Vectorly API Integration
+# SignalWire Vectorly API Integration
 
 This is an example repository showing how to integrate Vectorly's Background Filter with SignalWire's Video API.
 
