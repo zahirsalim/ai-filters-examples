@@ -18,16 +18,16 @@ The filter takes in a `MediaStream` or `VideoTrack`, and outputs another `MediaS
 #### Quickstarts
 
 To just get started with a basic example, you can take a look at the following quickstarts:
-* [NPM quickstart](/npm-load-filters)
-* [CDN quickstart](/virtual-background)
-* [Typescript quckstart](/livekit-demo)
-* [Vanilla WebRTC quickstart](/webrtc-demo)
+* [NPM quickstart](npm-load-filters)
+* [CDN quickstart](virtual-background)
+* [Typescript quckstart](livekit-demo)
+* [Vanilla WebRTC quickstart](webrtc-demo)
 
 #### Integrations
 
 We also have quickstarts/integrations with popular Video APIs
 
-* [Agora](/npm-load-filters)
-* [Daily.co](/virtual-background)
-* [Twilio](/livekit-demo)
-* [Vonage](/webrtc-demo)
+* [Agora](agora-demo)
+* [Daily.co](daily-co-demo)
+* [Twilio](twilio-demo)
+* [Vonage](vonage-demo)
