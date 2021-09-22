@@ -23,6 +23,8 @@ To just get started with a basic example, you can take a look at the following q
 * [Typescript quckstart](livekit-demo)
 * [Vanilla WebRTC quickstart](webrtc-demo)
 
+
+
 #### Integrations
 
 We also have quickstarts/integrations with popular Video APIs
@@ -31,3 +33,10 @@ We also have quickstarts/integrations with popular Video APIs
 * [Daily.co](daily-co-demo)
 * [Twilio](twilio-demo)
 * [Vonage](vonage-demo)
+
+
+#### Other resources
+
+To speed up deployment, we've included a few other resources, including
+* [Sample UI components](ui-quickstart/html)
+* [Sample background images](https://vectorly.io/docs/docs-page.html#item-background-images)
