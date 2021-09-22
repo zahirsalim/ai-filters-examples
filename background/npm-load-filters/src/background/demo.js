@@ -125,6 +125,15 @@ window.blurbackground = function (){
   }
 }
 
+window.updatevirtualbackground = function(image_url){
+
+  if (window.bgFilter) {
+    window.bgFilter.enable()
+    window.bgFilter && window.bgFilter.changeBackground(image_url)
+  }
+}
+
+
 
 function updateFPS(){
   //return
