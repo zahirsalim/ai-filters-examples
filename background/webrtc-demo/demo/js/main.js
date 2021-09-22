@@ -55,10 +55,29 @@ async function gotStream(stream) {
 
   try {
 
-    const BackgroundFilter = vectorly.BackgroundFilter;
-    const filter = new BackgroundFilter(stream, {token:  getUrlParams("token") || '0b5707c6-6642-4cc8-8570-b29af9e51345',      frameRate: 30,
-      segmentationFrameRate: 15, model: 'webgl' , analyticsEnabled: false, background: 'https://vectorly-demos.s3.us-west-1.amazonaws.com/virtual-backgrounds/1.jpg'});
-    filteredStream=  await filter.getOutput();  //Video Stream Track
+
+    await new Promise(async function (resolve, reject){
+
+      const img = new Image();
+      img.src = getUrlParams('background_url') || "https://images4.alphacoders.com/562/thumb-1920-562920.jpg";
+      img.crossOrigin = "anonymous";
+      console.log(`Loading ${img.src} as background`);
+      img.onload = async function () {
+        const BackgroundFilter = vectorly.BackgroundFilter;
+        const filter = new BackgroundFilter(stream, {token:  getUrlParams("token") || '0b5707c6-6642-4cc8-8570-b29af9e51345',      frameRate: 30,
+          segmentationFrameRate: 15, model: 'webgl' , analyticsEnabled: false, background: img});
+        filteredStream=  await filter.getOutput();  //Video Stream Track
+        resolve();
+      }
+
+      img.onerror = function (e){
+        console.log(`Background image failed to load`)
+        return reject(e);
+      }
+    });
+
+
+
 
   } catch (e){
 
@@ -128,7 +147,6 @@ function call() {
 }
 
 function gotDescription1(desc) {
-  console.log('Offer from pc1 \n' + desc.sdp);
   pc1.setLocalDescription(desc).then(
       () => {
         pc2.setRemoteDescription(desc)
@@ -141,7 +159,6 @@ function gotDescription1(desc) {
 function gotDescription2(desc) {
   pc2.setLocalDescription(desc).then(
       () => {
-        console.log('Answer from pc2 \n' + desc.sdp);
         let p;
         if (maxBandwidth) {
           p = pc1.setRemoteDescription({
