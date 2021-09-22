@@ -17,7 +17,7 @@ For the `UpscaleFilter`, the basic API involves instantiating an `UpscaleFilter`
 #### Quickstarts
 
 To just get started with a basic example, you can take a look at the following quickstarts:
-* [NPM quickstart](npm-load-filters)
+* [NPM quickstart](npm-load-demo)
 * [CDN quickstart](html5-plugins-demo/standalone/index.html)
 * [Electron quickstart](electron-demo)
 * [React quickstart](react-demo)
