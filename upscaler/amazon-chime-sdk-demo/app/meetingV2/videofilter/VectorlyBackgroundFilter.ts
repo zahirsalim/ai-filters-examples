@@ -7,9 +7,9 @@ import {
   VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 
-const BackgroundFilter = require('@vectorly-io/ai-filters/dist/vectorly.BackgroundFilter')
+const BackgroundFilterCore = require('@vectorly-io/ai-filters/dist/vectorly.BackgroundFilterCore')
 
-const vectorly = {BackgroundFilter: BackgroundFilter}
+const vectorly = {BackgroundFilterCore: BackgroundFilterCore}
 
 /**
  * [[CircularCut]] is an implementation of {@link VideoFrameProcessor} for demonstration purpose.
@@ -21,7 +21,6 @@ export default class VectorlyBackgroundFilter implements VideoFrameProcessor {
   private sourceWidth: number = 0;
   private sourceHeight: number = 0;
   private filterReady: boolean = false;
-  private outputStream: MediaStream = null;
   private bgFilter: any = null;
 
   constructor() {}
@@ -35,7 +34,6 @@ export default class VectorlyBackgroundFilter implements VideoFrameProcessor {
   async process(buffers: VideoFrameBuffer[]): Promise<VideoFrameBuffer[]> {
     // assuming one video stream
     const canvas = buffers[0].asCanvasElement();
-    const inputStream = canvas.captureStream()
 
     const frameWidth = canvas.width;
     const frameHeight = canvas.height;
@@ -48,15 +46,19 @@ export default class VectorlyBackgroundFilter implements VideoFrameProcessor {
 
       try{
 
-        this.bgFilter = new vectorly.BackgroundFilter(inputStream, {
-          token: "4b6789ac-2241-4359-98fb-0364f2fb3919",
-          // canvas: this.targetCanvas,
-        });
+        this.bgFilter = new vectorly.BackgroundFilterCore();
 
-        this.outputStream = await this.bgFilter.getOutput()
-        console.log('Output stream', this.outputStream)
+        const config = {
+          inputSize: {w: frameWidth, h: frameHeight},
+          token: "<your-token>",
+          canvas: this.targetCanvas,
+          model: 'selfie_v2',
+        }
 
-        this.filterReady = true
+        this.bgFilter.load(config).then(() => {
+          this.filterReady = true
+        })
+
       } catch (e){
         console.log("Error");
         console.log(e);
@@ -65,7 +67,8 @@ export default class VectorlyBackgroundFilter implements VideoFrameProcessor {
 
 
     if(this.filterReady){
-      // this.bgFilter.render()
+      this.bgFilter.setInput(canvas) // Sets input element
+      this.bgFilter.render() // Renders to canvas
     }
 
 
