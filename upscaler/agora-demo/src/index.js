@@ -132,14 +132,37 @@ async function subscribe(user, mediaType) {
     const upscaler = new vectorly.UpscaleFilter(videoElement,
         {
           networkParams: {
-            name:  'residual_3k_3x',
+            name:  'residual_4k_2x',
             tag: 'general',
-            version:  '2.1'
+            version:  '0'
           },
           debug: false,
           token : document.getElementById("vectorly-token").value
         });
 
+
+    const disable = document.getElementById('disable');
+    const enable = document.getElementById('enable');
+
+    upscaler.on('load', function (){
+      console.log("Upscaler loaded");
+      disable.style.display  =  "inline-block";
+
+
+      disable.addEventListener('click', function (){
+        enable.style.display = "inline-block";
+        disable.style.display = "none";
+        upscaler.disable();
+
+      });
+
+      enable.addEventListener('click', function () {
+        enable.style.display = "none";
+        disable.style.display = "inline-block";
+        upscaler.enable();
+      });
+
+    });
 
   }
   if (mediaType === 'audio') {

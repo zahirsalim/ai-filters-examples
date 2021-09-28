@@ -5,6 +5,9 @@
   "main": "server.js",
   "dependencies": {
     "connect": "^3.7.0",
+    "grunt": "^1.4.1",
+    "grunt-aws-s3": "^2.0.2",
+    "grunt-cloudfront": "^0.2.2",
     "open": "^8.2.1",
     "serve-static": "^1.14.1"
   },
