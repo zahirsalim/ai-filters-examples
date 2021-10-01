@@ -11,10 +11,16 @@ By using the Background Filter, you can implement features like Virtual Backgrou
 #### Basic Usage
 The filter takes in a `MediaStream` or `VideoTrack`, and outputs another `MediaStream` or `VideoTrack`
 
+```javascript
     const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: 'vectorly-token', background: 'blur'});
+    const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
+    const filter = new BackgroundFilter(stream, {
+        token: 'vectorly-token', 
+        background: 'blur'
+        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+    });
     const outputStream =  await filter.getOutput();
-
+```
 #### Quickstarts
 
 To just get started with a basic example, you can take a look at the following quickstarts:
