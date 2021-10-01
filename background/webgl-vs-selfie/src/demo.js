@@ -54,9 +54,14 @@ async function getFilter(inputStream, model) {
 
 
   const params = {
+    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
+    background: 'blur',
+    debug: false,
     model: model,
+    segmentationFrameRate: 15,
+    frameRate: 30,
     analyticsEnabled: true,
-    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345'
+    passthrough: true
   }
 
   const bgFilter = new vectorly.BackgroundFilter(inputStream, params);
