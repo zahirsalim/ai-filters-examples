@@ -15,7 +15,7 @@ module.exports = env => {
   return {
     devServer: {
       hot: true,
-      dev: {
+      historyApiFallback: {
         index: `${app}.html`,
       },
       onListening: (server) => {

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Amazon Chime SDK JavaScript Demos",
   "scripts": {
-    "deps": "cd ../.. && npm run build",
+    "deps": "echo 0",
     "copy-assets": "node script/copy-assets.js",
     "build:fast": "npm run copy-assets && node script/webpack-wrapper.js",
     "build": "npm run deps && npm install && tsc && npm run build:fast",
@@ -32,11 +32,11 @@
     "webpack-dev-server": "^4.0.0-beta.2"
   },
   "dependencies": {
-    "amazon-chime-sdk-js": "file:../..",
+    "@vectorly-io/ai-filters": "^1.5.2",
+    "amazon-chime-sdk-js": "^2.17.0",
     "aws-sdk": "^2.957.0",
     "bootstrap": "^4.5.2",
     "compression": "^1.7.4",
-    "@vectorly-io/ai-filters": "^1.2.8",
     "jquery": "^3.5.1",
     "lodash": "^4.17.20",
     "popper.js": "^1.15.0"
