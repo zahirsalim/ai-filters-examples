@@ -50,7 +50,18 @@ async function joinwithusername() {
 
                     const originalVideoTrack  = originalStream.getVideoTracks()[0];
                     const originalAudioTrack = originalStream.getAudioTracks()[0];
-                    const filter = new vectorly.BackgroundFilter(originalVideoTrack, {token: urlParams.get("vectorlyToken")})
+                    const filter = new vectorly.BackgroundFilter(originalVideoTrack, 
+                        {
+                            token: urlParams.get("vectorlyToken"),
+                            background: 'blur',
+                            debug: false,
+                            model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+                            segmentationFrameRate: 15,
+                            frameRate: 30,
+                            analyticsEnabled: false,
+                            passthrough: true
+                        }
+                    )
                     const filteredVideoTrack = await filter.getOutputTrack();
 
                     return  new MediaStream([filteredVideoTrack, originalAudioTrack]);
