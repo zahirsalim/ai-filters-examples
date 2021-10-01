@@ -11,6 +11,14 @@ const BackgroundFilterCore = require('@vectorly-io/ai-filters/dist/vectorly.Back
 
 const vectorly = {BackgroundFilterCore: BackgroundFilterCore}
 
+let searchParams: any;
+
+function getUrlParams(prop: string) {
+  searchParams = searchParams || (new URLSearchParams(window.location.search));
+  return searchParams.get(prop)
+}
+
+
 /**
  * [[CircularCut]] is an implementation of {@link VideoFrameProcessor} for demonstration purpose.
  * It updates the first {@link VideoFrameBuffer} from the input array and clip the whole frame to a circle.
@@ -50,9 +58,9 @@ export default class VectorlyBackgroundFilter implements VideoFrameProcessor {
 
         const config = {
           inputSize: {w: frameWidth, h: frameHeight},
-          token: "<your-token>",
+          token: "<your-vectorly-token>",
           canvas: this.targetCanvas,
-          model: 'selfie_v2',
+          model: getUrlParams('model') || 'webgl_v2',
         }
 
         this.bgFilter.load(config).then(() => {
