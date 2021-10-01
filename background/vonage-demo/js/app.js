@@ -31,13 +31,13 @@ async function initializeSession() {
         const filter = new BackgroundFilter(stream, 
             {
                 token: 'your-vectorly-token',
+                model: 'webgl' || 'selfie', // switch between models as per client's device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
                 background: 'blur',
                 debug: false,
-                model: 'webgl' || 'selfie', // switch between models as per client's device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
-                segmentationFrameRate: 15,
-                frameRate: 30,
                 analyticsEnabled: false,
-                passthrough: true
+                passthrough: true,
+                frameRate: 30,
+                segmentationFrameRate: 15
             }
         );
 

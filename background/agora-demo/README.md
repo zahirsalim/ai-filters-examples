@@ -37,7 +37,7 @@ The relevant code block in this repo is located in Line 74 of src/index.js
 
   const filter = new BackgroundFilter(mediaStream, {
     token: document.getElementById("vectorly-token").value,
-    model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+    model: 'webgl' || 'selfie' // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
   });
 
   const filteredStream = await filter.getOutput();

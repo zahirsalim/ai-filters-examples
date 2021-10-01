@@ -54,12 +54,12 @@ async function joinwithusername() {
                         {
                             token: urlParams.get("vectorlyToken"),
                             background: 'blur',
-                            debug: false,
                             model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
-                            segmentationFrameRate: 15,
-                            frameRate: 30,
+                            debug: false,
                             analyticsEnabled: false,
-                            passthrough: true
+                            passthrough: true,
+                            frameRate: 30,
+                            segmentationFrameRate: 15
                         }
                     )
                     const filteredVideoTrack = await filter.getOutputTrack();

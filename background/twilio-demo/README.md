@@ -35,8 +35,8 @@ Finally, insert your vectorly token into line 235 of quickstart/src/joinroom.js
 ```javascript
   const filter = new BackgroundFilter(inputStream, {
     token: 'your-vectorly-token', 
-    background: 'blur'
-    model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+    background: 'blur',
+    model: 'webgl' || 'selfie' // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
   });
 ```
 

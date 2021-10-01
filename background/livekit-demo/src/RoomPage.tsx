@@ -83,13 +83,13 @@ async function onConnected(room: Room, query: URLSearchParams) {
     const filter = new BackgroundFilter(inputStream, 
       {
         token: 'your-vectorly-token',
+        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
         background: 'blur',
         debug: false,
-        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
-        segmentationFrameRate: 15,
-        frameRate: 30,
         analyticsEnabled: false,
-        passthrough: true
+        passthrough: true,
+        frameRate: 30,
+        segmentationFrameRate: 15
       }
     );
     const outputStream = await filter.getOutput()

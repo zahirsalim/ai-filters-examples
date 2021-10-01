@@ -33,13 +33,13 @@ async function enablebackground(inputStream) {
 
   const params = {
     token: 'your-vectorly-token',
+    model: 'webgl' || 'selfie', // switch between models as per client's device performance
     background: 'blur',
     debug: false,
-    model: 'webgl' || 'selfie', // switch between models as per client's device performance
-    segmentationFrameRate: 15,
-    frameRate: 30,
     analyticsEnabled: false,
-    passthrough: true
+    passthrough: true,
+    frameRate: 30,
+    segmentationFrameRate: 15
   }
   const bgFilter = new BackgroundFilter(inputStream, params);
   window.bgFilter = bgFilter

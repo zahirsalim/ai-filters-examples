@@ -52,8 +52,8 @@ The filter takes in a `MediaStream` or `VideoTrack`, and outputs another `MediaS
     const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
     const filter = new BackgroundFilter(stream, {
         token: 'vectorly-token', 
-        background: 'blur'
-        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+        background: 'blur',
+        model: 'webgl' || 'selfie' // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
     });
     const outputStream =  await filter.getOutput();
 ```

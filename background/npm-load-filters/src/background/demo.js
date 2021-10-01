@@ -66,14 +66,14 @@ async function enablebackground(type, image) {
   document.getElementById('btnradio1').disabled = true;
 
   const params = {
+    token: getUrlParams('token'),
+    model: window.model || getUrlParams('model') || 'selfie',
+    background: background,
     debug: false,
     analyticsEnabled: false,
-    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    background: background,
+    passthrough: true,
     frameRate: 30,
-    segmentationFrameRate: 15,
-    model: window.model || getUrlParams('model') || 'selfie',
-    passthrough: true
+    segmentationFrameRate: 15
   }
   if (window.bgFilter) {
     window.bgFilter.enable()

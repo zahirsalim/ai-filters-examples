@@ -57,12 +57,14 @@ async function gotStream(stream) {
 
     const BackgroundFilter = vectorly.BackgroundFilter;
     const filter = new BackgroundFilter(stream, {
-      token:  getUrlParams("token") || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-      frameRate: 30,
-      segmentationFrameRate: 15, 
+      token:  getUrlParams("token"),
       model: 'webgl' || 'selfie', // switch between models as per client's device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
-      analyticsEnabled: false, 
-      background: 'https://vectorly-demos.s3.us-west-1.amazonaws.com/virtual-backgrounds/1.jpg'
+      background: 'https://vectorly-demos.s3.us-west-1.amazonaws.com/virtual-backgrounds/1.jpg',
+      debug: false,
+      analyticsEnabled: false,
+      passthrough: true,
+      frameRate: 30,
+      segmentationFrameRate: 15
     });
     filteredStream=  await filter.getOutput();  //Video Stream Track
 
