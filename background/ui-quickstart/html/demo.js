@@ -32,9 +32,14 @@ async function startStream() {
 async function enablebackground(inputStream) {
 
   const params = {
-    token: getUrlParams('token') || '0b5707c6-6642-4cc8-8570-b29af9e51345',
-    passthrough: true,
-    background: 'blur'
+    token: 'your-vectorly-token',
+    background: 'blur',
+    debug: false,
+    model: 'webgl' || 'selfie', // switch between models as per client's device performance
+    segmentationFrameRate: 15,
+    frameRate: 30,
+    analyticsEnabled: false,
+    passthrough: true
   }
   const bgFilter = new BackgroundFilter(inputStream, params);
   window.bgFilter = bgFilter
