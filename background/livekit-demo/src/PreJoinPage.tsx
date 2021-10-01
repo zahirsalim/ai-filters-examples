@@ -44,10 +44,18 @@ export const PreJoinPage = () => {
   }, [token, url])
 
   const setVideoTrackWithBG = async (videoTrack:LocalVideoTrack) => {
-    const filter = new BackgroundFilter(videoTrack.mediaStreamTrack, {
-      token: 'your-vectorly-token',
-      background: 'blur',
-    });
+    const filter = new BackgroundFilter(videoTrack.mediaStreamTrack, 
+      {
+        token: 'your-vectorly-token',
+        background: 'blur',
+        debug: false,
+        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+        segmentationFrameRate: 15,
+        frameRate: 30,
+        analyticsEnabled: false,
+        passthrough: true
+      }
+    );
     const outputTrack = await filter.getOutputTrack()
     const videoTrackWithBG = new LocalVideoTrack(outputTrack)
     setVideoTrack(videoTrackWithBG)
