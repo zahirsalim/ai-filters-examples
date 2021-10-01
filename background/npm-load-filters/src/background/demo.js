@@ -1,115 +1,157 @@
 /* eslint-disable */
+let setBackground = false;
+
 
 import { BackgroundFilter } from '@vectorly-io/ai-filters'
-import './constraints.js'
+import './demo.css';
 
-let captureCam =false;
-let segmentBg =false;
-let blurBg =false;
-let virtualBg =false;
+console.log('Feature Check', BackgroundFilter.isSupported());
 
-// const width = 640;
-// const height = 360;
+
 
 function getUrlParams(prop) {
   window.searchParams = window.searchParams || (new URLSearchParams(window.location.search));
   return window.searchParams.get(prop)
 }
 
-async function initializeWebcam(){
-    console.log('Initializing initializeWebcam', window.mediaStream)
-    if (window.mediaStream === null || window.mediaStream === undefined || window.mediaStream.active === false) {
-      var webcamStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video: true})
-      // {width: 640, height: 360}})
 
-      window.mediaStream = webcamStream;
+async function initializeWebcam(width, height){
+  console.log(`Initializing initializeWebcam with width: ${width}, height: ${height}`, window.mediaStream)
+
+  window.mediaStream = await navigator.mediaDevices.getUserMedia(window.constraints || {audio: false, video:  {width: {exact: width}, height: {exact: height}}})
+
+  const video = document.getElementById('video');
+  window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
+  video.srcObject  = window.mediaStream;
+}
+
+
+window.streamWebcam  = async function(width=640, height=360) {
+  try{
+    if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
+      throw "webcam initialization failed"
     }
-    const video = document.getElementById('video');
-    window.bgFilter && window.bgFilter.changeInput(window.mediaStream)
-    video.srcObject  = window.mediaStream;
+
+    document.getElementById('demo').setAttribute('poster', "https://i.stack.imgur.com/ATB3o.gif");
+
+    await initializeWebcam(width, height);
+    await enablebackground()
+    updateFPS();
+
+
+  } catch (e) {
+
+    console.warn(e);
+    alert(`Webcam initialized failed: ${e.name}`);
+    document.getElementById('demo').setAttribute('poster', "");
+  }
 }
 
+async function stopWebcam(){
+  window.mediaStream.getTracks()[0].stop()
+  window.bgFilter && window.bgFilter.stop()
+}
 
-async function playPause(capture) {
-    console.log(capture)
-    if (capture !== null && capture !== undefined){
-      captureCam = capture
-    } else {
-      captureCam = !captureCam;
+async function enablebackground(type, image) {
+  setBackground = true;
+  const processed = document.getElementById('demo');
+  let background;
+
+  if(type) background = (type === 'blur') ? type : image;
+
+  window.old_type = type;
+  window.old_image = image;
+
+  document.getElementById('btnradio2').disabled = true;
+  document.getElementById('btnradio1').disabled = true;
+
+  const params = {
+    token: getUrlParams('token'),
+    model: window.model || getUrlParams('model') || 'selfie',
+    background: background,
+    debug: false,
+    analyticsEnabled: false,
+    passthrough: true,
+    frameRate: 30,
+    segmentationFrameRate: 15
+  }
+  if (window.bgFilter) {
+    window.bgFilter.enable()
+
+  } else {
+    try {
+
+      console.log("Media stream");
+      console.log(window.mediaStream);
+      const bgFilter = new BackgroundFilter(window.mediaStream, params);
+      window.bgFilter = bgFilter
+      const outputStream = await bgFilter.getOutput()
+      console.log('OutputStream', outputStream)
+      processed.srcObject = outputStream
+    } catch (err) {
+      console.log('ERROR in enablebackground', err)
+      console.log(err);
     }
-    let btn = document.getElementById("cam-button");
-    if (captureCam) {
-        try{
-            if (!('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia)) {
-                throw "webcam initialization failed"
-            }
-            initializeWebcam()
-        } catch (e) {
-            alert("webcam initialization failed")
-        }
-        btn.innerText = "Pause";
-    } else {
-        console.log("Pausing the video")
-        window.mediaStream.getTracks()[0].stop()
-        window.bgFilter && window.bgFilter.stop()
-        btn.innerText = "Play";
-    }
+  }
+
 }
 
-async function enablebackground() {
-    segmentBg = !segmentBg
-    let btn = document.getElementById("bg-button");
-    const processed = document.getElementById('demo');
-    if (segmentBg) {
-        const params = {
-          debug: true,
-          token: getUrlParams('token'),
-        }
-        if (window.bgFilter) {
-          processed.srcObject = await window.bgFilter.enable()
-        } else {
-          try {
-            const bgFilter = new BackgroundFilter(window.mediaStream, params);
-            window.bgFilter = bgFilter
-            virtualBg = true;
-            const outputStream = await bgFilter.getOutput()
-            console.log('OutputStream', outputStream)
-            processed.srcObject = outputStream
-          } catch (err) {
-            console.error('================ERROR in enablebackground', err)
-            throw err
-          }
-        }
-        btn.innerText = "Turn Virtual Background: OFF";
-    }
-    else{
-        if (window.bgFilter) {
-          processed.srcObject = await window.bgFilter.disable()
-          btn.innerText = "Turn Virtual Background: ON";
-        }
-    }
+window.disable = function (){
+  bgFilter.disable();
+}
+window.enable = function (){
+  bgFilter.enable();
 }
 
-function blurbackground(){
-  window.bgFilter && segmentBg && window.bgFilter.changeBackground('blur')
-}
-
-function virtualbackground(){
-  window.bgFilter && segmentBg && window.bgFilter.changeBackground('')
-}
-
-function updatevirtualbackground(image_url){
-  image_url = image_url || "https://cdn.vectorly.io/public-demos/background-waterfall-pexels.jpg"
-  window.bgFilter && segmentBg && window.bgFilter.changeBackground(image_url)
+window.setAImodel = function(model){
+  window.model = model;
+  if(model==='webgl') document.getElementById('webgl-warning').style.display = 'block';
+  else document.getElementById('webgl-warning').style.display = 'none';
 }
 
 
-export {
-  enablebackground,
-  playPause,
-  blurbackground,
-  initializeWebcam,
-  virtualbackground,
-  updatevirtualbackground,
+window.disablebackground = function (){
+
+  if (window.bgFilter) {
+    window.bgFilter.disable()
+  }
 }
+
+window.blurbackground = function (){
+  if (setBackground && window.bgFilter) {
+    window.bgFilter.enable()
+    window.bgFilter && window.bgFilter.changeBackground('blur')
+  } else {
+    enablebackground()
+  }
+}
+
+window.updatevirtualbackground = function(image_url){
+
+  if (window.bgFilter) {
+    window.bgFilter.enable()
+    window.bgFilter && window.bgFilter.changeBackground(image_url)
+  }
+}
+
+
+
+function updateFPS(){
+  //return
+  try {
+    setInterval(() => {
+      if (window.bgFilter && window.bgFilter.processor && window.bgFilter.processor.metrics && window.bgFilter.processor.metrics.fps) {
+        let fps = window.bgFilter.processor.metrics.fps;
+        document.getElementById('fps').innerHTML = 'FPS: '+fps;
+      } else {
+        document.getElementById('fps').innerHTML = '';
+      }
+    }, 1000);
+  } catch (error) {
+    console.log('ERROR in updateFPS', error)
+  }
+}
+
+
+
 

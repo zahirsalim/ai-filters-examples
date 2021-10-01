@@ -80,10 +80,18 @@ async function onConnected(room: Room, query: URLSearchParams) {
     const videoTrack = await createLocalVideoTrack(captureOptions);
 
     const inputStream = new MediaStream([videoTrack.mediaStreamTrack])
-    const filter = new BackgroundFilter(inputStream, {
-      token: 'your-vectorly-token',
-      background: 'blur',
-    });
+    const filter = new BackgroundFilter(inputStream, 
+      {
+        token: 'your-vectorly-token',
+        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+        background: 'blur',
+        debug: false,
+        analyticsEnabled: false,
+        passthrough: true,
+        frameRate: 30,
+        segmentationFrameRate: 15
+      }
+    );
     const outputStream = await filter.getOutput()
     const videoTrackWithBG = new LocalVideoTrack(outputStream.getVideoTracks()[0])
     

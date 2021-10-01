@@ -80,8 +80,18 @@ async function join() {
 
   try{
 
-    const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack, {token: document.getElementById("vectorly-token").value,  model: 'webgl',       frameRate: 30,
-      segmentationFrameRate: 15,  analyticsEnabled: false,});
+    const filter = new BackgroundFilter(localTracks.videoTrack._mediaStreamTrack,
+      {
+        token: document.getElementById("vectorly-token").value,  
+        model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+        background: 'blur',
+        debug: false,
+        analyticsEnabled: false,
+        passthrough: true,
+        frameRate: 30,
+        segmentationFrameRate: 15
+      }
+    );
 
     const filteredTrack = await filter.getOutputTrack();
 

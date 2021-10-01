@@ -58,7 +58,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
-    "@vectorly-io/ai-filters": "^1.2.8",
+    "@vectorly-io/ai-filters": "^1.5.1",
     "prismjs": "^1.6.0",
     "stackblur-canvas": "^1.4.0",
     "twilio": "^3.19.1",

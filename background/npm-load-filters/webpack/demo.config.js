@@ -16,6 +16,7 @@ module.exports = {
     path: path.resolve(__dirname, `../demo/${target}`),
     // chunkFilename: `${target}.demo.js`,
     filename: `${target}.demo.js`,
+   // publicPath: `/src/${target}/`
   },
   module: {
     rules: [
@@ -45,6 +46,7 @@ module.exports = {
   ],
   devServer: {
     injectClient: false, // Fixes import issue as per https://github.com/webpack/webpack-dev-server/issues/2484#issuecomment-655211893
+  //  publicPath: `/src/${target}/`
     // port: 8008
 },
   node: {}

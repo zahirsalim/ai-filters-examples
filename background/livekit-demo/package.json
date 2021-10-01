@@ -10,15 +10,15 @@
     "eject": "node ./node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "@vectorly-io/ai-filters": "^1.5.1",
     "livekit-client": "^0.9.6",
     "livekit-react": "^0.3.11",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "typescript": "^3.7.5",
     "react-aspect-ratio": "^1.0.49",
+    "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "@vectorly-io/ai-filters": "^1.2.8"
+    "react-scripts": "^3.4.1",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
