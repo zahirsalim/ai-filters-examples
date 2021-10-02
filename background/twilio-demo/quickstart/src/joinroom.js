@@ -231,7 +231,18 @@ async function joinRoom(token, connectOptions) {
 
 try{
 
-  const filter = new BackgroundFilter(localVideoTrack.mediaStreamTrack, {token: '0912c95e-c4e5-47d0-bf26-01b214f01f48', background: 'blur'});
+  const filter = new BackgroundFilter(localVideoTrack.mediaStreamTrack, 
+    {
+      token: 'your-vectorly-token',
+      model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+      background: 'blur',
+      debug: false,
+      analyticsEnabled: false,
+      passthrough: true,
+      frameRate: 30,
+      segmentationFrameRate: 15
+    }
+  );
   const filteredTrack = await  filter.getOutputTrack();
 
   localVideoTrack =  new LocalVideoTrack(filteredTrack);

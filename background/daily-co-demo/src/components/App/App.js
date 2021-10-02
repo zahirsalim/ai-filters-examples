@@ -131,6 +131,12 @@ export default function App() {
             const filter = new BackgroundFilter(sourceVideoTrack, {
               token: '<your-vectorly-token>',
               background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
+              model: 'webgl' || 'selfie', // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+              debug: false,
+              analyticsEnabled: false,
+              passthrough: true,
+              frameRate: 30,
+              segmentationFrameRate: 15
             });
 
             // You'll need to manually call filter.stop() when you want to close the video stream

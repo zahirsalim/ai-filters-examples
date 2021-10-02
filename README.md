@@ -48,12 +48,15 @@ By using the Background Filter, you can implement features like Virtual Backgrou
 <img src="https://user-images.githubusercontent.com/5678502/134424415-71ff7fce-bf38-4062-8570-78960d5ba808.png" width="800" >
 
 The filter takes in a `MediaStream` or `VideoTrack`, and outputs another `MediaStream` or `VideoTrack`
-
+```javascript
     const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: 'vectorly-token', background: 'blur'});
+    const filter = new BackgroundFilter(stream, {
+        token: 'vectorly-token', 
+        background: 'blur',
+        model: 'webgl' || 'selfie' // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+    });
     const outputStream =  await filter.getOutput();
-
-
+```
 
 
 You can find more details in the [docs](https://vectorly.io/docs/docs-page.html#section-background), or find quickstarts/integrations in the [backgrounds](/background) section
@@ -66,10 +69,10 @@ Vectorly has built it's own AI Upscaling filter based on a technique called Supe
 
 
 For the `UpscaleFilter`, the basic API involves instantiating an `UpscaleFilter` object, and specifying a `video` element.
-
+```javascript
     const video = document.getElementById("video");
     const upscaler = new UpscaleFilter(video, {token: 'vectorly-token'});
-
+```
 
 You can find more details in the [docs](https://vectorly.io/docs/docs-page.html#section-upscaling), or find quickstarts/integrations in the [upscaler](/upscaler) section
 

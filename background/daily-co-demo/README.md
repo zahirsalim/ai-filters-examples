@@ -40,23 +40,24 @@ import { BackgroundFilter } from '@vectorly-io/ai-filters';
 
 The relevant code block in this repo is located in Line 126 of src/components/App/App.js
 
-```
-          const sourceVideoTrack = callObject._participants.local.videoTrack;
+```javascript
+  const sourceVideoTrack = callObject._participants.local.videoTrack;
 
-          const inputStream = new MediaStream([sourceVideoTrack.clone()]);
+  const inputStream = new MediaStream([sourceVideoTrack.clone()]);
 
-          const filter = new BackgroundFilter(inputStream, {
-            token: 'your-vectorly-token',
-            background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg'
-          });
+  const filter = new BackgroundFilter(inputStream, {
+    token: 'your-vectorly-token',
+    background: 'https://files.vectorly.io/demo/background-filter/images/virtual-background-1.jpg',
+    model: 'webgl' || 'selfie' // switch between models as per client device performance; read more here: https://vectorly.io/docs/docs-page.html#item-webgl-model
+  });
 
-          filter.getOutput().then(function(filteredTrack ){
+  filter.getOutput().then(function(filteredTrack ){
 
-            callObject.setInputDevicesAsync({
-              videoSource: filteredTrack.getVideoTracks()[0],
-            });
+    callObject.setInputDevicesAsync({
+      videoSource: filteredTrack.getVideoTracks()[0],
+    });
 
-          });
+  });
  ```
 
 
