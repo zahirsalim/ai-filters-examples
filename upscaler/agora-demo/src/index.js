@@ -75,7 +75,7 @@ async function join() {
     AgoraRTC.createMicrophoneAudioTrack(),
 
     //AgoraRTC.createCameraVideoTrack()
-     AgoraRTC.createCameraVideoTrack({encoderConfig: {width: 320, height: 240}})
+    AgoraRTC.createCameraVideoTrack({encoderConfig: {width: 640, height: 360}})
   ]);
 
 
@@ -108,14 +108,14 @@ async function leave() {
   $("#local-player-name").text("");
   $("#join").attr("disabled", false);
   $("#leave").attr("disabled", true);
- // console.log("client leaves channel success");
+  // console.log("client leaves channel success");
 }
 
 async function subscribe(user, mediaType) {
   const uid = user.uid;
   // subscribe to a remote user
   await client.subscribe(user, mediaType);
- // console.log("subscribe success");
+  // console.log("subscribe success");
   if (mediaType === 'video') {
     const player = $(`
       <div id="player-wrapper-${uid}">
@@ -132,7 +132,7 @@ async function subscribe(user, mediaType) {
     const upscaler = new vectorly.UpscaleFilter(videoElement,
         {
           networkParams: {
-            name:  'residual_4k_2x',
+            name:  'upscaler_4krgb_2x',
             tag: 'general',
             version:  '0'
           },
