@@ -5,8 +5,9 @@ import { BackgroundFilter } from '@vectorly-io/ai-filters';
 async function start(){
 
 
-    const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:true});
-    const filter = new BackgroundFilter(stream, {token: 'vectorly-token'});
+    const stream = await navigator.mediaDevices.getUserMedia({video:true, audio:false});
+    const filter = new BackgroundFilter(stream, {model: 'webgl', token: '<your-vectorly-token'>});
+
     const outputStream =  await filter.getOutput();
 
     const video = document.createElement('video');
@@ -17,7 +18,6 @@ async function start(){
     document.body.appendChild(video);
 
     video.play();
-
 }
 
 start();

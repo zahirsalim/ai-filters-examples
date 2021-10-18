@@ -11,12 +11,15 @@
   "build": {
     "appId": "test",
     "mac": {
-      "target" : { "target": "dir", "arch": "arm64" }
+      "target": {
+        "target": "dir",
+        "arch": "arm64"
+      }
     }
   },
   "dependencies": {
-    "source-map-support": "^0.5.16",
-    "@vectorly-io/ai-filters": "^1.6.1"
+    "@vectorly-io/ai-filters": "^1.6.1",
+    "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "electron": "^15.2.0",
