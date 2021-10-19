@@ -2,6 +2,7 @@ import AgoraRTC from 'agora-rtc-sdk'
 import {Toast, addView, removeView} from './common'
 import SketchPad from './sketchpad'
 import * as $ from 'jquery'
+import { BackgroundFilter } from '@vectorly-io/ai-filters'
 
 console.log('agora sdk version: ' + AgoraRTC.VERSION + ' compatible: ' + AgoraRTC.checkSystemRequirements())
 
@@ -156,8 +157,10 @@ export default class RTCClient {
       this._agoraRTCStream.setVideoProfile(data.cameraResolution)
     }
     // init local stream and passive audio video track for continuation
-    this._agoraRTCStream.init(() => {
-      next(this._agoraRTCStream.getVideoTrack(), this._agoraRTCStream.getAudioTrack())
+    this._agoraRTCStream.init(async () => {
+      this.bgFilter = this.bgFilter || (new BackgroundFilter(this._agoraRTCStream.getVideoTrack(), {token: this.vectorly_token}))
+      const bgTrack = await this.bgFilter.getOutputTrack()
+      next(bgTrack, this._agoraRTCStream.getAudioTrack())
     }, (err) =>  {
       Toast.error('stream init failed, please open console see more detail')
       console.error('init _agoraRTCStream failed ', err)
@@ -254,7 +257,9 @@ export default class RTCClient {
       // init client
       this._client.init(data.appID, () => {
         console.log('init success')
-    
+        this.vectorly_token = data.token
+        data.token = null
+
         /**
          * Joins an AgoraRTC Channel
          * This method joins an AgoraRTC channel.
